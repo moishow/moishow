@@ -1,0 +1,89 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 본인인증 (W-03)</title>
+<!-- W-03 KYC 본인인증: surface-community. 폼(통신사·이름·주민번호·휴대폰·인증번호).
+     인증 CTA는 신뢰 액션이라 .btn--primary(블루). 화면 고유 레이아웃만 아래 style. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  .form{padding-top:8px}
+  .rrn{display:flex;align-items:center;gap:10px}
+  .rrn__front{flex:1}
+  .rrn__dash{color:var(--text-faint);font-weight:var(--weight-bold)}
+  .rrn__digit{width:52px;text-align:center;flex-shrink:0}
+  .rrn__mask{color:var(--text-faint);font-weight:var(--weight-bold);letter-spacing:5px;font-size:var(--fs-title)}
+  .otp{display:flex;gap:10px;align-items:stretch}
+  .otp__field{position:relative;flex:1}
+  .otp__field .field__input{padding-right:60px}
+  .otp__timer{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:var(--fs-caption);font-weight:var(--weight-semibold);color:var(--color-primary)}
+  .otp__btn{flex-shrink:0}
+  .hint{display:flex;align-items:center;gap:7px;margin:12px 20px 0;font-size:var(--fs-caption);color:var(--text-muted)}
+  .hint .icon{width:14px;height:14px;color:var(--text-faint)}
+</style></head><body>
+
+<div class="phone"><div class="screen surface-community">
+
+  <header class="appbar">
+    <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div class="appbar__title">본인인증</div>
+    <span style="width:24px"></span>
+  </header>
+
+  <div class="headline">
+    <h1><span class="light">휴대폰으로</span><br>본인인증</h1>
+  </div>
+
+  <div class="form">
+    <label class="field">
+      <span class="field__label">통신사</span>
+      <span class="select">
+        <input class="field__input" readonly value="SKT">
+      </span>
+    </label>
+
+    <label class="field">
+      <span class="field__label">이름</span>
+      <input class="field__input" placeholder="이름 (실명)">
+    </label>
+
+    <div class="field">
+      <span class="field__label">주민등록번호</span>
+      <div class="rrn">
+        <input class="field__input num rrn__front" inputmode="numeric" maxlength="6" placeholder="앞 6자리">
+        <span class="rrn__dash">-</span>
+        <input class="field__input num rrn__digit" inputmode="numeric" maxlength="1" placeholder="0" aria-label="뒷자리 첫 숫자">
+        <span class="rrn__mask" aria-hidden="true">••••••</span>
+      </div>
+    </div>
+
+    <label class="field">
+      <span class="field__label">휴대폰 번호</span>
+      <input class="field__input num" inputmode="numeric" placeholder="010-0000-0000">
+    </label>
+
+    <div class="field">
+      <span class="field__label">인증번호</span>
+      <div class="otp">
+        <div class="otp__field">
+          <input class="field__input num otp__input" inputmode="numeric" maxlength="6" placeholder="6자리 입력">
+          <span class="otp__timer num">02:47</span>
+        </div>
+        <button type="button" class="btn btn--secondary otp__btn">재전송</button>
+      </div>
+    </div>
+
+    <div class="hint">
+      <svg class="icon" viewBox="0 0 24 24">
+        <rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none"/>
+        <path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>인증번호 <b style="color:var(--text-body)">5회 실패 시 30분 잠금</b>돼요</span>
+    </div>
+  </div>
+
+  <div class="cta-bar">
+    <button class="btn btn--primary btn--block">인증하기</button>
+  </div>
+
+</div></div>
+
+</body></html>

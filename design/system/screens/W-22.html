@@ -1,0 +1,102 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — W-22 추가정산 납부(부원)</title>
+<!-- W-22 추가정산 납부: surface-money. 부족액·미납 표기에만 크림슨 절제 사용, 납부 CTA는 블루. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃 — 흰 카드 안의 key/value 요약 행(슬랩 전용 .slab__row 재사용 금지) */
+  .sum-row{display:flex;align-items:baseline;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border-subtle)}
+  .sum-row:last-child{border-bottom:none}
+  .sum-row .k{font-size:13.5px;color:var(--text-body)}
+  .sum-row .v{font-size:15px;font-weight:var(--weight-bold);color:var(--text-strong)}
+  .sum-row .v.is-danger{color:var(--color-danger-strong)}
+  .sum-row--total{margin-top:2px;padding-top:14px;border-top:1.5px solid var(--border-default);border-bottom:none}
+  .sum-row--total .k{font-size:14px;font-weight:var(--weight-semibold);color:var(--text-title)}
+  .sum-row--total .k small{display:block;font-size:11.5px;font-weight:var(--weight-medium);color:var(--text-muted);margin-top:2px}
+  .sum-row--total .v{font-size:20px;font-weight:var(--weight-extrabold);color:var(--color-primary);letter-spacing:var(--ls-display)}
+  /* 납부 수단 선택 행 */
+  .pay-row{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid var(--border-subtle);cursor:pointer}
+  .pay-row:last-child{border-bottom:none}
+  .pay-row__tile{width:38px;height:38px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .pay-row__tile .icon{width:20px;height:20px}
+  .pay-row__main{flex:1;min-width:0}
+  .pay-row__title{font-size:var(--fs-subtitle);font-weight:var(--weight-semibold);color:var(--text-title)}
+  .pay-row__sub{font-size:var(--fs-caption);color:var(--text-muted);margin-top:2px}
+  /* 미납 안내 — 크림슨 절제 사용 */
+  .notice{display:flex;gap:10px;align-items:flex-start;margin:16px 20px 0;padding:12px 14px;border-radius:var(--radius-md);background:var(--color-danger-soft);color:var(--color-danger-strong);font-size:12.5px;line-height:1.5}
+  .notice .icon{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+  .notice b{font-weight:var(--weight-bold);color:inherit}
+</style></head><body>
+  <div class="phone"><div class="screen surface-money">
+
+    <header class="appbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">추가 정산</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="headline">
+      <h1>부족분을<br><span class="light">추가 정산</span>해요</h1>
+      <div class="meta">
+        <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        납부 기한 <span class="num">7/3 23:59</span>
+        <span class="meta__dot"></span>
+        봄 시즌 킥오프
+      </div>
+    </div>
+
+    <!-- 추가 정산 요약 -->
+    <div class="card">
+      <div class="card__head">
+        <div class="card__title">추가 정산 요약</div>
+        <span class="chip chip--count num">35명 나눔</span>
+      </div>
+      <div style="margin-top:6px">
+        <div class="sum-row"><span class="k">모인 금액</span><span class="v num">1,664,000원</span></div>
+        <div class="sum-row"><span class="k">실지출</span><span class="v num">1,820,000원</span></div>
+        <div class="sum-row"><span class="k">부족액</span><span class="v num is-danger">−156,000원</span></div>
+        <div class="sum-row sum-row--total">
+          <span class="k">1인 추가<small>부족액 ÷ 35명 균등</small></span>
+          <span class="v num">+4,875원</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 납부 수단 -->
+    <div class="section-title">납부 수단</div>
+    <div class="card" style="margin-top:4px">
+      <label class="pay-row">
+        <span class="pay-row__tile" style="background:var(--color-primary-soft);color:var(--color-primary)">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="14.5" r="1.3" fill="currentColor"/></svg>
+        </span>
+        <span class="pay-row__main">
+          <span class="pay-row__title">포인트로 납부</span>
+          <span class="pay-row__sub">잔액 <span class="num">128,400P</span> · 즉시 처리</span>
+        </span>
+        <span class="radio"><input type="radio" name="pay" checked><span class="radio__dot"></span></span>
+      </label>
+      <label class="pay-row">
+        <span class="pay-row__tile" style="background:var(--surface-sunken);color:var(--text-body)">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 16V4m0 0l-4 4m4-4l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 16v3a1 1 0 001 1h12a1 1 0 001-1v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </span>
+        <span class="pay-row__main">
+          <span class="pay-row__title">카카오페이 충전 후 납부</span>
+          <span class="pay-row__sub">잔액 부족 시 <span class="num">4,875원</span> 충전</span>
+        </span>
+        <span class="radio"><input type="radio" name="pay"><span class="radio__dot"></span></span>
+      </label>
+    </div>
+
+    <!-- 미납 안내 (크림슨 절제 사용) -->
+    <div class="notice">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+      <span>기한 내 <b>미납 시</b> 프로필에 <b>미납요금</b>이 표시돼요.</span>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">1인 추가<br><b class="num">4,875원</b></div>
+      <button class="btn btn--primary">납부하기</button>
+    </div>
+
+  </div></div>
+</body></html>

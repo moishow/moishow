@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>모이쇼 — 모임 상세 (디자인 기준화면)</title>
+    <!--
+  디자인시스템 v2 기준화면(baseline).
+  잉크 에디토리얼 헤드라인 + 5단계 모금 스테퍼 + 블루 솔리드 슬랩.
+  상단 모임 정체성 행만 코랄(.identity), 정산 영역은 블루/잉크/민트.
+  컴포넌트 스타일은 전부 components.css 클래스에서 온다(인라인 CSS 없음).
+-->
+    <link rel="stylesheet" href="../tokens.css" />
+    <link rel="stylesheet" href="../components.css" />
+    <style>
+      body {
+        background: #faf9f5;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 14px;
+        padding: 24px 0;
+      }
+      .legend {
+        display: flex;
+        gap: 15px;
+        font-size: 11.5px;
+        color: var(--text-muted);
+      }
+      .legend span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .legend .sw {
+        width: 11px;
+        height: 11px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <div class="screen surface-money">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+          <div class="appbar__title">모임 상세</div>
+          <svg class="icon">
+            <circle cx="5" cy="12" r="1.6" fill="currentColor" />
+            <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+            <circle cx="19" cy="12" r="1.6" fill="currentColor" />
+          </svg>
+        </header>
+
+        <!-- 모임 정체성 행 — community 색 권한(코랄) 국소 적용 -->
+        <div class="identity">
+          <div class="identity__avatar">모디</div>
+          <div class="identity__name">
+            디자인동아리 모디
+            <span class="chip">총무 김산</span>
+          </div>
+        </div>
+
+        <div class="headline">
+          <h1>
+            봄 시즌 킥오프
+            <br />
+            <span class="light">정산</span>
+            진행 중
+          </h1>
+          <div class="meta">
+            <svg class="icon" viewBox="0 0 24 24">
+              <rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2" fill="none" />
+              <path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            6/30 19:00
+            <span class="meta__dot"></span>
+            성수동 글로우 스튜디오
+            <span class="meta__end">만남 종료</span>
+          </div>
+        </div>
+
+        <!-- 모금 스테퍼 -->
+        <div class="card">
+          <div class="card__head"><div class="card__title">모금 진행</div></div>
+          <div class="stepper">
+            <div class="step is-done">
+              <div class="step__node">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+              </div>
+              <div class="step__label">예치</div>
+            </div>
+            <div class="step is-done">
+              <div class="step__seg"></div>
+              <div class="step__node">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+              </div>
+              <div class="step__label">락</div>
+            </div>
+            <div class="step is-done">
+              <div class="step__seg"></div>
+              <div class="step__node">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+              </div>
+              <div class="step__label">동의</div>
+            </div>
+            <div class="step is-done">
+              <div class="step__seg"></div>
+              <div class="step__node">
+                <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+              </div>
+              <div class="step__label">출금</div>
+            </div>
+            <div class="step is-current">
+              <div class="step__seg"></div>
+              <div class="step__node">5</div>
+              <div class="step__label">정산</div>
+            </div>
+            <div class="step">
+              <div class="step__seg"></div>
+              <div class="step__node">6</div>
+              <div class="step__label">완료</div>
+            </div>
+          </div>
+          <div class="stepper-note">
+            지금
+            <b>총무가 영수증·잔액을 정산</b>
+            하는 단계예요
+          </div>
+        </div>
+
+        <!-- 블루 슬랩 -->
+        <div class="slab">
+          <div class="slab__label">총무 출금 완료 · 정산 마감까지</div>
+          <div class="slab__figure">
+            <span class="big num">08:24:13</span>
+            <span class="unit">남았어요</span>
+          </div>
+          <div class="slab__row">
+            <span class="k">출금액</span>
+            <span class="v num">1,820,000원</span>
+          </div>
+          <div class="avatars">
+            <div class="avatars__item">진</div>
+            <div class="avatars__item">산</div>
+            <div class="avatars__item">윤</div>
+            <div class="avatars__item">+</div>
+            <span class="avatars__more">락 시점 참여 35명 전원 동의 완료</span>
+          </div>
+          <div class="slab__note">
+            <svg class="icon" viewBox="0 0 24 24">
+              <rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none" />
+              <path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            <span>
+              총무가
+              <b>12시간 안에</b>
+              증빙·잔액 반납을 안 하면 신용등급 패널티가 자동 적용돼요.
+            </span>
+          </div>
+        </div>
+
+        <!-- 증빙 체크리스트 -->
+        <div class="card">
+          <div class="card__head">
+            <div class="card__title">증빙 체크리스트</div>
+            <span class="chip chip--count num">1 / 3</span>
+          </div>
+          <div class="checklist">
+            <div class="check-row is-checked">
+              <div class="check-row__left">
+                <div class="check-row__radio">
+                  <svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+                </div>
+                <span class="check-row__text">식대 영수증 · OCR 확인</span>
+              </div>
+              <span class="check-row__amount num">880,000원</span>
+            </div>
+            <div class="check-row">
+              <div class="check-row__left">
+                <div class="check-row__radio"></div>
+                <span class="check-row__text">교통·대절 영수증</span>
+              </div>
+              <span class="check-row__amount num is-pending">대기</span>
+            </div>
+            <div class="check-row">
+              <div class="check-row__left">
+                <div class="check-row__radio"></div>
+                <span class="check-row__text">장소 대관 영수증</span>
+              </div>
+              <span class="check-row__amount num is-pending">대기</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-bar">
+          <div class="cta-bar__meta">
+            내 예상 환급
+            <br />
+            <b class="num">12,300P</b>
+          </div>
+          <button class="btn btn--primary">정산 현황 자세히</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span>
+        <span class="sw" style="background: var(--color-warm)"></span>
+        코랄 = 모임 (상단만)
+      </span>
+      <span>
+        <span class="sw" style="background: var(--color-primary)"></span>
+        블루 = 신뢰·정산
+      </span>
+      <span>
+        <span class="sw" style="background: var(--color-success)"></span>
+        민트 = 완료
+      </span>
+    </div>
+  </body>
+</html>

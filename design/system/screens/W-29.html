@@ -1,0 +1,55 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* DM */
+  .dm-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-warm); flex-shrink: 0; }
+</style></head><body>
+      <div class="phone"><div class="screen surface-community">
+        <header class="appbar">
+          <div class="appbar__title" style="font-weight:var(--weight-bold)">DM</div>
+          <svg class="icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </header>
+        <div class="list" style="margin-top:4px">
+          <div class="list-row">
+            <div class="list-row__avatar" style="background:var(--color-warm)">김산</div>
+            <div class="list-row__body">
+              <div class="list-row__title">김산 (총무)</div>
+              <div class="list-row__sub">동의 요청 보냈어요. 10분 안에 눌러주세요!</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px"><span class="t-caption">방금</span><span class="dm-dot"></span></div>
+          </div>
+          <div class="list-row">
+            <div class="list-row__avatar" style="background:var(--color-primary)">이윤</div>
+            <div class="list-row__body">
+              <div class="list-row__title">이윤</div>
+              <div class="list-row__sub">환급 들어왔네요 ㅎㅎ 감사해요</div>
+            </div>
+            <span class="t-caption">1시간</span>
+          </div>
+          <div class="list-row">
+            <div class="list-row__avatar" style="background:var(--mint-600)">박서</div>
+            <div class="list-row__body">
+              <div class="list-row__title">박서진</div>
+              <div class="list-row__sub">다음 모임 장소 같이 정해요</div>
+            </div>
+            <span class="t-caption">어제</span>
+          </div>
+          <div class="list-row">
+            <div class="list-row__avatar" style="background:var(--gray-400)">정민</div>
+            <div class="list-row__body">
+              <div class="list-row__title">정민호</div>
+              <div class="list-row__sub">사진 잘 받았습니다</div>
+            </div>
+            <span class="t-caption">화요일</span>
+          </div>
+        </div>
+        <nav class="tabbar">
+          <div class="tabbar__item"><svg class="icon"><path d="M4 11l8-7 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>홈</div>
+          <div class="tabbar__item"><svg class="icon"><rect x="3" y="5" width="18" height="14" rx="2.4" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M5 17l4.5-4 3 2.2L16 11l3 3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>쇼</div>
+          <div class="tabbar__fab"><svg class="icon"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="tabbar__item is-active"><svg class="icon"><path d="M4 5.5h16v10H9l-4 3.2v-3.2H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>DM</div>
+          <div class="tabbar__item"><svg class="icon"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>마이</div>
+        </nav>
+      </div></div>
+</body></html>

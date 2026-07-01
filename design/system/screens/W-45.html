@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — CS 티켓 (W-45)</title>
+<!-- W-45 CS 티켓(웹): 좌 티켓 리스트 + 우 상세/답변. 중립 톤, 답변 등록은 primary. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:0}
+
+  .cs{display:grid;grid-template-columns:212px 1fr;min-height:520px}
+  .cs__list{border-right:1px solid var(--border-subtle);background:var(--gray-25)}
+  .cs__lhead{padding:13px 16px;font-size:var(--fs-caption);font-weight:var(--weight-semibold);color:var(--text-muted);border-bottom:1px solid var(--border-subtle)}
+  .cs__item{padding:13px 16px;border-bottom:1px solid var(--border-subtle);cursor:pointer;position:relative}
+  .cs__item.is-active{background:var(--color-primary-soft)}
+  .cs__item.is-active::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--color-primary)}
+  .cs__it-top{display:flex;align-items:center;gap:6px}
+  .cs__dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .cs__dot--open{background:var(--color-primary)}
+  .cs__dot--wait{background:var(--amber-500)}
+  .cs__dot--done{background:var(--color-success)}
+  .cs__it-t{font-size:13px;font-weight:var(--weight-semibold);color:var(--text-title);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .cs__it-s{font-size:11px;color:var(--text-muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .cs__detail{padding:18px 20px}
+  .cs__d-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+  .cs__d-title{font-size:var(--fs-title);font-weight:var(--weight-bold);color:var(--text-strong);letter-spacing:var(--ls-title)}
+  .cs__d-sub{font-size:var(--fs-caption);color:var(--text-muted);margin-top:4px}
+  .cs__d-head .badge{margin-left:auto;flex-shrink:0}
+  .cs__msg{background:var(--surface-sunken);border-radius:var(--radius-md);padding:13px 15px;font-size:var(--fs-body);color:var(--text-body);line-height:1.6}
+  .cs__msg .icon{width:15px;height:15px;color:var(--text-faint);vertical-align:-2px}
+  .cs__ctx{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .cs__reply-label{font-size:var(--fs-caption);font-weight:var(--weight-semibold);color:var(--text-muted);margin:18px 0 7px}
+  .cs__ta{width:100%;box-sizing:border-box;font-family:inherit;font-size:var(--fs-body);color:var(--text-strong);background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:12px 14px;min-height:96px;resize:vertical;line-height:1.55}
+  .cs__ta:focus{outline:none;border-color:var(--border-focus);box-shadow:0 0 0 3px var(--color-primary-soft)}
+  .cs__ta::placeholder{color:var(--text-faint)}
+  .cs__acts{display:flex;gap:8px;margin-top:13px}
+  .cs__acts .btn:last-child{margin-left:auto}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>CS 티켓</b>
+    <span class="admin-me">미처리 <span class="num" style="color:var(--color-primary);font-weight:700">6</span>건<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+    <div class="cs">
+
+      <div class="cs__list">
+        <div class="cs__lhead">티켓 <span class="num">18</span>건</div>
+        <div class="cs__item is-active">
+          <div class="cs__it-top"><span class="cs__dot cs__dot--open"></span><span class="cs__it-t">환급이 안 들어와요</span></div>
+          <div class="cs__it-s">이서윤 · 5분 전</div>
+        </div>
+        <div class="cs__item">
+          <div class="cs__it-top"><span class="cs__dot cs__dot--wait"></span><span class="cs__it-t">충전 금액이 다릅니다</span></div>
+          <div class="cs__it-s">박도현 · 22분 전 · 보류</div>
+        </div>
+        <div class="cs__item">
+          <div class="cs__it-top"><span class="cs__dot cs__dot--open"></span><span class="cs__it-t">계좌 인증 오류</span></div>
+          <div class="cs__it-s">최유나 · 1시간 전</div>
+        </div>
+        <div class="cs__item">
+          <div class="cs__it-top"><span class="cs__dot cs__dot--done"></span><span class="cs__it-t">모임 탈퇴 문의</span></div>
+          <div class="cs__it-s">정하람 · 3시간 전 · 완료</div>
+        </div>
+        <div class="cs__item">
+          <div class="cs__it-top"><span class="cs__dot cs__dot--done"></span><span class="cs__it-t">알림이 안 와요</span></div>
+          <div class="cs__it-s">윤세아 · 어제 · 완료</div>
+        </div>
+      </div>
+
+      <div class="cs__detail">
+        <div class="cs__d-head">
+          <div>
+            <div class="cs__d-title">환급이 안 들어와요</div>
+            <div class="cs__d-sub">이서윤 · 디자인동아리 모디 · <span class="num">#TK-20260630-041</span></div>
+          </div>
+          <span class="badge badge--progress">답변 대기</span>
+        </div>
+
+        <div class="cs__msg">
+          정산 완료됐다고 알림 왔는데 <b style="color:var(--text-strong)">예상 환급 12,300P</b>가 아직 잔액에 안 보여요. 만남은 6/30 저녁이었고 총무님이 출금까지 하신 것 같습니다. 언제쯤 반영되나요?
+        </div>
+        <div class="cs__ctx">
+          <span class="chip--tag">정산 · 3차</span>
+          <span class="chip--tag">KYC 완료</span>
+          <span class="chip--tag num">환급 12,300P</span>
+        </div>
+
+        <div class="cs__reply-label">답변 작성</div>
+        <textarea class="cs__ta" placeholder="답변 내용을 입력하세요. 정산 반영 시점과 원장 확인 결과를 안내해 주세요."></textarea>
+        <div class="cs__acts">
+          <button class="btn btn--ghost btn--sm">보류</button>
+          <button class="btn btn--primary btn--sm">답변 등록</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body></html>

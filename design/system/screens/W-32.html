@@ -1,0 +1,52 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+/* W-32 고객센터 문의 — 화면 고유 레이아웃만 */
+.field textarea.field__input{min-height:130px;resize:none;line-height:var(--lh-normal)}
+.attach-btn{justify-content:center;color:var(--text-body)}
+.attach-btn .icon{color:var(--text-muted)}
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+
+    <header class="appbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">문의하기</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="headline">
+      <h1><span class="light">어떤 점이</span><br>불편하셨나요</h1>
+    </div>
+
+    <div class="field" style="margin-top:18px">
+      <label class="field__label">문의 유형</label>
+      <div class="select">
+        <select class="field__input">
+          <option>결제 문제</option>
+          <option>환불 요청</option>
+          <option>앱 버그·오류</option>
+          <option>기타 문의</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field__label">내용</label>
+      <textarea class="field__input" placeholder="언제, 어떤 상황에서 문제가 생겼는지 적어주시면 더 빠르게 도와드릴 수 있어요."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="field__label">첨부 (선택)</label>
+      <button class="btn btn--ghost btn--block attach-btn">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M4 18l5-5 3.2 3.2L16 12l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        스크린샷 첨부
+      </button>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">보통 <b class="num">1</b>영업일 내 답변</div>
+      <button class="btn btn--primary">접수하기</button>
+    </div>
+
+  </div></div>
+</body></html>

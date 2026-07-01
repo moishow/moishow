@@ -1,0 +1,73 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — W-24 현금화(cashout)</title>
+<!-- W-24 현금화: surface-money. 블루 슬랩 잔액 + 금액 입력 + 카카오페이 출금 레일. 수수료 0원(민트). CTA 블루. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃 */
+  .quick{display:flex;gap:8px;margin:10px 20px 0}
+  .quick .chip--tag{cursor:pointer}
+  .quick .chip--tag.is-active{background:var(--color-primary-soft);color:var(--color-primary);font-weight:var(--weight-bold)}
+  /* 수수료 0원 안내 — 긍정 정보(민트) */
+  .notice{display:flex;gap:10px;align-items:flex-start;margin:16px 20px 0;padding:12px 14px;border-radius:var(--radius-md);background:var(--color-success-soft);color:var(--color-success-strong);font-size:12.5px;line-height:1.5}
+  .notice .icon{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+  .notice b{font-weight:var(--weight-bold);color:inherit}
+</style></head><body>
+  <div class="phone"><div class="screen surface-money">
+
+    <header class="appbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">현금화</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="headline">
+      <h1>포인트를<br><span class="light">현금으로</span> 바꿔요</h1>
+    </div>
+
+    <!-- 포인트 잔액 슬랩 -->
+    <div class="slab">
+      <div class="slab__label">현금화 가능 포인트</div>
+      <div class="slab__figure"><span class="big num">128,400</span><span class="unit">P</span></div>
+      <div class="slab__row"><span class="k">이번 달 현금화</span><span class="v num">0원</span></div>
+    </div>
+
+    <!-- 현금화 금액 -->
+    <label class="field field--amount" style="margin-top:18px">
+      <span class="field__label">현금화 금액</span>
+      <input class="field__input num" inputmode="numeric" value="100,000">
+    </label>
+    <div class="quick">
+      <span class="chip chip--tag">5만</span>
+      <span class="chip chip--tag is-active">10만</span>
+      <span class="chip chip--tag">전액</span>
+    </div>
+
+    <!-- 출금 계좌 -->
+    <div class="section-title">출금 계좌</div>
+    <div class="list" style="margin-top:2px">
+      <div class="list-row">
+        <div class="list-row__avatar" style="background:var(--surface-sunken);color:var(--text-body)">
+          <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/><circle cx="16.5" cy="14.5" r="1.3" fill="currentColor"/></svg>
+        </div>
+        <div class="list-row__body">
+          <div class="list-row__title">카카오페이</div>
+          <div class="list-row__sub">카카오페이 머니로 즉시 지급</div>
+        </div>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+    </div>
+
+    <!-- 수수료 0원 안내 (민트) -->
+    <div class="notice">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span><b>현금화 수수료 0원</b> · 신청 즉시 지급돼요.</span>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">실지급액<br><b class="num">100,000원</b></div>
+      <button class="btn btn--primary">현금화하기</button>
+    </div>
+
+  </div></div>
+</body></html>

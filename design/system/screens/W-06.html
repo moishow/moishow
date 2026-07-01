@@ -1,0 +1,80 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 모임 탐색 (W-06)</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃만 (컴포넌트 복제 아님) */
+  .appbar__title--lg{font-size:var(--fs-heading);font-weight:var(--weight-bold);color:var(--text-strong);letter-spacing:var(--ls-title)}
+  .chips-row{display:flex;gap:8px;padding:14px 20px 4px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .chips-row::-webkit-scrollbar{display:none}
+  .chips-row{scrollbar-width:none}
+  .chips-row .chip{white-space:nowrap;flex-shrink:0;padding:7px 14px;font-size:var(--fs-caption)}
+  .chip--on{background:var(--color-warm);color:var(--color-warm-on);box-shadow:var(--glow-warm)}
+</style></head><body>
+
+  <div class="phone"><div class="screen surface-community">
+
+    <header class="appbar">
+      <div class="appbar__title--lg">탐색</div>
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </header>
+
+    <!-- 관심사 태그 칩 가로줄 -->
+    <div class="chips-row">
+      <span class="chip chip--on">운동</span>
+      <span class="chip">스터디</span>
+      <span class="chip">취미</span>
+      <span class="chip">봉사</span>
+      <span class="chip">문화</span>
+    </div>
+
+    <div class="section-title">지금 뜨는 모임</div>
+
+    <!-- 클럽 카드 리스트 -->
+    <div class="list">
+      <div class="list-row">
+        <div class="list-row__avatar" style="background:var(--color-primary)">러닝</div>
+        <div class="list-row__body">
+          <div class="list-row__title">새벽 러닝크루 <span class="chip">운동</span></div>
+          <div class="list-row__sub">멤버 <span class="num">128</span> · 어제 활동</div>
+        </div>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="list-row">
+        <div class="list-row__avatar" style="background:var(--color-warm)">코드</div>
+        <div class="list-row__body">
+          <div class="list-row__title">코드리뷰 스터디 <span class="chip">스터디</span></div>
+          <div class="list-row__sub">멤버 <span class="num">42</span> · 방금 활동</div>
+        </div>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="list-row">
+        <div class="list-row__avatar" style="background:var(--mint-600)">필름</div>
+        <div class="list-row__body">
+          <div class="list-row__title">필름카메라 산책 <span class="chip">취미</span></div>
+          <div class="list-row__sub">멤버 <span class="num">76</span> · 3일 전 활동</div>
+        </div>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="list-row">
+        <div class="list-row__avatar" style="background:var(--amber-500)">봉사</div>
+        <div class="list-row__body">
+          <div class="list-row__title">주말 연탄봉사대 <span class="chip">봉사</span></div>
+          <div class="list-row__sub">멤버 <span class="num">31</span> · 1주 전 활동</div>
+        </div>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+    </div>
+
+    <!-- 하단 탭바 (4탭: 홈 · 쇼 | + | DM · 마이) -->
+    <nav class="tabbar">
+      <div class="tabbar__item"><svg class="icon" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>홈</div>
+      <div class="tabbar__item is-active"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" fill="none"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>쇼</div>
+      <div class="tabbar__fab"><svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="tabbar__item"><svg class="icon" viewBox="0 0 24 24"><path d="M5 5h14a1 1 0 011 1v9a1 1 0 01-1 1H9l-4 3V6a1 1 0 011-1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>DM</div>
+      <div class="tabbar__item"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>마이</div>
+    </nav>
+
+  </div></div>
+
+</body></html>

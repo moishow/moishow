@@ -1,0 +1,50 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 집계 행 (동의 결과·정산) */
+  .stat-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #F1F3F8; }
+  .stat-row:last-child { border-bottom: none; }
+  .stat-row__k { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--text-body); }
+  .stat-row__pin { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .stat-row__pin .icon { width: 13px; height: 13px; }
+  .stat-row__v { font-size: 14px; font-weight: var(--weight-bold); color: var(--text-strong); font-feature-settings: var(--font-feature-numeric); }
+</style></head><body>
+      <div class="phone"><div class="screen surface-money">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <div class="appbar__title">동의 마감</div>
+          <span style="width:24px"></span>
+        </header>
+        <div class="headline"><h1>동의창이 닫혔어요<br><span class="light">정산 대상</span> 확정</h1></div>
+        <div class="card">
+          <div class="card__head"><div class="card__title">동의 현황</div><span class="chip chip--count num">35명</span></div>
+          <div class="checklist" style="margin-top:2px">
+            <div class="stat-row">
+              <span class="stat-row__k"><span class="stat-row__pin" style="background:var(--color-success-soft);color:var(--color-success-strong)"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>동의 · 정산 참여 <b class="num" style="color:var(--text-title)">32명</b></span>
+              <span class="stat-row__v">1,664,000원</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-row__k"><span class="stat-row__pin" style="background:var(--color-danger-soft);color:var(--color-danger-strong)"><svg class="icon"><path d="M12 4l9 16H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>노쇼 <b class="num" style="color:var(--text-title)">3명</b></span>
+              <span class="stat-row__v" style="color:var(--color-danger-strong)">페널티 −31,200원</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-row__k"><span class="stat-row__pin" style="background:var(--surface-sunken);color:var(--text-muted)"><svg class="icon"><path d="M9 14l-4-4 4-4M5 10h9a5 5 0 015 5v3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>노쇼 환급(예치−페널티)</span>
+              <span class="stat-row__v">124,800원</span>
+            </div>
+          </div>
+        </div>
+        <div class="slab">
+          <div class="slab__label">페널티 적립금 · 모임 경비</div>
+          <div class="slab__figure"><span class="big num">31,200</span><span class="unit">P</span></div>
+          <div class="slab__note">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>노쇼 페널티는 모금에 남아 <b>이 모임을 위해서만</b> 써요. 주최자 개인 출금은 안 돼요.</span>
+          </div>
+        </div>
+        <div class="cta-bar">
+          <div class="cta-bar__meta">정산 대상<br><b class="num">32명</b></div>
+          <button class="btn btn--primary">총무 출금하기</button>
+        </div>
+      </div></div>
+</body></html>

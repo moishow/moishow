@@ -1,0 +1,136 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — 대시보드 (W-40)</title>
+<!-- W-40 어드민 대시보드(웹): KPI 4 + 처리 대기 큐. 돈 관련 지표는 블루, 미납은 크림슨. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:18px 22px 24px}
+  .admin-body .list{margin:0}
+  .admin-body .section-title{padding:6px 0 8px;font-size:var(--fs-subtitle)}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .kpi{background:var(--surface-sunken);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:14px 13px 15px}
+  .kpi__top{display:flex;align-items:center;gap:6px;color:var(--text-muted);font-size:var(--fs-caption);font-weight:var(--weight-semibold)}
+  .kpi__top .icon{width:15px;height:15px;color:var(--text-faint)}
+  .kpi__num{margin-top:11px;font-size:27px;font-weight:var(--weight-extrabold);letter-spacing:var(--ls-display);color:var(--text-strong);line-height:1}
+  .kpi__num .u{font-size:13px;font-weight:var(--weight-semibold);color:var(--text-muted);margin-left:3px}
+  .kpi--money .kpi__num{color:var(--color-primary)}
+  .kpi--danger .kpi__num{color:var(--color-danger-strong)}
+  .kpi__delta{margin-top:7px;font-size:11px;font-weight:var(--weight-semibold);color:var(--text-muted)}
+
+  .q-row{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid var(--border-subtle)}
+  .q-row:last-child{border-bottom:none}
+  .q-ic{width:38px;height:38px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .q-ic .icon{width:19px;height:19px}
+  .q-ic--blue{background:var(--color-primary-soft);color:var(--color-primary)}
+  .q-ic--neutral{background:var(--surface-sunken);color:var(--text-muted)}
+  .q-ic--danger{background:var(--color-danger-soft);color:var(--color-danger-strong)}
+  .q-body{flex:1;min-width:0}
+  .q-title{font-size:var(--fs-subtitle);font-weight:var(--weight-semibold);color:var(--text-title)}
+  .q-sub{font-size:var(--fs-caption);color:var(--text-muted);margin-top:2px}
+  .q-time{font-size:11px;color:var(--text-faint);font-weight:var(--weight-medium)}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>운영 대시보드</b>
+    <span class="admin-me">운영자 김산 · 슈퍼<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+
+    <div class="kpi-grid">
+      <div class="kpi kpi--money">
+        <div class="kpi__top">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M4 12l6 6L20 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          오늘 정산
+        </div>
+        <div class="kpi__num num">12<span class="u">건</span></div>
+        <div class="kpi__delta">완료액 <span class="num">4,820,000원</span></div>
+      </div>
+      <div class="kpi kpi--money">
+        <div class="kpi__top">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          출금 대기
+        </div>
+        <div class="kpi__num num">5<span class="u">건</span></div>
+        <div class="kpi__delta">대기액 <span class="num">1,820,000원</span></div>
+      </div>
+      <div class="kpi kpi--danger">
+        <div class="kpi__top">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 4l9 16H3L12 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg>
+          미납
+        </div>
+        <div class="kpi__num num">3<span class="u">건</span></div>
+        <div class="kpi__delta">패널티 임박 <span class="num">1</span></div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__top">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5 2 6H4c.5-1 2-2 2-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M10 19a2 2 0 004 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          신고
+        </div>
+        <div class="kpi__num num">7<span class="u">건</span></div>
+        <div class="kpi__delta">신규 <span class="num">2</span></div>
+      </div>
+    </div>
+
+    <div class="section-title">처리 대기 큐</div>
+    <div class="card">
+      <div class="q-row">
+        <div class="q-ic q-ic--blue"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+        <div class="q-body">
+          <div class="q-title">출금 승인 대기 <span class="badge badge--progress">정산</span></div>
+          <div class="q-sub">디자인동아리 모디 · 봄 시즌 킥오프 · <span class="num">1,820,000원</span></div>
+        </div>
+        <span class="q-time">2분 전</span>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="q-row">
+        <div class="q-ic q-ic--neutral"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="q-body">
+          <div class="q-title">KYC 승인 대기 <span class="badge badge--waiting">개인</span></div>
+          <div class="q-sub">이서윤 · 실명·계좌 인증 요청</div>
+        </div>
+        <span class="q-time">3분 전</span>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="q-row">
+        <div class="q-ic q-ic--neutral"><svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="16.5" cy="10" r="2.4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3.5 19c0-3 2.4-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg></div>
+        <div class="q-body">
+          <div class="q-title">모임 개설 심사 <span class="badge badge--ended">신규</span></div>
+          <div class="q-sub">수요풋살 클럽 · 12명 · 구장 대관</div>
+        </div>
+        <span class="q-time">12분 전</span>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="q-row">
+        <div class="q-ic q-ic--danger"><svg class="icon" viewBox="0 0 24 24"><path d="M12 4l9 16H3L12 4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></svg></div>
+        <div class="q-body">
+          <div class="q-title">신고 검토 <span class="badge badge--danger">신고 <span class="num">4</span></span></div>
+          <div class="q-sub">게시글 · "환급 언제 들어오나요" 외 1건</div>
+        </div>
+        <span class="q-time">34분 전</span>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="q-row">
+        <div class="q-ic q-ic--danger"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2.4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 10h18" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="q-body">
+          <div class="q-title">충전 대사 미매칭 <span class="badge badge--danger">미매칭</span></div>
+          <div class="q-sub">partner_order_id 8842 · <span class="num">30,000원</span></div>
+        </div>
+        <span class="q-time">1시간 전</span>
+        <svg class="icon" style="color:var(--text-faint)" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

@@ -1,0 +1,52 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 만남 동의 (10분창) — 투표 버튼 쌍 */
+  .vote-grid { display: flex; gap: 10px; }
+  .vote-grid .btn { flex: 1; }
+  .btn--quiet { background: var(--surface-sunken); color: var(--text-body); box-shadow: none; }
+  .btn--quiet:hover { background: var(--gray-100); }
+  /* 카운트다운 강조 점 */
+  .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-warning); display: inline-block; box-shadow: 0 0 0 0 rgba(255,167,34,.5); animation: pulse 1.6s var(--ease-standard) infinite; }
+  @keyframes pulse { 70% { box-shadow: 0 0 0 7px rgba(255,167,34,0); } 100% { box-shadow: 0 0 0 0 rgba(255,167,34,0); } }
+  @media (prefers-reduced-motion: reduce) { .pulse-dot { animation: none; } }
+</style></head><body>
+      <div class="phone"><div class="screen surface-money" style="padding-bottom:96px">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <div class="appbar__title">만남 동의</div>
+          <span style="width:24px"></span>
+        </header>
+        <div class="headline">
+          <h1>총무가 정산<br><span class="light">동의</span>를 요청했어요</h1>
+          <div class="meta"><span class="pulse-dot"></span>지금 동의하지 않으면 노쇼로 처리돼요</div>
+        </div>
+        <div class="slab">
+          <div class="slab__label">동의 마감까지</div>
+          <div class="slab__figure"><span class="big num">09:42</span><span class="unit">남음</span></div>
+          <div class="slab__row"><span class="k">내 예치금</span><span class="v num">52,000P</span></div>
+          <div class="avatars">
+            <div class="avatars__item">진</div><div class="avatars__item">윤</div><div class="avatars__item">서</div><div class="avatars__item">+</div>
+            <span class="avatars__more">28 / 35명 동의 완료</span>
+          </div>
+          <div class="slab__note">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>10분 안에 동의를 안 누르면 <b>노쇼</b> — 예치금의 <b>20%(10,400P)</b>가 페널티로 차감돼요.</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__title">동의하면</div></div>
+          <div class="checklist">
+            <div class="check-row is-checked"><div class="check-row__left"><div class="check-row__radio"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="check-row__text">정산 대상에 포함돼요</span></div></div>
+            <div class="check-row is-checked"><div class="check-row__left"><div class="check-row__radio"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><span class="check-row__text">차수 종료 후 차액을 환급받아요</span></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:13px 20px 18px;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-top:1px solid var(--border-subtle)">
+          <div class="vote-grid">
+            <button class="btn btn--quiet">지금 못 가요 · 노쇼</button>
+            <button class="btn btn--primary">동의하고 참여</button>
+          </div>
+        </div>
+      </div></div>
+</body></html>

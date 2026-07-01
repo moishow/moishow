@@ -1,0 +1,51 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  .balance { margin: 12px 20px 0; }
+  /* 미납요금 카드 (마이/프로필) */
+  .due { margin: 14px 20px 0; background: var(--color-danger-soft); border: 1px solid var(--crimson-100); border-radius: var(--radius-lg); padding: 14px 16px; display: flex; align-items: center; gap: 12px; }
+  .due__ic { width: 38px; height: 38px; border-radius: var(--radius-md); background: var(--color-danger); color: var(--white); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .due__ic .icon { width: 20px; height: 20px; }
+  .due__t { font-size: 13px; font-weight: var(--weight-bold); color: var(--color-danger-strong); }
+  .due__d { font-size: var(--fs-caption); color: var(--crimson-700); margin-top: 2px; }
+  .due__amt { margin-left: auto; font-size: var(--fs-title); font-weight: var(--weight-extrabold); color: var(--color-danger); font-feature-settings: var(--font-feature-numeric); }
+</style></head><body>
+      <div class="phone"><div class="screen surface-money">
+        <header class="appbar">
+          <div class="appbar__title" style="font-weight:var(--weight-bold)">마이</div>
+          <svg class="icon"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/><path d="M19 12a7 7 0 00-.1-1l2-1.5-2-3.4-2.3 1a7 7 0 00-1.7-1l-.3-2.5H10.4l-.3 2.5a7 7 0 00-1.7 1l-2.3-1-2 3.4 2 1.5a7 7 0 000 2l-2 1.5 2 3.4 2.3-1a7 7 0 001.7 1l.3 2.5h3.2l.3-2.5a7 7 0 001.7-1l2.3 1 2-3.4-2-1.5a7 7 0 00.1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" fill="none"/></svg>
+        </header>
+        <div class="identity" style="padding-top:12px">
+          <div class="identity__avatar" style="background:var(--gray-700);box-shadow:none">김산</div>
+          <div class="identity__name">김산<br><span class="badge badge--progress" style="margin-top:3px"><svg class="icon icon--sm" style="width:12px;height:12px"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="2" fill="none"/></svg>신용등급 A · 우수</span></div>
+        </div>
+        <div class="slab balance">
+          <div class="slab__label">내 포인트 잔액</div>
+          <div class="slab__figure"><span class="big num">128,400</span><span class="unit">P</span></div>
+          <div class="slab__row"><span class="k">충전 · 현금화 수수료</span><span class="v">0원</span></div>
+        </div>
+        <div style="display:flex;gap:10px;margin:12px 20px 0">
+          <button class="btn btn--primary" style="flex:1">충전</button>
+          <button class="btn btn--secondary" style="flex:1">현금화</button>
+        </div>
+        <div class="due">
+          <div class="due__ic"><svg class="icon"><path d="M12 4l9 16H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v4M12 17v.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div><div class="due__t">미납요금 1건</div><div class="due__d">수요풋살 클럽 · 추가 정산</div></div>
+          <span class="due__amt num">4,875원</span>
+        </div>
+        <div class="section-title">최근 거래내역</div>
+        <div class="list" style="margin-top:0">
+          <div class="list-row"><div class="list-row__avatar" style="background:var(--mint-600);width:36px;height:36px"><svg class="icon icon--sm"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">정산 환급 · 봄 시즌 킥오프</div><div class="list-row__sub">6/30 21:10</div></div><span class="list-row__amount num" style="color:var(--color-success-strong)">+12,300P</span></div>
+          <div class="list-row"><div class="list-row__avatar" style="background:var(--color-primary);width:36px;height:36px"><svg class="icon icon--sm"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">예치 · 봄 시즌 킥오프</div><div class="list-row__sub">6/24 10:02</div></div><span class="list-row__amount num">−52,000P</span></div>
+          <div class="list-row"><div class="list-row__avatar" style="background:var(--gray-500);width:36px;height:36px"><svg class="icon icon--sm"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">충전 · 카카오페이</div><div class="list-row__sub">6/24 09:58 · 수수료 0원</div></div><span class="list-row__amount num">+100,000P</span></div>
+        </div>
+        <nav class="tabbar">
+          <div class="tabbar__item"><svg class="icon"><path d="M4 11l8-7 8 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>홈</div>
+          <div class="tabbar__item"><svg class="icon"><rect x="3" y="5" width="18" height="14" rx="2.4" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="8.5" cy="10" r="1.6" fill="currentColor"/><path d="M5 17l4.5-4 3 2.2L16 11l3 3.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>쇼</div>
+          <div class="tabbar__fab"><svg class="icon"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="tabbar__item"><svg class="icon"><path d="M4 5.5h16v10H9l-4 3.2v-3.2H4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>DM</div>
+          <div class="tabbar__item is-active"><svg class="icon"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>마이</div>
+        </nav>
+      </div></div>
+</body></html>

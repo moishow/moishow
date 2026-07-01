@@ -1,0 +1,109 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 클럽 상세 (W-07)</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃만 */
+  .cover{height:132px;margin:6px 20px 0;border-radius:var(--radius-xl);
+    background:linear-gradient(135deg,var(--coral-100),var(--coral-50) 70%);
+    position:relative;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .cover__blob{position:absolute;width:150px;height:150px;border-radius:50%;
+    background:var(--coral-300);opacity:.5;right:-36px;top:-40px}
+  .cover__tag{position:absolute;left:14px;bottom:12px;background:var(--white);color:var(--color-warm-strong);box-shadow:var(--shadow-xs)}
+  .intro{padding:12px 20px 2px}
+  .budget-row{display:flex;align-items:center;justify-content:space-between;
+    padding:11px 0;border-bottom:1px solid var(--border-subtle)}
+  .budget-row:last-child{border-bottom:none}
+  .budget-row__k{font-size:13.5px;color:var(--text-body)}
+  .budget-row__v{font-size:13.5px;font-weight:var(--weight-bold);color:var(--text-strong)}
+  .budget-total{display:flex;align-items:center;justify-content:space-between;
+    margin-top:12px;padding-top:13px;border-top:1.5px solid var(--border-default)}
+  .budget-total__k{font-size:var(--fs-body);font-weight:var(--weight-bold);color:var(--text-title)}
+  .budget-total__v{font-size:var(--fs-title);font-weight:var(--weight-extrabold);color:var(--text-strong)}
+  .member-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+  .member-row__label{font-size:13.5px;color:var(--text-body)}
+  .activity{margin-top:14px;padding-top:14px;border-top:1px solid var(--border-subtle);
+    display:flex;align-items:center;gap:10px}
+  .activity__dot{width:8px;height:8px;border-radius:50%;background:var(--color-success);flex-shrink:0}
+  .activity__text{font-size:13px;color:var(--text-muted)}
+</style></head><body>
+
+  <div class="phone"><div class="screen surface-community">
+
+    <header class="appbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">클럽 상세</div>
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>
+    </header>
+
+    <!-- 커버 영역 -->
+    <div class="cover">
+      <div class="cover__blob"></div>
+      <span class="chip cover__tag">스터디</span>
+    </div>
+
+    <!-- 클럽 정체성 (코랄 국소 허용) -->
+    <div class="identity" style="padding-top:14px">
+      <div class="identity__avatar">코드</div>
+      <div class="identity__name">
+        코드리뷰 스터디
+        <span class="chip">총무 김산</span>
+      </div>
+    </div>
+
+    <!-- 소개 문단 -->
+    <p class="t-body intro">매주 수요일, 서로의 코드를 함께 읽고 리뷰하는 개발자 모임이에요. 회비는 스터디룸 대관과 간식에만 쓰이고, 남은 금액은 전부 균등 환급됩니다.</p>
+
+    <!-- 안심예산안 프리뷰 (community 화면 · 금액은 잉크 num, 슬랩·코랄 금지) -->
+    <div class="card">
+      <div class="card__head">
+        <div class="card__title">안심예산안 프리뷰</div>
+        <span class="badge badge--waiting">가입 전 공개</span>
+      </div>
+      <div style="margin-top:8px">
+        <div class="budget-row">
+          <span class="budget-row__k">스터디룸 대관 (3시간)</span>
+          <span class="budget-row__v num">60,000원</span>
+        </div>
+        <div class="budget-row">
+          <span class="budget-row__k">음료·간식</span>
+          <span class="budget-row__v num">24,000원</span>
+        </div>
+        <div class="budget-row">
+          <span class="budget-row__k">예비비</span>
+          <span class="budget-row__v num">6,000원</span>
+        </div>
+      </div>
+      <div class="budget-total">
+        <span class="budget-total__k">1인 예상 회비</span>
+        <span class="budget-total__v num">15,000원</span>
+      </div>
+    </div>
+
+    <!-- 멤버 / 활동 -->
+    <div class="card">
+      <div class="card__head"><div class="card__title">멤버 · 활동</div></div>
+      <div class="member-row">
+        <div class="avatars">
+          <div class="avatars__item" style="background:var(--color-warm)">진</div>
+          <div class="avatars__item" style="background:var(--color-primary)">산</div>
+          <div class="avatars__item" style="background:var(--mint-600)">윤</div>
+          <div class="avatars__item">지</div>
+          <span class="avatars__more">함께하는 멤버 <span class="num">42</span>명</span>
+        </div>
+      </div>
+      <div class="activity">
+        <span class="activity__dot"></span>
+        <span class="activity__text">방금 <b style="color:var(--text-body)">주간 리뷰 정산</b>이 완료됐어요</span>
+      </div>
+    </div>
+
+    <!-- 하단 CTA: 가입 신청은 돈 이동이 아니므로 코랄(btn--warm) -->
+    <div class="cta-bar">
+      <div class="cta-bar__meta">멤버 <b class="num">42</b>명 · 승인제</div>
+      <button class="btn btn--warm">가입 신청</button>
+    </div>
+
+  </div></div>
+
+</body></html>

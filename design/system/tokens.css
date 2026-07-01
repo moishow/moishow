@@ -1,0 +1,332 @@
+/* ============================================================
+   모이쇼 디자인시스템 v2 — Design Tokens (단일 통합 파일)
+   "신뢰는 구조로, 친근함은 표면으로"
+
+   v1 대비 변경:
+   · 네온 퍼플(#8C52FF) 액센트 폐기 — '파티 앱' 신호로 신뢰와 충돌
+   · 코랄 #FF6B5C 신설 — 모임 온기 전용 액센트(--color-warm)
+   · 위험색을 #FF4B4B → 크림슨 #F0384B 로 분리 (따뜻함과 의미 충돌 제거)
+   · 블루(신뢰·정산) / 잉크(금액) / 민트(완료)는 그대로 유지
+
+   >> 색 출입 권한 규칙(Color Permission) — 이 파일의 핵심
+     같은 팔레트지만 화면 종류가 색 사용권을 통제한다.
+     · money 화면(정산·금액·출금): 코랄·크림슨 진입 금지. 블루/잉크/민트만.
+     · community 화면(모임·온보딩): 코랄 액센트 풀가동.
+     하단 .surface-money / .surface-community 컨벤션 클래스로 강제.
+   ============================================================ */
+
+:root {
+  /* ============================================================
+     1. PRIMITIVE PALETTE
+     ============================================================ */
+
+  /* ---------- 모이쇼 블루 — 신뢰·정산의 주인공 ----------
+     버튼 / 에스크로 스테퍼 / 블루 슬랩 / 핵심 링크. */
+  --moisho-blue-50:  #EEF2FF;
+  --moisho-blue-100: #DFE6FF;
+  --moisho-blue-200: #BECCFF;
+  --moisho-blue-300: #94A9FF;
+  --moisho-blue-400: #6781FF;
+  --moisho-blue-500: #3B5CFF;  /* ← 핵심 브랜드 컬러 */
+  --moisho-blue-600: #2E47E6;
+  --moisho-blue-700: #2438B8;
+  --moisho-blue-800: #1E2E8F;
+  --moisho-blue-900: #1A2870;
+
+  /* ---------- 코랄 — 모임 온기 전용 액센트 (v2 신설) ----------
+     모임 정체성 행 / 가입 CTA / 카테고리 칩 / 마스코트.
+     >> money 화면에는 절대 들어오지 않는다. */
+  --coral-50:   #FFF0EE;   /* soft 배경 */
+  --coral-100:  #FFD9D3;
+  --coral-300:  #FF9D92;
+  --coral-500:  #FF6B5C;   /* ← 코랄 core */
+  --coral-600:  #ED5746;
+  --coral-700:  #E0513F;   /* soft 위 텍스트(--coral-50 대비 4.5:1↑) */
+
+  /* ---------- 민트 그린 — 정산 완료 ----------
+     입금 완료 / 정산 마감 / 증빙 OK. 투명하고 안전한 완료. */
+  --mint-50:  #E5FBF3;
+  --mint-100: #C7F6E5;
+  --mint-300: #67E3BC;
+  --mint-500: #00C781;  /* ← Success */
+  --mint-600: #00A86D;
+  --mint-700: #008857;
+
+  /* ---------- 크림슨 — 위험 전용 (v2: 코랄과 분리) ----------
+     패널티 / 마감 초과 / 파괴적 액션. 코랄(온기)과 절대 혼용 안 함. */
+  --crimson-50:  #FEE9EC;
+  --crimson-100: #FCC9D1;
+  --crimson-500: #F0384B;  /* ← Danger */
+  --crimson-600: #D72A3D;
+  --crimson-700: #B61F30;
+
+  /* ---------- 앰버 — 주의(마감 임박 보조) ---------- */
+  --amber-50:  #FFF6E5;
+  --amber-100: #FFE9BF;
+  --amber-500: #FFA722;
+  --amber-600: #F08F00;
+
+  /* ---------- 옐로 — 마스코트 4번째 톤(장식 전용) ----------
+     UI 시맨틱 아님. 마스코트/일러스트에서만. */
+  --jelly-yellow: #FFC83D;
+
+  /* ---------- Neutral / Gray ---------- */
+  --white:    #FFFFFF;
+  --gray-25:  #FAFBFD;
+  --gray-50:  #F4F6FA;  /* ← 수치 카드 배경(surface-sunken) */
+  --gray-100: #EBEEF4;
+  --gray-200: #DDE2EC;
+  --gray-300: #C5CCDA;
+  --gray-400: #9AA3B5;
+  --gray-500: #6E7689;
+  --gray-600: #525B6E;
+  --gray-700: #3C4456;
+  --gray-800: #272D3B;
+  --gray-900: #161A24;  /* ← Ink 금액 */
+
+  /* ============================================================
+     2. SEMANTIC ALIASES — 제품 UI에서 이걸 쓴다
+     ============================================================ */
+
+  /* Brand — 신뢰·정산 (money + 공통) */
+  --color-primary:        var(--moisho-blue-500);
+  --color-primary-hover:  var(--moisho-blue-600);
+  --color-primary-press:  var(--moisho-blue-700);
+  --color-primary-soft:   var(--moisho-blue-50);
+  --color-primary-on:     var(--white);
+
+  /* Warm — 모임 온기 액센트 (community 전용, v1 accent 대체) */
+  --color-warm:        var(--coral-500);
+  --color-warm-hover:  var(--coral-600);
+  --color-warm-soft:   var(--coral-50);
+  --color-warm-strong: var(--coral-700);   /* soft 배경 위 텍스트 */
+  --color-warm-on:     var(--white);
+
+  /* Status */
+  --color-success:        var(--mint-500);
+  --color-success-soft:   var(--mint-50);
+  --color-success-strong: var(--mint-700);
+  --color-danger:         var(--crimson-500);   /* v2: 크림슨 */
+  --color-danger-soft:    var(--crimson-50);
+  --color-danger-strong:  var(--crimson-700);
+  --color-warning:        var(--amber-500);
+  --color-warning-soft:   var(--amber-50);
+
+  /* Surfaces */
+  --surface-page:     var(--white);
+  --surface-card:     var(--white);
+  --surface-sunken:   var(--gray-50);   /* 계좌/예산 수치 카드 배경 */
+  --surface-raised:   var(--white);
+  --surface-overlay:  rgba(22, 26, 36, 0.45);
+  --surface-inverse:  var(--gray-900);
+
+  /* Text */
+  --text-strong:    var(--gray-900);  /* Display / 금액 (Ink) */
+  --text-title:     var(--gray-800);  /* Title / 모임명 */
+  --text-body:      var(--gray-700);  /* Body 본문 */
+  --text-muted:     var(--gray-500);  /* Caption 보조 (흰 배경 4.5:1↑) */
+  --text-disabled:  #767F92;          /* 비활성 UI 전용 (WCAG 1.4.3 면제) */
+  --text-faint:     var(--gray-400);  /* 순수 장식(아이콘/플레이스홀더) */
+  --text-on-brand:  var(--white);
+  --text-link:      var(--moisho-blue-500);
+
+  /* Borders */
+  --border-subtle:  var(--gray-100);
+  --border-default: var(--gray-200);
+  --border-strong:  var(--gray-300);
+  --border-focus:   var(--moisho-blue-500);
+
+  /* ============================================================
+     3. TYPOGRAPHY
+     숫자(돈/인원/달성률)가 화면을 지배 → Pretendard + tabular numerals.
+     ============================================================ */
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system,
+               BlinkMacSystemFont, system-ui, "Apple SD Gothic Neo",
+               "Malgun Gothic", sans-serif;
+  --font-display: var(--font-sans);
+
+  /* tabular figures — 금액/달성률 표기 */
+  --font-feature-numeric: "tnum" 1, "cv01" 1;
+
+  /* Weights */
+  --weight-regular:   400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --weight-extrabold: 800;   /* v2 신설 — 에디토리얼 헤드라인 앵커 */
+
+  /* Type scale (px) — 모바일 기준 */
+  --fs-display-lg: 34px;  /* 펀딩 총액(히어로) */
+  --fs-display:    28px;  /* 펀딩 금액 / 달성률 */
+  --fs-editorial:  30px;  /* v2: 잉크 에디토리얼 헤드라인 */
+  --fs-heading:    22px;  /* 화면 제목 */
+  --fs-title:      18px;  /* 모임명 / 카드 타이틀 */
+  --fs-subtitle:   16px;  /* 리스트 1차 텍스트 */
+  --fs-body:       14px;  /* 본문 */
+  --fs-caption:    12px;  /* 계좌번호 / 입금 시간 */
+  --fs-micro:      11px;  /* 배지 / 미세 라벨 */
+
+  /* Line heights */
+  --lh-tight:    1.18;  /* 에디토리얼 헤드라인 */
+  --lh-snug:     1.35;
+  --lh-normal:   1.5;
+  --lh-relaxed:  1.65;
+
+  /* Letter spacing */
+  --ls-display:  -0.02em;  /* 금액/헤드라인 단단하게 */
+  --ls-title:    -0.01em;
+  --ls-normal:   0;
+  --ls-caption:  0.005em;
+
+  /* Semantic text tokens (weight size/lh family) */
+  --text-editorial:   var(--weight-extrabold) var(--fs-editorial)  / var(--lh-tight)  var(--font-display);
+  --text-display-lg:  var(--weight-bold)      var(--fs-display-lg) / var(--lh-tight)  var(--font-display);
+  --text-display:     var(--weight-bold)      var(--fs-display)    / var(--lh-tight)  var(--font-display);
+  --text-heading:     var(--weight-bold)      var(--fs-heading)    / var(--lh-snug)   var(--font-sans);
+  --text-title-1:     var(--weight-bold)      var(--fs-title)      / var(--lh-snug)   var(--font-sans);
+  --text-subtitle:    var(--weight-semibold)  var(--fs-subtitle)   / var(--lh-normal) var(--font-sans);
+  --text-body-1:      var(--weight-regular)   var(--fs-body)       / var(--lh-normal) var(--font-sans);
+  --text-body-strong: var(--weight-semibold)  var(--fs-body)       / var(--lh-normal) var(--font-sans);
+  --text-caption-1:   var(--weight-medium)    var(--fs-caption)    / var(--lh-snug)   var(--font-sans);
+
+  /* ============================================================
+     4. SPACING (4px base)
+     ============================================================ */
+  --space-0:   0;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+
+  --pad-screen: 20px;   /* 모바일 좌우 여백 */
+  --pad-card:   20px;   /* 카드 내부 */
+  --gap-list:   12px;   /* 리스트 아이템 간격 */
+
+  /* ============================================================
+     5. RADIUS — 부드러운 곡선으로 '친근함' 표현
+     ============================================================ */
+  --radius-mini:  6px;    /* 체크박스, 태그 */
+  --radius-sm:    8px;
+  --radius-md:    12px;   /* 입력창, 아바타 사각 */
+  --radius-lg:    16px;
+  --radius-xl:    20px;   /* 카드 */
+  --radius-2xl:   24px;   /* 메인 보드 */
+  --radius-3xl:   36px;   /* 폰 프레임 */
+  --radius-pill:  999px;  /* 칩 / 토글 */
+  --radius-full:  50%;
+
+  /* ============================================================
+     6. SHADOWS — 파란 기운이 살짝 도는 '핀테크다운' 깊이
+     ============================================================ */
+  --shadow-xs:    0 1px 2px rgba(22, 26, 36, 0.05);
+  --shadow-sm:    0 2px 8px rgba(30, 46, 143, 0.06);
+  --shadow-md:    0 6px 16px rgba(30, 46, 143, 0.08);
+  --shadow-lg:    0 12px 28px rgba(30, 46, 143, 0.10);
+  --shadow-card:  0 4px 20px rgba(59, 92, 255, 0.06);  /* 카드 기본 */
+  --shadow-pop:   0 16px 40px rgba(30, 46, 143, 0.16); /* 모달/바텀시트/폰 */
+
+  /* glow — CTA·강조 */
+  --glow-blue:    0 6px 20px rgba(59, 92, 255, 0.35);  /* money CTA */
+  --glow-slab:    0 10px 26px rgba(59, 92, 255, 0.32); /* 블루 슬랩 */
+  --glow-warm:    0 4px 12px rgba(255, 107, 92, 0.30); /* community 액센트 */
+
+  /* ============================================================
+     7. LAYOUT & MOTION
+     ============================================================ */
+  --border-width:        1px;
+  --border-width-strong: 1.5px;
+
+  --app-max-width: 420px;
+  --tabbar-height: 64px;
+  --header-height: 56px;
+
+  /* "또로롱" — 가볍게 통통 튀되 과하지 않은 스프링 */
+  --ease-standard: cubic-bezier(0.2, 0, 0.2, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+}
+
+/* ============================================================
+   8. COLOR PERMISSION — 컨벤션 클래스
+   화면/섹션 루트에 부여해 색 사용권을 강제한다.
+   ============================================================ */
+
+/* money 화면: 정산·금액·출금·현금화.
+   따뜻한 색(코랄·크림슨) 출입 금지. 블루/잉크/민트만 통과. */
+.surface-money {
+  --accent:      var(--color-primary);   /* 액센트도 블루로 고정 */
+  --accent-soft: var(--color-primary-soft);
+  --accent-on:   var(--color-primary-on);
+}
+.surface-money .warm-only {
+  /* 실수로 들어온 따뜻한 요소를 시각적으로 차단(개발 가드) */
+  outline: 2px dashed var(--crimson-500);
+}
+
+/* community 화면: 모임·온보딩·소셜. 코랄 액센트 풀가동. */
+.surface-community {
+  --accent:      var(--color-warm);
+  --accent-soft: var(--color-warm-soft);
+  --accent-on:   var(--color-warm-on);
+}
+
+/* ============================================================
+   9. BASE / RESET
+   ============================================================ */
+@font-face {
+  font-family: "Pretendard Variable";
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2") format("woff2-variations");
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font: var(--text-body-1);
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  background: var(--surface-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* tabular numerals — 금액/인원/달성률이 나오는 곳 기본 적용 */
+.num, .tnum, [data-numeric] { font-feature-settings: var(--font-feature-numeric); }
+
+h1, h2, h3, h4, p { margin: 0; }
+button { font-family: inherit; cursor: pointer; }
+a { color: var(--text-link); text-decoration: none; }
+
+::selection { background: var(--moisho-blue-200); color: var(--gray-900); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ============================================================
+   10. TYPE HELPER CLASSES — 스펙시멘/킷에서 사용
+   ============================================================ */
+.t-editorial { font: var(--text-editorial); letter-spacing: var(--ls-display); color: var(--text-strong); }
+.t-display   { font: var(--text-display); letter-spacing: var(--ls-display); color: var(--text-strong); font-feature-settings: var(--font-feature-numeric); }
+.t-heading   { font: var(--text-heading); letter-spacing: var(--ls-title); color: var(--text-strong); }
+.t-title     { font: var(--text-title-1); letter-spacing: var(--ls-title); color: var(--text-title); }
+.t-body      { font: var(--text-body-1);  color: var(--text-body); }
+.t-caption   { font: var(--text-caption-1); letter-spacing: var(--ls-caption); color: var(--text-muted); }
+.t-num       { font-feature-settings: var(--font-feature-numeric); }

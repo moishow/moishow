@@ -1,0 +1,45 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 신청 완료 (W-09)</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃만 */
+  .done{display:flex;flex-direction:column;align-items:center;text-align:center;
+    padding:40px 32px 0}
+  .done__art{width:150px;height:150px;object-fit:contain;margin-bottom:8px}
+  .done__badge{margin-bottom:16px}
+  .done__title{margin-top:2px}
+  .done__desc{font-size:var(--fs-body);color:var(--text-muted);line-height:var(--lh-relaxed);margin-top:14px}
+  .done__card{width:100%;margin-top:26px;background:var(--surface-sunken);
+    border-radius:var(--radius-lg);padding:16px 18px;display:flex;align-items:center;gap:12px;text-align:left}
+  .done__card .icon{width:20px;height:20px;color:var(--color-warm);flex-shrink:0}
+  .done__card-text{font-size:13px;color:var(--text-body);line-height:var(--lh-snug)}
+  .done__actions{position:absolute;left:0;right:0;bottom:0;padding:16px 20px 24px;display:flex;flex-direction:column;gap:10px}
+</style></head><body>
+
+  <div class="phone"><div class="screen surface-community">
+
+    <div class="done">
+      <img class="done__art" src="../assets/mascots/mascot_red.png" alt="" onerror="this.style.display='none'">
+
+      <span class="badge badge--waiting done__badge">승인 대기 중</span>
+
+      <h1 class="t-editorial done__title">신청 완료!<br>승인을 기다려요</h1>
+
+      <p class="done__desc">총무가 신청서를 확인하고 있어요.<br>승인되면 알림으로 알려드릴게요.</p>
+
+      <div class="done__card">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1112 0c0 4 1.5 5 2 6H4c.5-1 2-2 2-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M10 19a2 2 0 004 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="done__card-text">보통 <b style="color:var(--text-strong)">1일 이내</b>에 결과를 받을 수 있어요.</span>
+      </div>
+    </div>
+
+    <!-- 완료 화면 액션: 돈 이동이 아니므로 보조 버튼 -->
+    <div class="done__actions">
+      <button class="btn btn--secondary btn--block btn--lg">다른 모임 둘러보기</button>
+      <button class="btn btn--ghost btn--block">홈으로</button>
+    </div>
+
+  </div></div>
+
+</body></html>

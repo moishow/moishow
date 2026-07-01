@@ -1,0 +1,327 @@
+/* ============================================================
+   모이쇼 디자인시스템 v2 — Components
+   재사용 컴포넌트 클래스. tokens.css 위에서 동작한다.
+   모든 페이지는 <link tokens.css> + <link components.css> 둘 다 링크.
+
+   픽셀값은 기준화면 meeting-detail.html에서 추출 → 모든 페이지가
+   동일한 버튼/카드/배지/스테퍼를 공유한다. (복붙 금지, 클래스 사용)
+
+   색 출입 권한: 화면/섹션 루트에 .surface-money / .surface-community
+   를 부여하면 --accent 가 자동으로 블루/코랄로 바뀐다(tokens.css 정의).
+   ============================================================ */
+
+/* ============================================================
+   FRAME — 폰 프레임 / 스크린 / 헤더 / 탭바 / 하단 CTA
+   ============================================================ */
+.phone {
+  width: 390px;
+  background: var(--surface-card);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-pop);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+.screen {
+  position: relative;
+  padding-bottom: 92px;   /* 하단 CTA/탭바 여백 */
+  min-height: 760px;
+}
+
+/* 상단 헤더 */
+.appbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px 4px;
+}
+.appbar__title { font-size: var(--fs-subtitle); font-weight: var(--weight-semibold); color: var(--text-title); }
+
+/* 하단 고정 CTA 바 */
+.cta-bar {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255,.93); backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border-subtle);
+  padding: 13px 20px 18px; display: flex; align-items: center; gap: 14px;
+}
+.cta-bar__meta { font-size: 11.5px; color: var(--text-muted); }
+.cta-bar__meta b { color: var(--text-strong); font-size: var(--fs-subtitle); }
+.cta-bar .btn { margin-left: auto; }
+
+/* 하단 탭바 */
+.tabbar {
+  position: absolute; left: 0; right: 0; bottom: 0; height: var(--tabbar-height);
+  background: var(--surface-card); border-top: 1px solid var(--border-subtle);
+  display: flex; align-items: center; justify-content: space-around; padding: 0 8px;
+}
+.tabbar__item {
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  font-size: 10.5px; font-weight: var(--weight-medium); color: var(--text-faint);
+}
+.tabbar__item .icon { width: 22px; height: 22px; }
+.tabbar__item.is-active { color: var(--color-primary); }
+.tabbar__fab {
+  width: 46px; height: 46px; border-radius: var(--radius-full);
+  background: var(--color-primary); color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--glow-blue); margin-top: -14px;
+}
+.tabbar__fab .icon { width: 24px; height: 24px; }
+
+/* ============================================================
+   ICON — 인라인 SVG 사이즈 헬퍼 (이모지 금지, icons.svg 사용)
+   ============================================================ */
+.icon { width: 24px; height: 24px; color: currentColor; flex-shrink: 0; display: inline-block; }
+.icon--sm { width: 16px; height: 16px; }
+.icon--lg { width: 32px; height: 32px; }
+
+/* ============================================================
+   TEXT BLOCKS — 에디토리얼 헤드라인 / 메타행
+   ============================================================ */
+.headline { padding: 6px 20px 2px; }
+.headline h1 { font: var(--text-editorial); letter-spacing: var(--ls-display); color: var(--text-strong); margin: 6px 0 0; }
+.headline h1 .light { font-weight: var(--weight-regular); color: var(--text-muted); }
+
+.meta { display: flex; align-items: center; gap: 8px; color: var(--text-body); font-size: 13px; padding: 12px 20px 4px; }
+.meta .icon { width: 15px; height: 15px; color: var(--text-muted); }
+.meta__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-strong); }
+.meta__end { margin-left: auto; background: var(--surface-sunken); color: var(--text-muted); font-size: 11.5px; font-weight: var(--weight-semibold); padding: 4px 10px; border-radius: var(--radius-pill); }
+
+/* 모임 정체성 행 — community 색 권한(코랄) 국소 적용 */
+.identity { display: flex; align-items: center; gap: 10px; padding: 8px 20px 0; }
+.identity__avatar {
+  width: 34px; height: 34px; border-radius: var(--radius-md);
+  background: var(--color-warm); color: var(--color-warm-on);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: var(--weight-bold); font-size: 13px; box-shadow: var(--glow-warm);
+}
+.identity__name { font-size: 13.5px; font-weight: var(--weight-bold); color: var(--text-body); }
+
+/* ============================================================
+   CARD — 기본 카드 / 헤더
+   ============================================================ */
+.card {
+  margin: 14px 20px 0; background: var(--surface-card);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius-xl);
+  padding: 18px 18px 20px; box-shadow: var(--shadow-card);
+}
+.card__head { display: flex; align-items: center; justify-content: space-between; }
+.card__title { font-size: var(--fs-body); font-weight: var(--weight-bold); color: var(--text-title); }
+
+/* ============================================================
+   BUTTON
+   ============================================================ */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-size: 14.5px; font-weight: var(--weight-bold); line-height: 1;
+  padding: 13px 20px; border: none; border-radius: var(--radius-md);
+  cursor: pointer; transition: background var(--dur-fast) var(--ease-standard), transform var(--dur-fast) var(--ease-standard);
+}
+.btn:active { transform: translateY(1px); }
+.btn .icon { width: 18px; height: 18px; }
+.btn--block { width: 100%; }
+.btn--lg { padding: 16px 22px; font-size: 15.5px; }
+.btn--sm { padding: 9px 14px; font-size: 13px; }
+
+/* primary — money CTA & 공통. 돈 이동 버튼은 항상 이것. */
+.btn--primary { background: var(--color-primary); color: var(--color-primary-on); box-shadow: var(--glow-blue); }
+.btn--primary:hover { background: var(--color-primary-hover); }
+.btn--primary:active { background: var(--color-primary-press); }
+
+/* warm — 모임 액션 (community 전용) */
+.btn--warm { background: var(--color-warm); color: var(--color-warm-on); box-shadow: var(--glow-warm); }
+.btn--warm:hover { background: var(--color-warm-hover); }
+
+/* secondary — 보조(soft 블루) */
+.btn--secondary { background: var(--color-primary-soft); color: var(--color-primary); }
+.btn--secondary:hover { background: var(--moisho-blue-100); }
+
+/* ghost — 테두리만 */
+.btn--ghost { background: transparent; color: var(--text-body); border: 1px solid var(--border-default); }
+
+/* accent — 화면 색권한을 따름(.surface-money→블루, .surface-community→코랄) */
+.btn--accent { background: var(--accent, var(--color-primary)); color: var(--accent-on, var(--white)); }
+
+.btn:disabled, .btn.is-disabled { background: var(--gray-100); color: var(--text-disabled); box-shadow: none; cursor: not-allowed; }
+
+/* SNS 로그인 */
+.btn--sns { width: 100%; padding: 15px 18px; font-weight: var(--weight-semibold); font-size: 14.5px; box-shadow: none; }
+.btn--kakao  { background: #FEE500; color: #191600; }
+.btn--apple  { background: #000000; color: #FFFFFF; }
+.btn--google { background: #FFFFFF; color: var(--text-title); border: 1px solid var(--border-default); }
+
+/* ============================================================
+   BADGE / CHIP
+   ============================================================ */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: var(--fs-micro); font-weight: var(--weight-semibold);
+  padding: 3px 9px; border-radius: var(--radius-pill);
+}
+.badge--progress { background: var(--color-primary-soft); color: var(--color-primary); }
+.badge--done     { background: var(--color-success-soft); color: var(--color-success-strong); }
+.badge--ended    { background: var(--surface-sunken); color: var(--text-muted); }
+.badge--waiting  { background: var(--color-warm-soft); color: var(--color-warm-strong); }
+.badge--danger   { background: var(--color-danger-soft); color: var(--color-danger-strong); }
+
+/* 카테고리 칩 (community) */
+.chip { background: var(--color-warm-soft); color: var(--color-warm-strong); font-size: var(--fs-micro); font-weight: var(--weight-semibold); padding: 3px 9px; border-radius: var(--radius-pill); }
+/* 카운트 칩 (money) */
+.chip--count { background: var(--color-primary-soft); color: var(--color-primary); font-weight: var(--weight-bold); }
+/* 필터/태그 칩 */
+.chip--tag { background: var(--surface-sunken); color: var(--text-body); border-radius: var(--radius-mini); padding: 5px 10px; font-size: var(--fs-caption); }
+
+/* ============================================================
+   ESCROW STEPPER — 예치→락→동의→출금→정산→완료
+   ============================================================ */
+.stepper { display: flex; margin-top: 16px; }
+.step { flex: 1; position: relative; text-align: center; }
+.step__seg { position: absolute; top: 12px; left: -50%; width: 100%; height: 3px; background: #E7EBF3; border-radius: 2px; }
+.step__node {
+  position: relative; width: 27px; height: 27px; border-radius: 50%; margin: 0 auto; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: var(--weight-bold); background: #E7EBF3; color: var(--text-faint);
+}
+.step__node .icon { width: 14px; height: 14px; }
+.step__label { font-size: 10.5px; margin-top: 7px; color: var(--text-faint); font-weight: var(--weight-semibold); }
+.step.is-done .step__seg, .step.is-current .step__seg { background: var(--color-primary); }
+.step.is-done .step__node { background: var(--color-primary); color: var(--color-primary-on); }
+.step.is-current .step__node { background: var(--surface-card); color: var(--color-primary); border: 3px solid var(--color-primary); box-shadow: 0 0 0 4px var(--color-primary-soft); }
+.step.is-done .step__label, .step.is-current .step__label { color: var(--text-body); }
+.step.is-current .step__label { color: var(--color-primary); font-weight: var(--weight-bold); }
+.stepper-note { margin-top: 14px; font-size: var(--fs-caption); color: var(--text-muted); text-align: center; }
+.stepper-note b { color: var(--color-primary); }
+
+/* ============================================================
+   BLUE SLAB — 화면에서 가장 중요한 정보 블록 (money 전용)
+   ============================================================ */
+.slab { margin: 14px 20px 0; background: var(--color-primary); border-radius: var(--radius-xl); padding: 18px; color: var(--white); box-shadow: var(--glow-slab); }
+.slab__label { font-size: var(--fs-caption); font-weight: var(--weight-semibold); color: #CBD6FF; }
+.slab__figure { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+.slab__figure .big { font-size: 30px; font-weight: var(--weight-extrabold); letter-spacing: .01em; font-feature-settings: var(--font-feature-numeric); }
+.slab__figure .unit { font-size: var(--fs-caption); color: #CBD6FF; }
+.slab__row { margin-top: 14px; background: rgba(255,255,255,.13); border-radius: var(--radius-lg); padding: 12px 13px; display: flex; align-items: center; justify-content: space-between; }
+.slab__row .k { font-size: var(--fs-caption); color: #DCE4FF; }
+.slab__row .v { font-size: 15px; font-weight: var(--weight-bold); font-feature-settings: var(--font-feature-numeric); }
+.slab__note { margin-top: 12px; font-size: var(--fs-caption); color: var(--white); background: rgba(0,0,0,.16); border-radius: var(--radius-md); padding: 10px 12px; line-height: 1.45; display: flex; gap: 8px; }
+.slab__note .icon { width: 15px; height: 15px; margin-top: 1px; }
+.slab__note b { color: var(--white); }
+
+/* ============================================================
+   AVATAR STACK
+   ============================================================ */
+.avatars { display: flex; align-items: center; }
+.avatars__item { width: 26px; height: 26px; border-radius: 50%; margin-left: -8px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: var(--weight-bold); color: var(--white); background: #9DB2FF; border: 2px solid var(--surface-card); }
+.avatars__item:first-child { margin-left: 0; }
+.avatars__more { margin-left: 10px; font-size: var(--fs-caption); color: var(--text-muted); }
+/* 블루 슬랩 위에 얹을 때: 테두리를 슬랩색으로 */
+.slab .avatars { margin-top: 12px; }
+.slab .avatars__item { border-color: var(--color-primary); }
+.slab .avatars__more { color: #DCE4FF; }
+
+/* ============================================================
+   CHECKLIST
+   ============================================================ */
+.checklist { margin-top: 6px; }
+.check-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid #F1F3F8; }
+.check-row:last-child { border-bottom: none; }
+.check-row__left { display: flex; align-items: center; gap: 11px; }
+.check-row__radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-strong); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: transparent; }
+.check-row.is-checked .check-row__radio { background: var(--color-success); border-color: var(--color-success); color: var(--white); }
+.check-row__radio .icon { width: 12px; height: 12px; }
+.check-row__text { font-size: 13.5px; color: var(--text-body); }
+.check-row.is-checked .check-row__text { color: var(--text-faint); text-decoration: line-through; }
+.check-row__amount { font-size: 13.5px; font-weight: var(--weight-bold); color: var(--text-strong); font-feature-settings: var(--font-feature-numeric); }
+.check-row__amount.is-pending { color: var(--text-faint); font-weight: var(--weight-semibold); }
+
+/* ============================================================
+   FORM — 입력 / 셀렉트 / 토글 / 체크박스 / 라디오
+   ============================================================ */
+.field { display: block; margin: 0 20px; }
+.field + .field { margin-top: 12px; }
+.field__label { display: block; font-size: var(--fs-caption); font-weight: var(--weight-semibold); color: var(--text-muted); margin-bottom: 6px; }
+.field__input {
+  width: 100%; box-sizing: border-box; font-family: inherit; font-size: var(--fs-subtitle);
+  color: var(--text-strong); background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 13px 14px;
+  transition: border-color var(--dur-fast) var(--ease-standard);
+}
+.field__input::placeholder { color: var(--text-faint); }
+.field__input:focus { outline: none; border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--color-primary-soft); }
+/* 금액 입력: 우측 '원' suffix */
+.field--amount { position: relative; }
+.field--amount .field__input { text-align: right; padding-right: 38px; font-feature-settings: var(--font-feature-numeric); font-weight: var(--weight-bold); }
+.field--amount::after { content: "원"; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: var(--fs-body); color: var(--text-muted); }
+/* select */
+.select { position: relative; }
+.select .field__input { appearance: none; padding-right: 38px; color: var(--text-body); }
+.select::after { content: ""; position: absolute; right: 16px; top: 50%; width: 9px; height: 9px; border-right: 2px solid var(--text-muted); border-bottom: 2px solid var(--text-muted); transform: translateY(-70%) rotate(45deg); pointer-events: none; }
+
+/* toggle */
+.toggle { position: relative; display: inline-block; width: 44px; height: 26px; flex-shrink: 0; }
+.toggle input { position: absolute; opacity: 0; width: 0; height: 0; }
+.toggle__track { position: absolute; inset: 0; background: var(--border-strong); border-radius: var(--radius-pill); transition: background var(--dur-base) var(--ease-standard); }
+.toggle__track::before { content: ""; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: var(--white); border-radius: 50%; box-shadow: var(--shadow-xs); transition: transform var(--dur-base) var(--ease-spring); }
+.toggle input:checked + .toggle__track { background: var(--color-primary); }
+.toggle input:checked + .toggle__track::before { transform: translateX(18px); }
+
+/* checkbox / radio */
+.checkbox, .radio { display: inline-flex; align-items: center; gap: 10px; font-size: var(--fs-body); color: var(--text-body); cursor: pointer; }
+.checkbox input, .radio input { position: absolute; opacity: 0; }
+.checkbox__box { width: 20px; height: 20px; border-radius: var(--radius-mini); border: 2px solid var(--border-strong); display: flex; align-items: center; justify-content: center; color: transparent; transition: all var(--dur-fast) var(--ease-standard); }
+.checkbox input:checked + .checkbox__box { background: var(--color-primary); border-color: var(--color-primary); color: var(--white); }
+.checkbox__box .icon { width: 13px; height: 13px; }
+.radio__dot { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--border-strong); display: flex; align-items: center; justify-content: center; }
+.radio input:checked + .radio__dot { border-color: var(--color-primary); }
+.radio input:checked + .radio__dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--color-primary); }
+
+/* ============================================================
+   LIST ROW — 홈/리스트 화면 공통 행
+   ============================================================ */
+.list { margin: 8px 20px 0; }
+.list-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border-subtle); }
+.list-row:last-child { border-bottom: none; }
+.list-row__avatar { width: 42px; height: 42px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-weight: var(--weight-bold); font-size: 14px; color: var(--white); flex-shrink: 0; }
+.list-row__body { flex: 1; min-width: 0; }
+.list-row__title { font-size: var(--fs-subtitle); font-weight: var(--weight-semibold); color: var(--text-title); }
+.list-row__sub { font-size: var(--fs-caption); color: var(--text-muted); margin-top: 2px; }
+.list-row__amount { font-size: var(--fs-subtitle); font-weight: var(--weight-bold); color: var(--text-strong); font-feature-settings: var(--font-feature-numeric); }
+
+/* ============================================================
+   SHEET — 바텀시트 / 모달 헤더
+   ============================================================ */
+.sheet { background: var(--surface-card); border-radius: var(--radius-2xl) var(--radius-2xl) 0 0; box-shadow: var(--shadow-pop); padding: 8px 20px 24px; }
+.sheet__handle { width: 40px; height: 4px; border-radius: 999px; background: var(--border-strong); margin: 4px auto 14px; }
+.sheet__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.sheet__title { font-size: var(--fs-title); font-weight: var(--weight-bold); color: var(--text-title); }
+.sheet__close { color: var(--text-muted); background: none; border: none; padding: 4px; }
+
+/* ============================================================
+   EMPTY STATE — 마스코트 모먼트
+   ============================================================ */
+.empty { text-align: center; padding: 48px 32px; }
+.empty__art { width: 96px; height: 96px; margin: 0 auto 16px; }
+.empty__title { font-size: var(--fs-subtitle); font-weight: var(--weight-bold); color: var(--text-title); }
+.empty__desc { font-size: var(--fs-body); color: var(--text-muted); margin-top: 6px; line-height: var(--lh-normal); }
+
+/* ============================================================
+   SKELETON — 로딩
+   ============================================================ */
+.skeleton { background: linear-gradient(100deg, var(--gray-100) 30%, var(--gray-50) 50%, var(--gray-100) 70%); background-size: 200% 100%; border-radius: var(--radius-sm); animation: sk-shimmer 1.2s var(--ease-standard) infinite; }
+.skeleton--line { height: 12px; }
+.skeleton--title { height: 18px; width: 60%; }
+.skeleton--circle { border-radius: 50%; }
+@keyframes sk-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
+
+/* ============================================================
+   NOTICE — 인라인 안내 콜아웃(info). 화면 색권한을 따름
+   (.surface-money→블루 soft / .surface-community→코랄 soft).
+   ============================================================ */
+.notice { display: flex; align-items: flex-start; gap: 10px; margin: 14px 20px 0; background: var(--accent-soft, var(--color-primary-soft)); border-radius: var(--radius-lg); padding: 13px 14px; }
+.notice .icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; color: var(--accent, var(--color-primary)); }
+.notice__text { font-size: var(--fs-caption); line-height: 1.5; color: var(--text-body); }
+.notice__text b { color: var(--accent, var(--color-primary)); font-weight: var(--weight-bold); }
+
+/* ============================================================
+   SECTION HELPERS
+   ============================================================ */
+.section-title { font-size: var(--fs-title); font-weight: var(--weight-bold); color: var(--text-title); padding: 20px 20px 4px; letter-spacing: var(--ls-title); }
+.divider { height: 8px; background: var(--surface-sunken); margin: 16px 0; }

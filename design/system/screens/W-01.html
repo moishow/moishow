@@ -1,0 +1,50 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 온보딩 */
+  .hero { text-align: center; padding: 26px 20px 6px; }
+  .hero__art { width: 100%; max-width: 300px; margin: 0 auto 4px; display: block; }
+  .value { display: flex; gap: 12px; align-items: flex-start; padding: 11px 24px; }
+  .value__ic { width: 38px; height: 38px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .value__ic .icon { width: 20px; height: 20px; }
+  .value__t { font-size: var(--fs-subtitle); font-weight: var(--weight-bold); color: var(--text-title); }
+  .value__d { font-size: var(--fs-caption); color: var(--text-muted); margin-top: 2px; line-height: var(--lh-normal); }
+  .sns { padding: 14px 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+  .sns__legal { text-align: center; font-size: var(--fs-micro); color: var(--text-faint); margin-top: 4px; line-height: var(--lh-normal); }
+</style></head><body>
+      <div class="phone"><div class="screen surface-community" style="padding-bottom:24px">
+        <div class="hero">
+          <img class="hero__art" src="../assets/mascots/mascots.png" alt="모이쇼 마스코트" onerror="this.style.display='none'">
+          <h1 class="t-editorial" style="margin-top:8px">회비 걱정 없이<br><span style="color:var(--color-warm)">모임</span>에만 집중해요</h1>
+          <p class="t-body" style="margin-top:10px;color:var(--text-muted)">모으고 · 쓰고 · 투명하게 정산까지</p>
+        </div>
+        <div class="value">
+          <div class="value__ic" style="background:var(--color-warm-soft);color:var(--color-warm)">
+            <svg class="icon"><circle cx="9" cy="8" r="3.4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 19c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 5.2A3.4 3.4 0 0118 11m-1 3.3c2.3.5 4 2.2 4 4.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div><div class="value__t">모임은 즐겁게</div><div class="value__d">동아리·소모임 회비를 한곳에서 모으고 함께 예산을 짜요</div></div>
+        </div>
+        <div class="value">
+          <div class="value__ic" style="background:var(--color-primary-soft);color:var(--color-primary)">
+            <svg class="icon"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div><div class="value__t">정산은 믿음직하게</div><div class="value__d">모금가 자금을 잠그고 증빙까지 받아내요 — <b style="color:var(--text-body)">총무를 안 믿어도 돼요</b></div></div>
+        </div>
+        <div class="sns">
+          <button class="btn btn--sns btn--kakao">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.7 4.7 4.2 6L6.3 20l3.4-2.2c.7.1 1.5.2 2.3.2 5 0 9-3.1 9-7s-4-7-9-7z" fill="currentColor"/></svg>
+            카카오로 시작하기
+          </button>
+          <button class="btn btn--sns btn--apple">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M16 3c.1 1-.3 2-1 2.8-.7.8-1.7 1.4-2.7 1.3-.1-1 .4-2 1-2.7C14 3.6 15 3 16 3zm2.5 14.5c-.4 1-.6 1.4-1.1 2.3-.7 1.2-1.7 2.7-3 2.7-1.1 0-1.4-.7-2.9-.7s-1.9.7-3 .7c-1.3 0-2.2-1.3-3-2.5-1.9-3-2.1-6.4-.9-8.2.8-1.3 2.1-2 3.3-2 1.2 0 2 .7 3 .7s1.6-.7 3-.7c1 0 2.2.3 3 1.4-2.6 1.5-2.2 5.3.5 6.3z" fill="currentColor"/></svg>
+            Apple로 계속하기
+          </button>
+          <button class="btn btn--sns btn--google">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M21 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.1c-.2 1.2-.9 2.2-1.9 2.9v2.4h3.1c1.8-1.7 2.7-4.1 2.7-7.1z" fill="#4285F4"/><path d="M12 21c2.6 0 4.7-.9 6.3-2.3l-3.1-2.4c-.9.6-2 .9-3.2.9-2.5 0-4.6-1.7-5.3-3.9H3.5v2.5C5.1 19 8.3 21 12 21z" fill="#34A853"/><path d="M6.7 13.3c-.2-.6-.3-1.2-.3-1.8s.1-1.2.3-1.8V7.2H3.5C2.9 8.5 2.5 9.9 2.5 11.5s.4 3 1 4.3l3.2-2.5z" fill="#FBBC05"/><path d="M12 5.8c1.4 0 2.7.5 3.7 1.5l2.7-2.7C16.7 3 14.6 2 12 2 8.3 2 5.1 4 3.5 7.2l3.2 2.5c.7-2.2 2.8-3.9 5.3-3.9z" fill="#EA4335"/></svg>
+            Google로 계속하기
+          </button>
+          <p class="sns__legal">계속하면 <b style="color:var(--text-muted)">이용약관</b>과 <b style="color:var(--text-muted)">개인정보 처리방침</b>에 동의하는 것으로 간주돼요</p>
+        </div>
+      </div></div>
+</body></html>

@@ -1,0 +1,137 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — 리포트 (W-47)</title>
+<!-- W-47 리포트(웹): 기간 필터 + 지표 카드 4 + 막대/라인 차트. 거래·정산 지표는 블루. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:18px 22px 24px}
+  .admin-body .card{margin:0 0 14px}
+  .admin-body .card:last-child{margin-bottom:0}
+
+  .filter{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+  .segtabs{display:inline-flex;background:var(--surface-sunken);border-radius:var(--radius-pill);padding:4px;gap:2px}
+  .segtabs button{border:none;background:transparent;font-size:var(--fs-caption);font-weight:var(--weight-semibold);color:var(--text-muted);padding:7px 14px;border-radius:var(--radius-pill)}
+  .segtabs button.is-active{background:var(--surface-card);color:var(--color-primary);box-shadow:var(--shadow-xs)}
+  .filter__range{margin-left:auto;display:flex;align-items:center;gap:7px;font-size:var(--fs-caption);color:var(--text-body);background:var(--surface-sunken);border-radius:var(--radius-md);padding:7px 12px}
+  .filter__range .icon{width:15px;height:15px;color:var(--text-muted)}
+
+  .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+  .kpi{background:var(--surface-sunken);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);padding:13px 13px 15px}
+  .kpi__k{font-size:var(--fs-caption);color:var(--text-muted);font-weight:var(--weight-semibold)}
+  .kpi__v{margin-top:9px;font-size:22px;font-weight:var(--weight-extrabold);letter-spacing:var(--ls-display);color:var(--text-strong);line-height:1}
+  .kpi__v .u{font-size:12px;font-weight:var(--weight-semibold);color:var(--text-muted);margin-left:2px}
+  .kpi--money .kpi__v{color:var(--color-primary)}
+  .kpi__d{margin-top:7px;font-size:11px;font-weight:var(--weight-semibold);color:var(--color-success-strong)}
+
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .card-head .h{font-size:var(--fs-body);font-weight:var(--weight-bold);color:var(--text-title)}
+  .card-head .legend{font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:6px}
+  .card-head .legend .sw{width:10px;height:10px;border-radius:3px;background:var(--color-primary)}
+
+  .chart{display:flex;align-items:flex-end;gap:10px;height:150px}
+  .chart__col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:8px;height:100%}
+  .chart__bar{width:100%;max-width:34px;background:var(--color-primary);border-radius:6px 6px 0 0;min-height:5px;transition:height var(--dur-slow) var(--ease-out)}
+  .chart__col.is-peak .chart__bar{background:var(--color-primary)}
+  .chart__col:not(.is-peak) .chart__bar{background:var(--moisho-blue-200)}
+  .chart__x{font-size:10.5px;color:var(--text-muted);font-weight:var(--weight-medium)}
+
+  .line-wrap{position:relative}
+  .line-svg{width:100%;height:130px;display:block;overflow:visible}
+  .line-x{display:flex;justify-content:space-between;margin-top:8px;font-size:10.5px;color:var(--text-muted)}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>운영 리포트</b>
+    <span class="admin-me">주간 요약<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+
+    <div class="filter">
+      <div class="segtabs">
+        <button>7일</button>
+        <button class="is-active">30일</button>
+        <button>90일</button>
+      </div>
+      <span class="filter__range">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="num">2026-06-01 ~ 06-30</span>
+      </span>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi kpi--money">
+        <div class="kpi__k">총 거래액</div>
+        <div class="kpi__v num">184.2<span class="u">M</span></div>
+        <div class="kpi__d">+12.4% 전월</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__k">신규 가입</div>
+        <div class="kpi__v num">2,318<span class="u">명</span></div>
+        <div class="kpi__d">+8.1% 전월</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi__k">활성 모임</div>
+        <div class="kpi__v num">476<span class="u">개</span></div>
+        <div class="kpi__d">+5.6% 전월</div>
+      </div>
+      <div class="kpi kpi--money">
+        <div class="kpi__k">정산 완료율</div>
+        <div class="kpi__v num">98.7<span class="u">%</span></div>
+        <div class="kpi__d">+0.9%p 전월</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="h">주간 거래액</span>
+        <span class="legend"><span class="sw"></span>단위 백만원</span>
+      </div>
+      <div class="chart">
+        <div class="chart__col"><div class="chart__bar" style="height:44%"></div><span class="chart__x num">W1</span></div>
+        <div class="chart__col"><div class="chart__bar" style="height:58%"></div><span class="chart__x num">W2</span></div>
+        <div class="chart__col"><div class="chart__bar" style="height:52%"></div><span class="chart__x num">W3</span></div>
+        <div class="chart__col is-peak"><div class="chart__bar" style="height:86%"></div><span class="chart__x num">W4</span></div>
+        <div class="chart__col"><div class="chart__bar" style="height:71%"></div><span class="chart__x num">W5</span></div>
+        <div class="chart__col"><div class="chart__bar" style="height:63%"></div><span class="chart__x num">W6</span></div>
+        <div class="chart__col"><div class="chart__bar" style="height:78%"></div><span class="chart__x num">W7</span></div>
+        <div class="chart__col"><div class="chart__bar" style="height:92%"></div><span class="chart__x num">W8</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="h">일간 활성 사용자 (DAU)</span>
+        <span class="legend num">평균 8,420</span>
+      </div>
+      <div class="line-wrap">
+        <svg class="line-svg" viewBox="0 0 320 120" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" style="stop-color:var(--color-primary)" stop-opacity="0.22"/>
+              <stop offset="1" style="stop-color:var(--color-primary)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0 88 L45 72 L90 80 L135 52 L180 60 L225 34 L270 44 L320 20 L320 120 L0 120 Z" fill="url(#lg)"/>
+          <path d="M0 88 L45 72 L90 80 L135 52 L180 60 L225 34 L270 44 L320 20" fill="none" style="stroke:var(--color-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="20" r="4" style="fill:var(--color-primary)"/>
+          <circle cx="320" cy="20" r="7" style="fill:var(--color-primary)" fill-opacity="0.18"/>
+        </svg>
+      </div>
+      <div class="line-x">
+        <span>6/1</span><span>6/8</span><span>6/15</span><span>6/22</span><span>6/30</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

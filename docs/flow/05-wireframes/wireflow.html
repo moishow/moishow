@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 와이어플로우 (하이파이 · 실제 v2 UI)</title>
+<!--
+  모이쇼 와이어플로우 보드 — 하이파이.
+  · 각 노드는 로파이 스켈레톤이 아니라 실제 v2 디자인시스템 화면(design/system/screens/W-xx.html)을
+    축소 iframe으로 삽입한 것. 각 W-xx 실제 v2 화면이 흐름 안에서 그대로 이어진다.
+  · <base href> 로 tokens.css/컴포넌트/화면 경로를 design/system/ 기준으로 해석.
+  · 8개 시나리오(S1~S8) 레인 · 화살표(전환)·다이아몬드(분기). 같은 화면은 시나리오마다 다시 등장(중복 허용).
+  · 화면 소스: design/system/screens/*.html (각각 단독 실행 가능). 레지스트리는 하단 표 + README.
+-->
+<base href="../../../design/system/">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  body{margin:0;background:#e9ecf2;color:var(--text-body);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
+  .wrap{padding:34px clamp(16px,3vw,40px) 90px;max-width:1760px;margin:0 auto;}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.05em;color:var(--color-primary);text-transform:uppercase;}
+  h1{font-size:27px;font-weight:800;letter-spacing:-.02em;margin:6px 0 0;color:var(--text-strong);}
+  .sub{font-size:13.5px;color:var(--text-muted);margin-top:8px;max-width:780px;line-height:1.55;}
+  .sub code{font-weight:700;color:var(--color-primary);}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:18px;padding:14px 16px;background:#fff;
+          border:1px solid var(--border-default);border-radius:12px;font-size:12px;}
+  .legend b{font-weight:800}
+  .legend .g{display:inline-flex;align-items:center;gap:8px;}
+  .lg-scr{width:16px;height:22px;background:linear-gradient(160deg,#dfe6ff,#c9d3f5);border:1px solid var(--border-default);border-radius:4px;}
+  .lg-dec{width:15px;height:15px;background:#fff7e6;border:1.5px solid #ffd27a;transform:rotate(45deg);border-radius:3px;}
+  .lg-arr{font-size:15px;color:var(--text-faint);font-weight:700;}
+  .lg-blue{width:14px;height:14px;border-radius:50%;background:var(--color-primary);}
+  .lg-slate{width:14px;height:14px;border-radius:50%;background:#525b6e;}
+
+  .lane{background:#fff;border:1px solid var(--border-default);border-radius:14px;padding:15px 16px 8px;margin-top:18px;}
+  .lane__h{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .lane__h h3{font-size:15.5px;font-weight:800;margin:0;letter-spacing:-.01em;color:var(--text-strong);}
+  .persona{font-size:11px;font-weight:800;color:#fff;background:var(--color-primary);border-radius:999px;padding:2px 9px;}
+  .persona.admin{background:#525b6e}
+  .must{font-size:10px;font-weight:800;color:var(--color-danger-strong);background:var(--color-danger-soft);border-radius:999px;padding:2px 8px;}
+  .should{font-size:10px;font-weight:800;color:#9a6a00;background:#fff7e6;border-radius:999px;padding:2px 8px;}
+  .lane__sum{font-size:12px;color:var(--text-muted);margin:6px 0 8px;line-height:1.5;}
+
+  .track{overflow-x:auto;padding:8px 2px 16px;}
+  .flow{display:inline-flex;align-items:center;gap:4px;min-width:100%;}
+
+  .chip{flex:none;font-size:11px;font-weight:800;border-radius:999px;padding:7px 13px;white-space:nowrap;}
+  .chip.start{background:var(--text-strong);color:#fff;}
+  .chip.end{background:var(--color-success-soft);color:var(--color-success-strong);border:1px solid #b9efd9;}
+  .chip.end.stop{background:var(--color-danger-soft);color:var(--color-danger-strong);border-color:#f6ccd2;}
+  .chip.jump{background:var(--color-primary-soft);color:var(--color-primary);border:1px dashed #b9c6ff;}
+
+  .arr{flex:none;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:34px;color:var(--text-faint);}
+  .arr span{font-size:18px;line-height:1;font-weight:700;}
+  .arr i{font-style:normal;font-size:9.5px;font-weight:700;color:var(--text-muted);white-space:nowrap;margin-bottom:2px;}
+
+  .dec{flex:none;width:92px;height:92px;background:#fff7e6;border:1.5px solid #ffd27a;border-radius:12px;
+       display:flex;align-items:center;justify-content:center;text-align:center;
+       font-size:10.5px;font-weight:800;color:#9a6a00;padding:8px;line-height:1.25;}
+
+  .split{flex:none;display:inline-flex;flex-direction:column;gap:16px;}
+  .path{display:inline-flex;align-items:center;gap:4px;}
+  .lbl{flex:none;font-size:9.5px;font-weight:800;border-radius:6px;padding:3px 7px;white-space:nowrap;}
+  .lbl.y{background:var(--color-success-soft);color:var(--color-success-strong);}
+  .lbl.n{background:var(--color-danger-soft);color:var(--color-danger-strong);}
+  .lbl.alt{background:var(--color-primary-soft);color:var(--color-primary);}
+
+  /* 노드 = 실제 화면(축소 iframe) */
+  .wf{flex:none;margin:0;display:flex;flex-direction:column;gap:7px;}
+  .wf__cap{font-size:11px;color:var(--text-muted);padding-left:2px;white-space:nowrap;}
+  .wf__cap b{color:var(--text-strong);font-weight:800;}
+  .wf__cap.admin b{color:#525b6e;}
+  .slot{position:relative;flex:none;width:172px;height:379px;border-radius:16px;overflow:hidden;
+        border:1px solid var(--border-default);box-shadow:0 8px 22px rgba(30,46,143,.12);background:#fff;}
+  .slot iframe{width:390px;height:860px;border:0;transform:scale(.441);transform-origin:top left;pointer-events:none;}
+  .slot--admin{width:282px;height:335px;}
+  .slot--admin iframe{width:640px;height:760px;transform:scale(.441);}
+  .slot__badge{position:absolute;top:7px;left:7px;z-index:2;font-size:9px;font-weight:800;
+               background:rgba(22,26,36,.75);color:#fff;padding:2px 6px;border-radius:999px;letter-spacing:.02em;}
+
+  .note{flex:none;max-width:168px;font-size:9.5px;color:var(--text-muted);line-height:1.4;align-self:center;
+        background:var(--surface-sunken);border-radius:8px;padding:7px 9px;}
+
+  .reg{margin-top:32px;background:#fff;border:1px solid var(--border-default);border-radius:14px;padding:18px 20px;}
+  .reg h2{font-size:17px;font-weight:800;margin:0 0 4px;color:var(--text-strong);}
+  .reg p{font-size:12.5px;color:var(--text-muted);margin:0 0 12px;}
+  .reg table{width:100%;border-collapse:collapse;font-size:12px;}
+  .reg th,.reg td{text-align:left;padding:6px 10px;border-bottom:1px solid #eef0f4;vertical-align:top;}
+  .reg th{font-weight:800;color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
+  .reg td code{font-weight:800;color:var(--color-primary);}
+  .reg tr.adm td code{color:#525b6e;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">모이쇼 · 와이어플로우 (하이파이)</div>
+    <h1>시나리오 → 유저플로우 → 실제 v2 화면</h1>
+    <p class="sub">각 노드는 <code>design/system/</code> v2 디자인시스템으로 만든 실제 화면(<code>screens/W-xx.html</code>)을 축소 삽입한 것 — 각 <code>W-xx</code>가 실제 v2 화면 그대로 흐름 안에서 이어진다. 8개 시나리오(S1~S8)를 레인으로 펼치고 화살표·분기로 연결. 같은 화면은 시나리오마다 다시 등장(중복 허용).</p>
+    <div class="legend">
+      <span class="g"><span class="lg-scr"></span><b>카드</b> = 실제 v2 화면(축소) <code>W-xx</code></span>
+      <span class="g"><span class="lg-arr">→</span><b>화살표</b> = 전환(라벨 = 행동/조건)</span>
+      <span class="g"><span class="lg-dec"></span><b>다이아몬드</b> = 분기</span>
+      <span class="g"><span class="lg-blue"></span>부원·총무(앱)</span>
+      <span class="g"><span class="lg-slate"></span>운영자(어드민 웹)</span>
+    </div>
+  </header>
+
+  <!-- ============================= S1 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S1 · 소셜 로그인 + KYC + 지갑 개설</h3><span class="persona">부원·총무</span><span class="must">Must</span></div>
+    <p class="lane__sum">신규 진입 → 3초 로그인 → (신규)본인인증 → 지갑 자동 개설 → 홈. 성공 기준: <b>verified</b> + 지갑 생성.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">시작</span>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-01</b> 온보딩·SNS 로그인</figcaption><div class="slot"><span class="slot__badge">W-01</span><iframe src="screens/W-01.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>로그인</i><span>→</span></span>
+      <div class="dec">신규 가입?</div>
+      <div class="split">
+        <div class="path">
+          <span class="lbl alt">신규</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-03</b> KYC 인증</figcaption><div class="slot"><span class="slot__badge">W-03</span><iframe src="screens/W-03.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>verified</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-04</b> 지갑 개설</figcaption><div class="slot"><span class="slot__badge">W-04</span><iframe src="screens/W-04.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-05</b> 홈</figcaption><div class="slot"><span class="slot__badge">W-05</span><iframe src="screens/W-05.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end">홈 진입</span>
+        </div>
+        <div class="path">
+          <span class="lbl alt">기존</span>
+          <span class="arr"><span>→</span></span>
+          <span class="chip jump">W-05 홈 (위와 동일)</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= S2 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S2 · 모임 탐색 + 가입 신청(폼빌더)</h3><span class="persona">부원</span><span class="must">Must</span></div>
+    <p class="lane__sum">관심사 태그 탐색 → 클럽 상세(안심예산안 프리뷰) → 가입 신청서 → 총무 승인 → Membership + 알림.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">시작</span>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-05</b> 홈</figcaption><div class="slot"><span class="slot__badge">W-05</span><iframe src="screens/W-05.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>탐색</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-06</b> 모임 탐색</figcaption><div class="slot"><span class="slot__badge">W-06</span><iframe src="screens/W-06.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-07</b> 클럽 상세</figcaption><div class="slot"><span class="slot__badge">W-07</span><iframe src="screens/W-07.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>신청</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-08</b> 가입 신청서</figcaption><div class="slot"><span class="slot__badge">W-08</span><iframe src="screens/W-08.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-09</b> 신청 완료</figcaption><div class="slot"><span class="slot__badge">W-09</span><iframe src="screens/W-09.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>총무 승인</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-26</b> 알림</figcaption><div class="slot"><span class="slot__badge">W-26</span><iframe src="screens/W-26.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <span class="chip end">멤버십 생성 · 홈</span>
+    </div></div>
+  </section>
+
+  <!-- ============================= S3 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S3 · 차수 개설·예치 (에스크로 OPEN) + 만남 전 취소</h3><span class="persona">총무·부원</span><span class="must">Must ⭐</span></div>
+    <p class="lane__sum">총무가 차수 개설 → 부원이 차수 상세(달성 게이지)에서 예치(부족분 카카오페이 충전) → OPEN. 만남시각 전이면 자유 취소 → 즉시 환불(총무 출금 잠김 유지). 예치는 멱등.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">시작</span>
+      <span class="arr"><i>총무 개설</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-10</b> 모임 만들기(총무)</figcaption><div class="slot"><span class="slot__badge">W-10</span><iframe src="screens/W-10.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>부원 참여</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-11</b> 차수 상세</figcaption><div class="slot"><span class="slot__badge">W-11</span><iframe src="screens/W-11.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>예치</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-12</b> 예치</figcaption><div class="slot"><span class="slot__badge">W-12</span><iframe src="screens/W-12.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <div class="dec">잔액 충분?</div>
+      <div class="split">
+        <div class="path">
+          <span class="lbl n">부족</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-13</b> 충전</figcaption><div class="slot"><span class="slot__badge">W-13</span><iframe src="screens/W-13.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>충전 후</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-14</b> 예치 완료</figcaption><div class="slot"><span class="slot__badge">W-14</span><iframe src="screens/W-14.html" scrolling="no" loading="lazy"></iframe></div></figure>
+        </div>
+        <div class="path">
+          <span class="lbl y">충분</span>
+          <span class="arr"><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-14</b> 예치 완료</figcaption><div class="slot"><span class="slot__badge">W-14</span><iframe src="screens/W-14.html" scrolling="no" loading="lazy"></iframe></div></figure>
+        </div>
+      </div>
+      <span class="arr"><span>→</span></span>
+      <div class="dec">만남 전 취소?</div>
+      <div class="split">
+        <div class="path">
+          <span class="lbl n">취소</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-15</b> 취소·환불</figcaption><div class="slot"><span class="slot__badge">W-15</span><iframe src="screens/W-15.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end">즉시 환불</span>
+        </div>
+        <div class="path">
+          <span class="lbl y">유지</span>
+          <span class="arr"><i>만남시각 도달</i><span>→</span></span>
+          <span class="chip jump">S4 — 락·동의</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= S4 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S4 · 만남시각 락 → 10분 동의 창 / 노쇼 → 총무 출금</h3><span class="persona">총무 + 부원</span><span class="must">Must ⭐</span></div>
+    <p class="lane__sum">락 → 총무 동의 요청(락 스냅샷 전원 푸시, 10분 창) → 부원 동의(거절 없음) → 마감(미응답=노쇼) → 동의자≥1이면 총무 출금(정산 타이머), 0명이면 VOIDED 전원 환불.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">만남시각 도달</span>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-11</b> 차수 상세(락)</figcaption><div class="slot"><span class="slot__badge">W-11</span><iframe src="screens/W-11.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>총무</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-TR</b> 총무 대시보드</figcaption><div class="slot"><span class="slot__badge">W-TR</span><iframe src="screens/W-TR.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>동의 요청 발송</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-26</b> 알림(전원)</figcaption><div class="slot"><span class="slot__badge">W-26</span><iframe src="screens/W-26.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>부원</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-16</b> 동의 10분창</figcaption><div class="slot"><span class="slot__badge">W-16</span><iframe src="screens/W-16.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <div class="note">미응답 = <b>노쇼</b>: 예치금×노쇼율(주최자 설정) 몰수 → 에스크로 잔류 + 잔여 환불</div>
+      <span class="arr"><i>10분 마감</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-17</b> 동의 마감 결과</figcaption><div class="slot"><span class="slot__badge">W-17</span><iframe src="screens/W-17.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <div class="dec">동의자 ≥ 1?</div>
+      <div class="split">
+        <div class="path">
+          <span class="lbl y">예</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-18</b> 총무 출금</figcaption><div class="slot"><span class="slot__badge">W-18</span><iframe src="screens/W-18.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>출금</i><span>→</span></span>
+          <span class="chip jump">S5 — 차수 종료·정산</span>
+        </div>
+        <div class="path">
+          <span class="lbl n">0명</span>
+          <span class="arr"><span>→</span></span>
+          <span class="chip end stop">VOIDED · 전원 환불</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= S5 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S5 · 차수 종료 OCR → 잉여 환급 / 적자 추가정산 → 자동 정산</h3><span class="persona">총무 → 부원</span><span class="must">Must ⭐</span></div>
+    <p class="lane__sum">차수 종료(영수증 OCR 강제 매핑·실지출 확정) → 잉여면 잔액 반납·균등 환급 / 적자면 동의자 균등 추가징수(미납=프로필 표시+지속 푸시) → 자동 정산(DONE) → 현금화. 불변식: DONE 시 잔액 0.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">출금 완료</span>
+      <span class="arr"><i>차수 종료하기</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-19</b> 차수 종료 OCR</figcaption><div class="slot"><span class="slot__badge">W-19</span><iframe src="screens/W-19.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <div class="dec">잉여 / 적자?</div>
+      <div class="split">
+        <div class="path">
+          <span class="lbl y">잉여</span>
+          <span class="arr"><i>자동 균등환급</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-23</b> 정산 완료</figcaption><div class="slot"><span class="slot__badge">W-23</span><iframe src="screens/W-23.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-25</b> 지갑/마이</figcaption><div class="slot"><span class="slot__badge">W-25</span><iframe src="screens/W-25.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>현금화</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-24</b> 현금화</figcaption><div class="slot"><span class="slot__badge">W-24</span><iframe src="screens/W-24.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end">완료</span>
+        </div>
+        <div class="path">
+          <span class="lbl n">적자</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-21</b> 추가정산 요청</figcaption><div class="slot"><span class="slot__badge">W-21</span><iframe src="screens/W-21.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>부원</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-22</b> 추가정산 납부</figcaption><div class="slot"><span class="slot__badge">W-22</span><iframe src="screens/W-22.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <div class="dec">납부?</div>
+          <div class="split">
+            <div class="path"><span class="lbl y">납부</span><span class="arr"><span>→</span></span><span class="chip jump">W-23 정산 완료</span></div>
+            <div class="path"><span class="lbl n">미납</span><span class="arr"><span>→</span></span><span class="chip jump">S8 — 미납 추적</span></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= S6 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S6 · 소셜 — 쇼 피드 / DM</h3><span class="persona">부원</span><span class="should">Should</span></div>
+    <p class="lane__sum">쇼 글·사진 작성/반응/신고(→ 모더레이션). DM 대화. 운영 문의 → CSTicket. 쇼츠(숏폼) 제외 — 글/사진 피드만.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">시작</span>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-05</b> 홈</figcaption><div class="slot"><span class="slot__badge">W-05</span><iframe src="screens/W-05.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <div class="split">
+        <div class="path">
+          <span class="lbl alt">쇼 탭</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-27</b> 쇼 피드</figcaption><div class="slot"><span class="slot__badge">W-27</span><iframe src="screens/W-27.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <div class="split">
+            <div class="path">
+              <span class="lbl alt">글 열기</span>
+              <figure class="wf"><figcaption class="wf__cap"><b>W-33</b> 쇼 상세</figcaption><div class="slot"><span class="slot__badge">W-33</span><iframe src="screens/W-33.html" scrolling="no" loading="lazy"></iframe></div></figure>
+              <span class="arr"><span>→</span></span>
+              <div class="split">
+                <div class="path"><span class="lbl y">댓글·좋아요</span><span class="chip end">반응</span></div>
+                <div class="path">
+                  <span class="lbl n">신고</span>
+                  <figure class="wf"><figcaption class="wf__cap"><b>W-31</b> 신고</figcaption><div class="slot"><span class="slot__badge">W-31</span><iframe src="screens/W-31.html" scrolling="no" loading="lazy"></iframe></div></figure>
+                  <span class="arr"><span>→</span></span>
+                  <span class="chip jump">S7 — 모더레이션(W-44)</span>
+                </div>
+              </div>
+            </div>
+            <div class="path">
+              <span class="lbl alt">작성</span>
+              <figure class="wf"><figcaption class="wf__cap"><b>W-28</b> 글 작성</figcaption><div class="slot"><span class="slot__badge">W-28</span><iframe src="screens/W-28.html" scrolling="no" loading="lazy"></iframe></div></figure>
+              <span class="chip end">게시</span>
+            </div>
+          </div>
+        </div>
+        <div class="path">
+          <span class="lbl alt">DM 탭</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-29</b> DM 목록</figcaption><div class="slot"><span class="slot__badge">W-29</span><iframe src="screens/W-29.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-30</b> 대화방</figcaption><div class="slot"><span class="slot__badge">W-30</span><iframe src="screens/W-30.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end">대화</span>
+        </div>
+        <div class="path">
+          <span class="lbl alt">문의</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-32</b> 고객센터</figcaption><div class="slot"><span class="slot__badge">W-32</span><iframe src="screens/W-32.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>CSTicket</i><span>→</span></span>
+          <span class="chip jump">S7 — CS(W-45)</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= S7 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S7 · 운영자 — 심사·지급 감독·대사·모더레이션</h3><span class="persona admin">운영자</span><span class="must">Must</span></div>
+    <p class="lane__sum">대시보드에서 분기: 모임/KYC 심사, 에스크로·원장 감사(append-only·CSV), 카카오페이 충전 대사, 신고 모더레이션, CS, 푸시, 리포트. 민감 작업은 AuditLog.</p>
+    <div class="track"><div class="flow">
+      <span class="chip start">로그인</span>
+      <span class="arr"><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap admin"><b>W-40</b> 대시보드</figcaption><div class="slot slot--admin"><span class="slot__badge">W-40</span><iframe src="screens/W-40.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><span>→</span></span>
+      <div class="split">
+        <div class="path"><span class="lbl alt">심사</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-41</b> 심사 큐</figcaption><div class="slot slot--admin"><span class="slot__badge">W-41</span><iframe src="screens/W-41.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+        <div class="path"><span class="lbl alt">감사</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-42</b> 원장 감사</figcaption><div class="slot slot--admin"><span class="slot__badge">W-42</span><iframe src="screens/W-42.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+        <div class="path"><span class="lbl alt">대사</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-43</b> 충전 대사</figcaption><div class="slot slot--admin"><span class="slot__badge">W-43</span><iframe src="screens/W-43.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+        <div class="path"><span class="lbl alt">모더</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-44</b> 모더레이션</figcaption><div class="slot slot--admin"><span class="slot__badge">W-44</span><iframe src="screens/W-44.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+        <div class="path"><span class="lbl alt">CS</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-45</b> CS 티켓</figcaption><div class="slot slot--admin"><span class="slot__badge">W-45</span><iframe src="screens/W-45.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+        <div class="path"><span class="lbl alt">푸시</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-46</b> 푸시 발송</figcaption><div class="slot slot--admin"><span class="slot__badge">W-46</span><iframe src="screens/W-46.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+        <div class="path"><span class="lbl alt">리포트</span><figure class="wf"><figcaption class="wf__cap admin"><b>W-47</b> 리포트</figcaption><div class="slot slot--admin"><span class="slot__badge">W-47</span><iframe src="screens/W-47.html" scrolling="no" loading="lazy"></iframe></div></figure></div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= S8 ============================= -->
+  <section class="lane">
+    <div class="lane__h"><h3>S8 · 엣지 — 노쇼 · 추가징수 미납 · 충전 지연 · 환불 분쟁</h3><span class="persona">부원·운영자</span><span class="should">Should</span></div>
+    <p class="lane__sum">예외 4종. 강제 출금 없음 — 미납은 프로필 표시 + 지속 푸시로만. 충전 지연은 안내 + 재시도/DLQ. 모두 멱등 전제.</p>
+    <div class="track"><div class="flow">
+      <div class="split">
+        <div class="path">
+          <span class="lbl n">노쇼</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-16</b> 동의창(미응답)</figcaption><div class="slot"><span class="slot__badge">W-16</span><iframe src="screens/W-16.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>페널티 몰수</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-25</b> 지갑</figcaption><div class="slot"><span class="slot__badge">W-25</span><iframe src="screens/W-25.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end">잔여 환급</span>
+        </div>
+        <div class="path">
+          <span class="lbl n">미납</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-22</b> 추가정산(미납)</figcaption><div class="slot"><span class="slot__badge">W-22</span><iframe src="screens/W-22.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-25</b> 프로필</figcaption><div class="slot"><span class="slot__badge">W-25</span><iframe src="screens/W-25.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>지속 푸시</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-26</b> 알림</figcaption><div class="slot"><span class="slot__badge">W-26</span><iframe src="screens/W-26.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end stop">미납 추적 지속</span>
+        </div>
+        <div class="path">
+          <span class="lbl n">충전 지연</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-13</b> 충전(지연)</figcaption><div class="slot"><span class="slot__badge">W-13</span><iframe src="screens/W-13.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-26</b> 안내 알림</figcaption><div class="slot"><span class="slot__badge">W-26</span><iframe src="screens/W-26.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <div class="note">재시도 · DLQ · 멱등(partner_order_id) — 이중 확정 금지</div>
+          <span class="chip end">충전 확정</span>
+        </div>
+        <div class="path">
+          <span class="lbl n">환불 분쟁</span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-32</b> 고객센터</figcaption><div class="slot"><span class="slot__badge">W-32</span><iframe src="screens/W-32.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>CSTicket</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap admin"><b>W-45</b> CS(어드민)</figcaption><div class="slot slot--admin"><span class="slot__badge">W-45</span><iframe src="screens/W-45.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="chip end">처리</span>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- ============================= 레지스트리 ============================= -->
+  <section class="reg">
+    <h2>페이지 레지스트리 (W-xx) · 실제 화면 소스</h2>
+    <p>각 화면은 <code>design/system/screens/W-xx.html</code> — v2 디자인시스템으로 만든 단독 실행 화면(독립적으로도 열림). 등장 시나리오 · 소스 매핑.</p>
+    <table>
+      <thead><tr><th>ID</th><th>화면</th><th>등장 시나리오</th><th>소스</th></tr></thead>
+      <tbody>
+        <tr><td><code>W-01</code></td><td>온보딩·SNS 로그인 (한 화면)</td><td>S1</td><td>screens/W-01.html</td></tr>
+        <tr><td><code>W-03</code></td><td>KYC 본인인증</td><td>S1</td><td>screens/W-03.html</td></tr>
+        <tr><td><code>W-04</code></td><td>지갑 개설 완료</td><td>S1</td><td>screens/W-04.html</td></tr>
+        <tr><td><code>W-05</code></td><td>홈 (잔액·내 모임·4탭)</td><td>S1·S2·S6</td><td>screens/W-05.html</td></tr>
+        <tr><td><code>W-06</code></td><td>모임 탐색(태그)</td><td>S2</td><td>screens/W-06.html</td></tr>
+        <tr><td><code>W-07</code></td><td>클럽 상세(안심예산안)</td><td>S2</td><td>screens/W-07.html</td></tr>
+        <tr><td><code>W-08</code></td><td>가입 신청서(폼빌더)</td><td>S2</td><td>screens/W-08.html</td></tr>
+        <tr><td><code>W-09</code></td><td>신청 완료/대기</td><td>S2</td><td>screens/W-09.html</td></tr>
+        <tr><td><code>W-10</code></td><td>모임 만들기/차수 개설(총무)</td><td>S3</td><td>screens/W-10.html</td></tr>
+        <tr><td><code>W-11</code></td><td>차수/펀딩 상세(스테퍼)</td><td>S3·S4</td><td>screens/W-11.html</td></tr>
+        <tr><td><code>W-12</code></td><td>예치</td><td>S3</td><td>screens/W-12.html</td></tr>
+        <tr><td><code>W-13</code></td><td>카카오페이 충전</td><td>S3·S8</td><td>screens/W-13.html</td></tr>
+        <tr><td><code>W-14</code></td><td>예치 완료(OPEN)</td><td>S3</td><td>screens/W-14.html</td></tr>
+        <tr><td><code>W-15</code></td><td>만남 전 취소·환불</td><td>S3</td><td>screens/W-15.html</td></tr>
+        <tr><td><code>W-16</code></td><td>만남 동의 10분창</td><td>S4·S8</td><td>screens/W-16.html</td></tr>
+        <tr><td><code>W-17</code></td><td>동의 마감 결과(노쇼·페널티)</td><td>S4</td><td>screens/W-17.html</td></tr>
+        <tr><td><code>W-18</code></td><td>총무 출금</td><td>S4</td><td>screens/W-18.html</td></tr>
+        <tr><td><code>W-19</code></td><td>차수 종료 OCR (흑자 환급 포함)</td><td>S5</td><td>screens/W-19.html</td></tr>
+        <tr><td><code>W-21</code></td><td>정산 미리보기 — 추가정산</td><td>S5</td><td>screens/W-21.html</td></tr>
+        <tr><td><code>W-22</code></td><td>추가정산 납부(부원)</td><td>S5·S8</td><td>screens/W-22.html</td></tr>
+        <tr><td><code>W-23</code></td><td>정산 완료(DONE)</td><td>S5</td><td>screens/W-23.html</td></tr>
+        <tr><td><code>W-24</code></td><td>현금화(cashout)</td><td>S5</td><td>screens/W-24.html</td></tr>
+        <tr><td><code>W-25</code></td><td>지갑·마이(미납·신용등급)</td><td>S5·S8</td><td>screens/W-25.html</td></tr>
+        <tr><td><code>W-26</code></td><td>알림</td><td>S2·S4·S8</td><td>screens/W-26.html</td></tr>
+        <tr><td><code>W-27</code></td><td>쇼 피드(글·사진)</td><td>S6</td><td>screens/W-27.html</td></tr>
+        <tr><td><code>W-28</code></td><td>쇼 글 작성</td><td>S6</td><td>screens/W-28.html</td></tr>
+        <tr><td><code>W-29</code></td><td>DM 목록</td><td>S6</td><td>screens/W-29.html</td></tr>
+        <tr><td><code>W-30</code></td><td>DM 대화방</td><td>S6</td><td>screens/W-30.html</td></tr>
+        <tr><td><code>W-31</code></td><td>신고</td><td>S6</td><td>screens/W-31.html</td></tr>
+        <tr><td><code>W-32</code></td><td>고객센터(CSTicket)</td><td>S6·S8</td><td>screens/W-32.html</td></tr>
+        <tr><td><code>W-33</code></td><td>쇼 상세(글·사진·댓글)</td><td>S6</td><td>screens/W-33.html</td></tr>
+        <tr><td><code>W-TR</code></td><td>총무 대시보드(앱)</td><td>S4</td><td>screens/W-TR.html</td></tr>
+        <tr class="adm"><td><code>W-40</code></td><td>어드민 대시보드</td><td>S7</td><td>screens/W-40.html</td></tr>
+        <tr class="adm"><td><code>W-41</code></td><td>심사 큐(모임·KYC)</td><td>S7</td><td>screens/W-41.html</td></tr>
+        <tr class="adm"><td><code>W-42</code></td><td>에스크로·원장 감사(CSV)</td><td>S7</td><td>screens/W-42.html</td></tr>
+        <tr class="adm"><td><code>W-43</code></td><td>카카오페이 충전 대사</td><td>S7</td><td>screens/W-43.html</td></tr>
+        <tr class="adm"><td><code>W-44</code></td><td>모더레이션 큐</td><td>S6·S7</td><td>screens/W-44.html</td></tr>
+        <tr class="adm"><td><code>W-45</code></td><td>CS 티켓 처리</td><td>S6·S7·S8</td><td>screens/W-45.html</td></tr>
+        <tr class="adm"><td><code>W-46</code></td><td>푸시 발송</td><td>S7</td><td>screens/W-46.html</td></tr>
+        <tr class="adm"><td><code>W-47</code></td><td>리포트</td><td>S7</td><td>screens/W-47.html</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+</body>
+</html>

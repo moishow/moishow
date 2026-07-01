@@ -1,0 +1,84 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — W-19 차수 종료(OCR·증빙)</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  .field-hint { font-size: var(--fs-caption); color: var(--text-muted); margin: 7px 20px 0; line-height: var(--lh-normal); }
+  /* 업로드 */
+  .upload { margin: 14px 20px 0; border: 1.5px dashed var(--border-strong); border-radius: var(--radius-lg); padding: 20px 16px; text-align: center; background: var(--surface-sunken); }
+  .upload .icon { width: 26px; height: 26px; color: var(--color-primary); }
+  .upload__t { font-size: 13.5px; font-weight: var(--weight-bold); color: var(--text-title); margin-top: 8px; }
+  .upload__d { font-size: var(--fs-caption); color: var(--text-muted); margin-top: 3px; }
+  /* 첨부됨 칩 */
+  .attach { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 20px 0; }
+  .attach__chip { display: inline-flex; align-items: center; gap: 6px; background: var(--color-success-soft); color: var(--color-success-strong); border-radius: var(--radius-pill); padding: 6px 11px; font-size: var(--fs-caption); font-weight: var(--weight-semibold); }
+  .attach__chip .icon { width: 13px; height: 13px; }
+  /* OCR (수정 가능) */
+  .ocr { margin: 12px 20px 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow-xs); }
+  .ocr__top { display: flex; align-items: center; gap: 8px; font-size: var(--fs-caption); font-weight: var(--weight-semibold); color: var(--color-success-strong); }
+  .ocr__top .icon { width: 15px; height: 15px; }
+  .ocr__amtrow { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .ocr__amtinput { font-size: 24px; font-weight: var(--weight-extrabold); color: var(--text-strong); letter-spacing: var(--ls-display); font-feature-settings: var(--font-feature-numeric); text-align: right; border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 5px 12px; width: 168px; background: var(--surface-page); }
+  .ocr__amtrow .won { font-size: var(--fs-subtitle); font-weight: var(--weight-bold); color: var(--text-body); }
+  .ocr__edit { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; background: var(--color-primary-soft); color: var(--color-primary); border: none; border-radius: var(--radius-md); padding: 8px 12px; font-size: var(--fs-caption); font-weight: var(--weight-bold); }
+  .ocr__edit .icon { width: 14px; height: 14px; }
+  /* 정산 차액 breakdown */
+  .breakdown__row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: 13.5px; color: var(--text-body); }
+  .breakdown__row .v { font-weight: var(--weight-semibold); color: var(--text-title); font-feature-settings: var(--font-feature-numeric); }
+  .breakdown__row.is-minus .v { color: var(--color-danger-strong); }
+  .breakdown__total { display: flex; align-items: baseline; justify-content: space-between; padding: 13px 0 2px; margin-top: 4px; border-top: 1.5px solid var(--border-default); }
+  .breakdown__total .k { font-size: var(--fs-body); font-weight: var(--weight-bold); color: var(--text-title); }
+  .breakdown__total .v { font-size: 20px; font-weight: var(--weight-extrabold); color: var(--text-strong); letter-spacing: var(--ls-display); font-feature-settings: var(--font-feature-numeric); }
+  /* 종료 게이트 안내 */
+  .gate { display: flex; gap: 8px; margin: 14px 20px 0; background: var(--color-primary-soft); border-radius: var(--radius-md); padding: 10px 12px; font-size: var(--fs-caption); color: var(--text-body); line-height: var(--lh-normal); }
+  .gate .icon { width: 15px; height: 15px; color: var(--color-primary); flex-shrink: 0; margin-top: 1px; }
+</style></head><body>
+  <div class="phone"><div class="screen surface-money">
+    <header class="appbar">
+      <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">차수 종료하기</div>
+      <span style="width:24px"></span>
+    </header>
+    <div class="headline"><h1>영수증·이체내역을 올리면<br><span class="light">OCR</span>이 금액을 읽어요</h1></div>
+
+    <div class="upload">
+      <svg class="icon"><path d="M12 16V5M8 9l4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <div class="upload__t">영수증 · 이체내역 촬영·업로드</div>
+      <div class="upload__d">식대·대관 영수증 또는 계좌 이체내역 (둘 중 하나 이상 필수)</div>
+    </div>
+    <div class="attach">
+      <span class="attach__chip"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>영수증 2건</span>
+      <span class="attach__chip"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>이체내역 1건</span>
+    </div>
+
+    <div class="ocr">
+      <div class="ocr__top"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>OCR 인식 완료 · 금액 직접 수정 가능</div>
+      <div class="ocr__amtrow">
+        <input class="ocr__amtinput num" value="1,540,000" inputmode="numeric" aria-label="실제 지출 금액">
+        <span class="won">원</span>
+        <button class="ocr__edit"><svg class="icon"><path d="M5 19h14M14 4l4 4-9 9H5v-4z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>수정</button>
+      </div>
+      <div class="field-hint" style="margin-left:0;margin-right:0">인식이 틀리면 금액을 직접 고치세요. 수정하면 아래 정산이 다시 계산돼요.</div>
+    </div>
+
+    <div class="card">
+      <div class="card__head"><div class="card__title">정산 미리보기</div><span class="badge badge--done">흑자 · 환급</span></div>
+      <div class="breakdown">
+        <div class="breakdown__row">모인 금액(출금)<span class="v num">1,664,000</span></div>
+        <div class="breakdown__row is-minus">실제 지출(증빙)<span class="v num">−1,540,000</span></div>
+        <div class="breakdown__total"><span class="k">잔액 · 균등 환급</span><span class="v num">+124,000원</span></div>
+      </div>
+      <div class="field-hint" style="margin:8px 0 0">참여 32명에게 <b style="color:var(--text-body)">1인당 +3,875P</b> 균등 환급돼요.</div>
+    </div>
+
+    <div class="gate">
+      <svg class="icon"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+      <span><b>영수증 또는 이체내역</b>이 있어야 차수를 종료할 수 있어요. (증빙 없이 종료 불가)</span>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">1인당 환급<br><b class="num">+3,875P</b></div>
+      <button class="btn btn--primary">차수 종료 · 균등 환급</button>
+    </div>
+  </div></div>
+</body></html>

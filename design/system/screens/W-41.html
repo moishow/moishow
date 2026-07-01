@@ -1,0 +1,115 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — 심사 큐 (W-41)</title>
+<!-- W-41 심사 큐(웹): 모임(클럽) 개설 심사. 개인 KYC는 본인인증 기관에서 통과 시 자동 승인 →
+     여기선 안 다룬다(예외/재심사 탭만). '사업자' 개념 없음(모이쇼 = 동아리·소모임). -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:18px 22px 24px}
+
+  .banner{display:flex;gap:8px;background:var(--color-primary-soft);color:var(--color-primary);border-radius:var(--radius-md);padding:11px 14px;font-size:var(--fs-caption);font-weight:var(--weight-medium);line-height:var(--lh-normal);margin-bottom:15px}
+  .banner .icon{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+  .banner b{font-weight:var(--weight-bold)}
+
+  .segtabs{display:inline-flex;background:var(--surface-sunken);border-radius:var(--radius-pill);padding:4px;gap:2px;margin-bottom:16px}
+  .segtabs button{border:none;background:transparent;font:var(--text-body-strong);color:var(--text-muted);padding:8px 18px;border-radius:var(--radius-pill);display:inline-flex;align-items:center;gap:7px}
+  .segtabs button.is-active{background:var(--surface-card);color:var(--color-primary);box-shadow:var(--shadow-xs)}
+  .segtabs .cnt{font-size:11px;font-weight:var(--weight-bold);background:var(--color-primary-soft);color:var(--color-primary);border-radius:var(--radius-pill);padding:1px 7px}
+  .segtabs button:not(.is-active) .cnt{background:var(--border-subtle);color:var(--text-muted)}
+
+  .rev-row{display:flex;align-items:center;gap:13px;padding:15px 0;border-bottom:1px solid var(--border-subtle)}
+  .rev-row:last-child{border-bottom:none}
+  .rev-av{width:42px;height:42px;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;font-weight:var(--weight-bold);font-size:13px;color:var(--white);flex-shrink:0}
+  .rev-body{flex:1;min-width:0}
+  .rev-title{font-size:var(--fs-subtitle);font-weight:var(--weight-semibold);color:var(--text-title);display:flex;align-items:center;gap:7px}
+  .rev-sub{font-size:var(--fs-caption);color:var(--text-muted);margin-top:3px}
+  .rev-act{display:flex;gap:8px;flex-shrink:0}
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .card-head .h{font-size:var(--fs-body);font-weight:var(--weight-bold);color:var(--text-title)}
+  .card-head .m{font-size:var(--fs-caption);color:var(--text-muted)}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>심사 큐</b>
+    <span class="admin-me">운영자 김산<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+
+    <div class="banner">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+      <span>개인 <b>신분인증(KYC)은 본인인증 기관(PASS·카카오·토스)에서 통과하면 자동 승인</b>돼요. 운영자는 여기서 <b>모임(클럽) 개설</b>과 이상·재심사 건만 봅니다.</span>
+    </div>
+
+    <div class="segtabs">
+      <button class="is-active"><svg class="icon icon--sm" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="16.5" cy="10" r="2.4" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3.5 19c0-3 2.4-5 5.5-5s5.5 2 5.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>모임 개설 <span class="cnt num">4</span></button>
+      <button><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 4l9 16H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>이상·재심사 <span class="cnt num">0</span></button>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="h">모임 개설 대기</span>
+        <span class="m">오래된 순 · <span class="num">4</span>건</span>
+      </div>
+
+      <div class="rev-row">
+        <div class="rev-av" style="background:var(--color-warm)">러닝</div>
+        <div class="rev-body">
+          <div class="rev-title">성수 러닝크루 <span class="badge badge--progress">운동</span></div>
+          <div class="rev-sub">개설자 김산 · “함께 성수 한강 뛰는 러닝 모임” · 예상 <span class="num">12</span>명 · 15분 전 접수</div>
+        </div>
+        <div class="rev-act">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--primary btn--sm">승인</button>
+        </div>
+      </div>
+
+      <div class="rev-row">
+        <div class="rev-av" style="background:var(--color-primary)">코드</div>
+        <div class="rev-body">
+          <div class="rev-title">코드리뷰 스터디 <span class="badge badge--progress">스터디</span></div>
+          <div class="rev-sub">개설자 이서윤 · “매주 수요일 코드리뷰·회고” · 예상 <span class="num">8</span>명 · 22분 전 접수</div>
+        </div>
+        <div class="rev-act">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--primary btn--sm">승인</button>
+        </div>
+      </div>
+
+      <div class="rev-row">
+        <div class="rev-av" style="background:var(--mint-600)">보드</div>
+        <div class="rev-body">
+          <div class="rev-title">주말 보드게임 모임 <span class="badge badge--progress">취미</span></div>
+          <div class="rev-sub">개설자 박도현 · “토요일 오후 보드게임” · 예상 <span class="num">10</span>명 · 41분 전 접수</div>
+        </div>
+        <div class="rev-act">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--primary btn--sm">승인</button>
+        </div>
+      </div>
+
+      <div class="rev-row">
+        <div class="rev-av" style="background:var(--amber-500)">나눔</div>
+        <div class="rev-body">
+          <div class="rev-title">봉사동아리 나눔 <span class="badge badge--progress">봉사</span></div>
+          <div class="rev-sub">개설자 정하람 · “월 1회 연탄·급식 봉사” · 예상 <span class="num">20</span>명 · 1시간 전 접수</div>
+        </div>
+        <div class="rev-act">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--primary btn--sm">승인</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

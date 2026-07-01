@@ -1,0 +1,129 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — 에스크로·원장 감사 (W-42)</title>
+<!-- W-42 원장 감사(웹·돈 관련): 블루 잔액 슬랩 + append-only 원장 테이블 + CSV. 코랄 금지. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:18px 22px 24px}
+  .admin-body .slab{margin:0 0 14px}
+  .admin-body .card{margin:0}
+
+  .slab__grid{display:flex;gap:10px;margin-top:14px}
+  .slab__grid .cell{flex:1;background:rgba(255,255,255,.13);border-radius:var(--radius-lg);padding:11px 12px}
+  .slab__grid .k{font-size:var(--fs-caption);color:#DCE4FF}
+  .slab__grid .v{font-size:16px;font-weight:var(--weight-bold);margin-top:4px;font-feature-settings:var(--font-feature-numeric)}
+
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .card-head .h{font-size:var(--fs-body);font-weight:var(--weight-bold);color:var(--text-title)}
+
+  .note-strip{display:flex;align-items:center;gap:9px;background:var(--color-primary-soft);border-radius:var(--radius-md);padding:10px 13px;margin-bottom:14px;font-size:var(--fs-caption);color:var(--color-primary);font-weight:var(--weight-semibold)}
+  .note-strip .icon{width:16px;height:16px;flex-shrink:0}
+
+  .table{width:100%;border-collapse:collapse;font-size:var(--fs-caption)}
+  .table thead th{text-align:left;font-weight:var(--weight-semibold);color:var(--text-muted);padding:0 6px 8px;border-bottom:1px solid var(--border-default)}
+  .table th.r,.table td.r{text-align:right}
+  .table td{padding:11px 6px;border-bottom:1px solid var(--border-subtle);color:var(--text-body)}
+  .table tr:last-child td{border-bottom:none}
+  .table td.amt{font-weight:var(--weight-bold);font-feature-settings:var(--font-feature-numeric)}
+  .table td.bal{color:var(--text-strong);font-weight:var(--weight-semibold);font-feature-settings:var(--font-feature-numeric)}
+  .amt-in{color:var(--color-success-strong)}
+  .amt-out{color:var(--text-strong)}
+  .ltype{display:inline-block;font-size:11px;font-weight:var(--weight-semibold);color:var(--color-primary);background:var(--color-primary-soft);border-radius:var(--radius-mini);padding:2px 8px}
+  .ltype--out{color:var(--text-body);background:var(--surface-sunken)}
+  .ltype--done{color:var(--color-success-strong);background:var(--color-success-soft)}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>에스크로 · 원장 감사</b>
+    <span class="admin-me">디자인동아리 모디 · 3차<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+
+    <div class="slab">
+      <div class="slab__label">에스크로 현재 잔액 · 원장 분개 합 기준</div>
+      <div class="slab__figure"><span class="big num">12,480,000</span><span class="unit">원</span></div>
+      <div class="slab__grid">
+        <div class="cell"><div class="k">누적 예치</div><div class="v num">+15,900,000</div></div>
+        <div class="cell"><div class="k">누적 출금</div><div class="v num">-3,470,000</div></div>
+        <div class="cell"><div class="k">반납·환급</div><div class="v num">+50,000</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <span class="h">원장 분개 (LedgerEntry)</span>
+        <button class="btn btn--secondary btn--sm">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          CSV 내보내기
+        </button>
+      </div>
+
+      <div class="note-strip">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        원장은 append-only — 수정·삭제 불가. 정정은 반대 분개로만 기록됩니다.
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr><th>일시 (UTC)</th><th>유형</th><th class="r">금액</th><th class="r">잔액</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="num">06-30 10:12:04</td>
+            <td><span class="ltype ltype--done">정산 환급</span></td>
+            <td class="amt r amt-in num">+50,000</td>
+            <td class="bal r num">12,480,000</td>
+          </tr>
+          <tr>
+            <td class="num">06-30 09:58:41</td>
+            <td><span class="ltype ltype--out">총무 출금</span></td>
+            <td class="amt r amt-out num">-1,820,000</td>
+            <td class="bal r num">12,430,000</td>
+          </tr>
+          <tr>
+            <td class="num">06-30 09:40:00</td>
+            <td><span class="ltype">차수 락</span></td>
+            <td class="amt r num" style="color:var(--text-faint)">0</td>
+            <td class="bal r num">14,250,000</td>
+          </tr>
+          <tr>
+            <td class="num">06-29 21:03:17</td>
+            <td><span class="ltype">회비 예치</span></td>
+            <td class="amt r amt-in num">+52,000</td>
+            <td class="bal r num">14,250,000</td>
+          </tr>
+          <tr>
+            <td class="num">06-29 20:47:55</td>
+            <td><span class="ltype">회비 예치</span></td>
+            <td class="amt r amt-in num">+52,000</td>
+            <td class="bal r num">14,198,000</td>
+          </tr>
+          <tr>
+            <td class="num">06-29 20:31:10</td>
+            <td><span class="ltype ltype--out">예치 취소</span></td>
+            <td class="amt r amt-out num">-52,000</td>
+            <td class="bal r num">14,146,000</td>
+          </tr>
+          <tr>
+            <td class="num">06-29 19:58:02</td>
+            <td><span class="ltype">회비 예치</span></td>
+            <td class="amt r amt-in num">+52,000</td>
+            <td class="bal r num">14,198,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>모이쇼 — 컴포넌트 갤러리</title>
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="components.css" />
+    <style>
+      body {
+        background: var(--surface-sunken);
+        padding: 32px 0 80px;
+      }
+      .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .gtitle {
+        font: var(--text-heading);
+        color: var(--text-strong);
+        margin-bottom: 4px;
+      }
+      .gsub {
+        font-size: var(--fs-body);
+        color: var(--text-muted);
+        margin-bottom: 28px;
+      }
+      .sec {
+        background: var(--surface-card);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-xl);
+        padding: 22px;
+        margin-bottom: 20px;
+        box-shadow: var(--shadow-card);
+      }
+      .sec > h2 {
+        font-size: var(--fs-title);
+        font-weight: var(--weight-bold);
+        color: var(--text-title);
+        margin-bottom: 16px;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+      .swatch {
+        width: 96px;
+      }
+      .swatch__chip {
+        height: 52px;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-subtle);
+      }
+      .swatch__name {
+        font-size: var(--fs-micro);
+        color: var(--text-title);
+        margin-top: 6px;
+        font-weight: var(--weight-semibold);
+      }
+      .swatch__hex {
+        font-size: var(--fs-micro);
+        color: var(--text-muted);
+        font-feature-settings: var(--font-feature-numeric);
+      }
+      .lbl {
+        font-size: var(--fs-micro);
+        color: var(--text-faint);
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-top: 6px;
+      }
+      .demo {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .demo > div {
+        flex: 1;
+        min-width: 280px;
+        border: 1px dashed var(--border-default);
+        border-radius: var(--radius-lg);
+        padding: 16px;
+      }
+      .mascot-row {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+      .mascot-row img {
+        height: 84px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="gtitle">모이쇼 디자인시스템 — 컴포넌트 갤러리</div>
+      <div class="gsub">tokens.css + components.css. 새 화면은 여기 컴포넌트를 조합한다. 색은 화면 종류(money/community)가 통제한다.</div>
+
+      <!-- 컬러 -->
+      <div class="sec">
+        <h2>컬러</h2>
+        <div class="row">
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--color-primary)"></div>
+            <div class="swatch__name">Primary 블루</div>
+            <div class="swatch__hex">#3B5CFF</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--text-strong)"></div>
+            <div class="swatch__name">Ink 금액</div>
+            <div class="swatch__hex">#161A24</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--color-success)"></div>
+            <div class="swatch__name">Success 민트</div>
+            <div class="swatch__hex">#00C781</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--color-warm)"></div>
+            <div class="swatch__name">Warm 코랄</div>
+            <div class="swatch__hex">#FF6B5C</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--color-danger)"></div>
+            <div class="swatch__name">Danger 크림슨</div>
+            <div class="swatch__hex">#F0384B</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--color-warning)"></div>
+            <div class="swatch__name">Warning 앰버</div>
+            <div class="swatch__hex">#FFA722</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__chip" style="background: var(--surface-sunken)"></div>
+            <div class="swatch__name">Surface</div>
+            <div class="swatch__hex">#F4F6FA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 색 출입 권한 데모 -->
+      <div class="sec">
+        <h2>색 출입 권한 규칙</h2>
+        <div class="demo">
+          <div class="surface-money">
+            <div class="lbl">money 화면 — 코랄·크림슨 금지</div>
+            <div class="row" style="margin-top: 10px">
+              <span class="badge badge--done">정산 완료</span>
+              <span class="badge badge--progress">정산 진행</span>
+            </div>
+            <button class="btn btn--primary btn--block" style="margin-top: 8px">현금화</button>
+          </div>
+          <div class="surface-community">
+            <div class="lbl">community 화면 — 코랄 풀가동</div>
+            <div class="row" style="margin-top: 10px">
+              <span class="chip">동아리</span>
+              <span class="badge badge--waiting">참여 대기</span>
+            </div>
+            <button class="btn btn--warm btn--block" style="margin-top: 8px">가입 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 타이포 -->
+      <div class="sec">
+        <h2>타이포그래피</h2>
+        <div class="t-editorial">에디토리얼 헤드라인 / 800</div>
+        <div class="t-display num" style="margin-top: 8px">1,820,000원</div>
+        <div class="t-title" style="margin-top: 8px">카드 타이틀 / 18 Bold</div>
+        <div class="t-body" style="margin-top: 6px">본문 텍스트 / 14 Regular — 지원서·장부 상세에 사용</div>
+        <div class="t-caption" style="margin-top: 6px">캡션 / 12 — 계좌·시간 메타</div>
+      </div>
+
+      <!-- 버튼 -->
+      <div class="sec">
+        <h2>버튼</h2>
+        <div class="lbl">variants</div>
+        <div class="row">
+          <button class="btn btn--primary">Primary</button>
+          <button class="btn btn--warm">Warm</button>
+          <button class="btn btn--secondary">Secondary</button>
+          <button class="btn btn--ghost">Ghost</button>
+          <button class="btn btn--primary" disabled>Disabled</button>
+        </div>
+        <div class="lbl">sizes</div>
+        <div class="row">
+          <button class="btn btn--primary btn--lg">Large</button>
+          <button class="btn btn--primary">Default</button>
+          <button class="btn btn--primary btn--sm">Small</button>
+        </div>
+        <div class="lbl">SNS</div>
+        <div class="row" style="flex-direction: column; align-items: stretch; max-width: 320px">
+          <button class="btn btn--sns btn--kakao">카카오로 시작하기</button>
+          <button class="btn btn--sns btn--apple">Apple로 계속하기</button>
+          <button class="btn btn--sns btn--google">Google로 계속하기</button>
+        </div>
+      </div>
+
+      <!-- 배지 / 칩 -->
+      <div class="sec">
+        <h2>배지 · 칩</h2>
+        <div class="row">
+          <span class="badge badge--progress">정산 진행</span>
+          <span class="badge badge--done">정산 완료</span>
+          <span class="badge badge--ended">만남 종료</span>
+          <span class="badge badge--waiting">참여 대기</span>
+          <span class="badge badge--danger">패널티</span>
+        </div>
+        <div class="row">
+          <span class="chip">동아리</span>
+          <span class="chip chip--count num">1 / 3</span>
+          <span class="chip chip--tag">#밴드</span>
+        </div>
+      </div>
+
+      <!-- 스테퍼 -->
+      <div class="sec">
+        <h2>에스크로 스테퍼</h2>
+        <div class="stepper">
+          <div class="step is-done">
+            <div class="step__node">
+              <svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+            </div>
+            <div class="step__label">예치</div>
+          </div>
+          <div class="step is-done">
+            <div class="step__seg"></div>
+            <div class="step__node">
+              <svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+            </div>
+            <div class="step__label">락</div>
+          </div>
+          <div class="step is-current">
+            <div class="step__seg"></div>
+            <div class="step__node">3</div>
+            <div class="step__label">동의</div>
+          </div>
+          <div class="step">
+            <div class="step__seg"></div>
+            <div class="step__node">4</div>
+            <div class="step__label">출금</div>
+          </div>
+          <div class="step">
+            <div class="step__seg"></div>
+            <div class="step__node">5</div>
+            <div class="step__label">정산</div>
+          </div>
+          <div class="step">
+            <div class="step__seg"></div>
+            <div class="step__node">6</div>
+            <div class="step__label">완료</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 슬랩 + 아바타 -->
+      <div class="sec">
+        <h2>블루 슬랩 · 아바타 스택</h2>
+        <div class="slab" style="margin: 0">
+          <div class="slab__label">총무 출금 완료 · 정산 마감까지</div>
+          <div class="slab__figure">
+            <span class="big num">08:24:13</span>
+            <span class="unit">남았어요</span>
+          </div>
+          <div class="slab__row">
+            <span class="k">출금액</span>
+            <span class="v num">1,820,000원</span>
+          </div>
+          <div class="avatars">
+            <div class="avatars__item">진</div>
+            <div class="avatars__item">산</div>
+            <div class="avatars__item">윤</div>
+            <div class="avatars__item">+</div>
+            <span class="avatars__more">35명 전원 동의</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 폼 -->
+      <div class="sec">
+        <h2>폼 요소</h2>
+        <div style="max-width: 340px">
+          <label class="field" style="margin: 0">
+            <span class="field__label">모임 이름</span>
+            <input class="field__input" placeholder="이름을 입력해주세요" />
+          </label>
+          <label class="field field--amount" style="margin-top: 12px">
+            <span class="field__label">금액</span>
+            <input class="field__input num" value="50,000" />
+          </label>
+          <label class="field select" style="margin-top: 12px">
+            <span class="field__label">카테고리</span>
+            <input class="field__input" readonly value="카테고리 선택" />
+          </label>
+          <div class="row" style="margin-top: 16px">
+            <label class="toggle">
+              <input type="checkbox" checked />
+              <span class="toggle__track"></span>
+            </label>
+            <label class="toggle">
+              <input type="checkbox" />
+              <span class="toggle__track"></span>
+            </label>
+          </div>
+          <div class="row" style="margin-top: 8px">
+            <label class="checkbox">
+              <input type="checkbox" checked />
+              <span class="checkbox__box">
+                <svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+              </span>
+              약관 동의
+            </label>
+            <label class="radio">
+              <input type="radio" name="r" checked />
+              <span class="radio__dot"></span>
+              옵션 A
+            </label>
+            <label class="radio">
+              <input type="radio" name="r" />
+              <span class="radio__dot"></span>
+              옵션 B
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 체크리스트 / 리스트 -->
+      <div class="sec">
+        <h2>체크리스트 · 리스트 행</h2>
+        <div class="checklist" style="max-width: 360px">
+          <div class="check-row is-checked">
+            <div class="check-row__left">
+              <div class="check-row__radio">
+                <svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+              </div>
+              <span class="check-row__text">식대 영수증 · OCR 확인</span>
+            </div>
+            <span class="check-row__amount num">880,000원</span>
+          </div>
+          <div class="check-row">
+            <div class="check-row__left">
+              <div class="check-row__radio"></div>
+              <span class="check-row__text">교통·대절 영수증</span>
+            </div>
+            <span class="check-row__amount num is-pending">대기</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 빈 상태 / 스켈레톤 -->
+      <div class="sec">
+        <h2>빈 상태 · 스켈레톤</h2>
+        <div class="demo">
+          <div>
+            <div class="lbl">empty</div>
+            <div class="empty" style="padding: 24px 12px">
+              <img class="empty__art" src="assets/mascots/mascot_blue.png" alt="" style="width: 72px; height: 72px" onerror="this.style.display = 'none'" />
+              <div class="empty__title">아직 내역이 없어요</div>
+              <div class="empty__desc">모임을 시작해보세요</div>
+            </div>
+          </div>
+          <div>
+            <div class="lbl">skeleton</div>
+            <div style="display: flex; gap: 12px; align-items: center; margin-top: 12px">
+              <div class="skeleton skeleton--circle" style="width: 42px; height: 42px"></div>
+              <div style="flex: 1">
+                <div class="skeleton skeleton--title"></div>
+                <div class="skeleton skeleton--line" style="margin-top: 8px; width: 80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 마스코트 -->
+      <div class="sec">
+        <h2>마스코트 (등장 허용 모먼트만)</h2>
+        <div class="mascot-row">
+          <img src="assets/mascots/mascot_blue.png" alt="블루" onerror="this.style.display = 'none'" />
+          <img src="assets/mascots/mascot_red.png" alt="코랄" onerror="this.style.display = 'none'" />
+          <img src="assets/mascots/mascot_green.png" alt="그린" onerror="this.style.display = 'none'" />
+          <img src="assets/mascots/mascot_yellow.png" alt="옐로" onerror="this.style.display = 'none'" />
+          <img src="assets/mascots/speech-bubble.png" alt="안녕" onerror="this.style.display = 'none'" />
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
