@@ -1,7 +1,7 @@
 # AGENTS.md — 모이쇼 디자인시스템 사용 규칙 (에이전트용)
 
 > 이 폴더(`design/system/`)에서 화면/컴포넌트를 만들 때 **반드시** 따른다.
-> 사람용 설계 근거는 [`DESIGN.md`](DESIGN.md), 기준화면은 [`meeting-detail.html`](meeting-detail.html).
+> 사람용 설계 근거는 [`DESIGN.md`](DESIGN.md), 기준화면은 [`screens_v0/meeting-detail.html`](screens_v0/meeting-detail.html).
 > 충돌 시 우선순위: `tokens.css`·`components.css` > 이 문서 > 임의 판단.
 
 ## 0. 새 페이지를 만들 때
@@ -54,12 +54,12 @@
 ## 4. 아이콘 — 이모지 절대 금지
 
 - 모든 글리프는 [`icons.svg`](icons.svg)의 symbol을 쓴다. 이름: chevron-left/right/down, close, dots, search, check, plus, calendar, clock, pin, lock, upload, download, edit, trash, filter, info, bell, home, list, user, users, wallet, shield-check, receipt.
-- 사용법: `<svg class="icon"><use href="icons.svg#calendar"/></svg>`. `file://`로 열어 렌더가 안 되면 해당 symbol의 `path`를 **인라인 복사**한다(기준화면 방식). `.icon`/`.icon--sm`/`.icon--lg`로 크기 조절, 색은 `currentColor` 상속.
+- 사용법: `<svg class="icon"><use href="icons.svg#calendar"/></svg>` (하위 폴더 `screens/`·`screens_v0/`에서는 `../icons.svg#calendar`). `file://`로 열어 렌더가 안 되면 해당 symbol의 `path`를 **인라인 복사**한다(기준화면 방식). `.icon`/`.icon--sm`/`.icon--lg`로 크기 조절, 색은 `currentColor` 상속.
 - 그림문자(웃는 얼굴·달력·체크표 같은 유니코드 이모지)를 텍스트로 넣지 않는다. 코드 주석에도 금지.
 
 ## 5. 마스코트
 
-- 정식 마스코트는 flat 벡터 [`mascots.svg`](mascots.svg). 래스터 원본은 `assets/mascots/*.png`.
+- 정식 마스코트는 [`assets/mascots/`](assets/mascots/)의 PNG(`mascot_blue/green/red/yellow/pink.png`, 단체 `mascots.png`). 하위 폴더에서는 `../assets/mascots/…` 로 링크.
 - **등장 허용**: 온보딩 · 빈 상태(`.empty`) · 정산 완료 축하. **금지**: 그 외 정산/금액 화면.
 
 ## 6. 체크리스트 (페이지 완료 전)
