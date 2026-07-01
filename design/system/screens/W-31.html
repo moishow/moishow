@@ -1,0 +1,62 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+/* W-31 신고 — 화면 고유 레이아웃만 */
+.report-target{display:flex;gap:11px;align-items:flex-start;}
+.report-target__avatar{width:38px;height:38px;border-radius:var(--radius-md);background:var(--gray-400);color:var(--white);display:flex;align-items:center;justify-content:center;font-weight:var(--weight-bold);font-size:13px;flex-shrink:0;}
+.report-target__name{font-size:var(--fs-body);font-weight:var(--weight-bold);color:var(--text-title);}
+.report-target__text{font-size:var(--fs-caption);color:var(--text-muted);margin-top:3px;line-height:var(--lh-normal);}
+.reason-list .radio{display:flex;flex-direction:row-reverse;justify-content:space-between;width:100%;padding:14px 0;border-bottom:1px solid var(--border-subtle);font-size:var(--fs-subtitle);color:var(--text-body);}
+.reason-list .radio:last-child{border-bottom:none;}
+.report-note{display:flex;gap:8px;align-items:flex-start;margin:14px 20px 0;padding:12px 14px;background:var(--color-danger-soft);border-radius:var(--radius-md);font-size:var(--fs-caption);color:var(--color-danger-strong);line-height:var(--lh-normal);}
+.report-note .icon{width:15px;height:15px;flex-shrink:0;margin-top:1px;}
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+
+    <header class="appbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">신고</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="headline">
+      <h1>이 글을<br>신고할게요</h1>
+    </div>
+
+    <div class="card">
+      <div class="report-target">
+        <div class="report-target__avatar">준</div>
+        <div>
+          <div class="report-target__name">이준호</div>
+          <div class="report-target__text">"저렴하게 티켓 양도합니다. 개인 계좌로 먼저 입금해주시면 바로 보내드려요…"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">신고 사유</div>
+    <div class="card" style="padding-top:4px;padding-bottom:6px">
+      <div class="reason-list">
+        <label class="radio"><input type="radio" name="reason" checked><span class="radio__dot"></span>스팸·홍보성 도배</label>
+        <label class="radio"><input type="radio" name="reason"><span class="radio__dot"></span>욕설·혐오 표현</label>
+        <label class="radio"><input type="radio" name="reason"><span class="radio__dot"></span>사기·금전 요구</label>
+        <label class="radio"><input type="radio" name="reason"><span class="radio__dot"></span>기타</label>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:16px">
+      <label class="field__label">상세 사유 (선택)</label>
+      <input class="field__input" placeholder="신고 내용을 자세히 적어주세요">
+    </div>
+
+    <div class="report-note">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="8" r="1.2" fill="currentColor"/></svg>
+      <span>허위·악의적 신고가 반복되면 신고자에게도 이용 제한이 적용될 수 있어요.</span>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">접수 후<br><b class="num">24</b>시간 내 검토</div>
+      <button class="btn btn--ghost" style="color:var(--color-danger);border-color:var(--crimson-100)">신고 접수</button>
+    </div>
+
+  </div></div>
+</body></html>

@@ -1,0 +1,49 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — W-14 예치 완료</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃: 민트 성공 카드 */
+  .success{margin-top:28px;background:var(--color-success-soft);border-color:var(--mint-100);text-align:center;padding:26px 20px 24px}
+  .success__check{width:58px;height:58px;border-radius:50%;background:var(--color-success);color:var(--white);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 8px 18px rgba(0,199,129,.32)}
+  .success__check .icon{width:30px;height:30px}
+  .success__title{font-size:var(--fs-title);font-weight:var(--weight-extrabold);color:var(--text-strong);letter-spacing:-.01em}
+  .success__sub{font-size:var(--fs-body);font-weight:var(--weight-semibold);color:var(--color-success-strong);margin-top:6px}
+  /* 요약 행 */
+  .summary__row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border-subtle)}
+  .summary__row:last-child{border-bottom:none}
+  .summary__k{font-size:var(--fs-body);color:var(--text-body)}
+  .summary__v{font-size:var(--fs-subtitle);font-weight:var(--weight-bold);color:var(--text-strong);font-feature-settings:var(--font-feature-numeric)}
+</style></head><body>
+  <div class="phone"><div class="screen surface-money">
+
+    <!-- 민트 성공 카드 · 모금 OPEN -->
+    <div class="card success">
+      <div class="success__check">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="success__title">예치 완료</div>
+      <div class="success__sub">모금 OPEN</div>
+    </div>
+
+    <!-- 요약 -->
+    <div class="card">
+      <div class="summary__row"><span class="summary__k">모임</span><span class="summary__v">디자인동아리 모디</span></div>
+      <div class="summary__row"><span class="summary__k">차수</span><span class="summary__v">봄 시즌 킥오프</span></div>
+      <div class="summary__row"><span class="summary__k">예치 금액</span><span class="summary__v num">52,000P</span></div>
+      <div class="summary__row"><span class="summary__k">상태</span><span class="badge badge--progress">OPEN</span></div>
+    </div>
+
+    <!-- 취소·환불 안내 -->
+    <div class="notice">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+      <div class="notice__text">만남시각 전에는 <b>취소 시 즉시 환불</b>돼요. 만남시각이 지나면 잠금(락)돼요.</div>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">모금 상태<br><b>OPEN</b></div>
+      <button class="btn btn--primary">차수 보기</button>
+    </div>
+
+  </div></div>
+</body></html>

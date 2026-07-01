@@ -1,0 +1,70 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 가입 신청서 (W-08)</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃만 */
+  .form-intro{padding:8px 20px 4px}
+  .form-intro__title{font-size:var(--fs-title);font-weight:var(--weight-bold);color:var(--text-title)}
+  .form-intro__desc{font-size:13px;color:var(--text-muted);margin-top:4px}
+  .field__hint{font-size:var(--fs-caption);color:var(--text-faint);margin-top:6px}
+  .radio-group{display:flex;flex-direction:column;gap:12px;margin-top:2px}
+  textarea.field__input{resize:none;min-height:84px;line-height:var(--lh-normal)}
+  .field-block{margin-top:22px}
+</style></head><body>
+
+  <div class="phone"><div class="screen surface-community">
+
+    <header class="appbar">
+      <svg class="icon" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">가입 신청서</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="form-intro">
+      <div class="form-intro__title">코드리뷰 스터디</div>
+      <div class="form-intro__desc">총무가 확인 후 승인하는 모임이에요. 아래 질문에 답해 주세요.</div>
+    </div>
+
+    <!-- Q1. 짧은답 -->
+    <div class="field field-block">
+      <label class="field__label">활동할 때 부를 닉네임</label>
+      <input class="field__input" type="text" placeholder="예) 산">
+    </div>
+
+    <!-- Q2. 짧은답 (긴 텍스트) -->
+    <div class="field field-block">
+      <label class="field__label">가입 동기를 한두 줄로 알려주세요</label>
+      <textarea class="field__input" placeholder="어떤 점이 끌렸는지 편하게 적어주세요"></textarea>
+    </div>
+
+    <!-- Q3. 선택 (라디오) -->
+    <div class="field field-block">
+      <label class="field__label">참여 가능한 빈도</label>
+      <div class="radio-group">
+        <label class="radio"><input type="radio" name="freq" checked><span class="radio__dot"></span>매주 참여할 수 있어요</label>
+        <label class="radio"><input type="radio" name="freq"><span class="radio__dot"></span>격주로 참여할 수 있어요</label>
+        <label class="radio"><input type="radio" name="freq"><span class="radio__dot"></span>가끔 참여할 것 같아요</label>
+      </div>
+    </div>
+
+    <!-- Q4. 동의 (체크박스) -->
+    <div class="field field-block">
+      <label class="field__label">회칙 동의</label>
+      <label class="checkbox" style="margin-top:4px">
+        <input type="checkbox" checked>
+        <span class="checkbox__box"><svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+        회비 규정과 정산 방식에 동의합니다
+      </label>
+      <div class="field__hint">회비는 앱 포인트로만 예치되고, 남은 금액은 균등 환급돼요.</div>
+    </div>
+
+    <!-- 하단 CTA: 제출은 돈 이동이 아니므로 코랄(btn--warm) -->
+    <div class="cta-bar">
+      <div class="cta-bar__meta">승인까지<br><b>보통 1일</b></div>
+      <button class="btn btn--warm">제출</button>
+    </div>
+
+  </div></div>
+
+</body></html>

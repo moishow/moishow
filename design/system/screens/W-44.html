@@ -1,0 +1,114 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — 모더레이션 큐 (W-44)</title>
+<!-- W-44 모더레이션(웹): 신고된 글 카드 리스트. 반려(ghost) + 숨김(크림슨 텍스트, 파괴적). 중립 톤. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:18px 22px 24px}
+  .admin-body .card{margin:0 0 12px}
+  .admin-body .card:last-child{margin-bottom:0}
+  .admin-body .section-title{padding:2px 0 10px;font-size:var(--fs-subtitle)}
+
+  .rep-head{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+  .rep-av{width:32px;height:32px;border-radius:var(--radius-md);background:var(--surface-sunken);color:var(--text-muted);display:flex;align-items:center;justify-content:center;font-weight:var(--weight-bold);font-size:12px;flex-shrink:0}
+  .rep-who{font-size:var(--fs-body);font-weight:var(--weight-semibold);color:var(--text-title)}
+  .rep-meta{font-size:11px;color:var(--text-muted);margin-top:1px}
+  .rep-head .badge{margin-left:auto}
+  .rep-quote{background:var(--surface-sunken);border-radius:var(--radius-md);border-left:3px solid var(--border-strong);padding:12px 14px;font-size:var(--fs-body);color:var(--text-body);line-height:1.55}
+  .rep-tags{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
+  .rep-foot{display:flex;align-items:center;gap:8px;margin-top:14px}
+  .rep-foot .why{font-size:11px;color:var(--text-muted)}
+  .rep-foot .acts{margin-left:auto;display:flex;gap:8px}
+  .btn--hide{background:transparent;color:var(--color-danger-strong);border:1px solid var(--crimson-100)}
+  .btn--hide:hover{background:var(--color-danger-soft)}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>모더레이션 큐</b>
+    <span class="admin-me">신고 대기 <span class="num" style="color:var(--color-danger-strong);font-weight:700">7</span>건<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+
+    <div class="section-title">신고 접수 · 최근순</div>
+
+    <div class="card">
+      <div class="rep-head">
+        <div class="rep-av">익</div>
+        <div>
+          <div class="rep-who">익명 회원 · 수요풋살 클럽</div>
+          <div class="rep-meta">자유게시판 · 6/30 09:41</div>
+        </div>
+        <span class="badge badge--danger">신고 <span class="num">4</span></span>
+      </div>
+      <div class="rep-quote">"환급 언제 들어오나요? 총무가 돈 들고 튄 거 아닌가요. 다들 조심하세요 이 모임 사기 같음"</div>
+      <div class="rep-tags">
+        <span class="chip--tag">허위사실</span>
+        <span class="chip--tag">명예훼손</span>
+      </div>
+      <div class="rep-foot">
+        <span class="why">신고 사유: 허위·비방</span>
+        <div class="acts">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--hide btn--sm">숨김</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="rep-head">
+        <div class="rep-av">한</div>
+        <div>
+          <div class="rep-who">한지민 · 한달한권 북클럽</div>
+          <div class="rep-meta">모임 후기 · 6/30 08:12</div>
+        </div>
+        <span class="badge badge--danger">신고 <span class="num">2</span></span>
+      </div>
+      <div class="rep-quote">"여기서 코인 리딩방 무료로 알려드려요. 관심 있으신 분 오픈채팅 링크 dm 주세요 수익 인증 가능"</div>
+      <div class="rep-tags">
+        <span class="chip--tag">스팸·광고</span>
+        <span class="chip--tag">외부 유도</span>
+      </div>
+      <div class="rep-foot">
+        <span class="why">신고 사유: 홍보·스팸</span>
+        <div class="acts">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--hide btn--sm">숨김</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="rep-head">
+        <div class="rep-av">서</div>
+        <div>
+          <div class="rep-who">서준호 · 디자인동아리 모디</div>
+          <div class="rep-meta">댓글 · 6/29 22:05</div>
+        </div>
+        <span class="badge badge--waiting">신고 <span class="num">1</span></span>
+      </div>
+      <div class="rep-quote">"이번 정산 내역 좀 이상한데 영수증 다시 올려주세요. 금액이 안 맞는 것 같습니다."</div>
+      <div class="rep-tags">
+        <span class="chip--tag">단순 이견</span>
+      </div>
+      <div class="rep-foot">
+        <span class="why">신고 사유: 분쟁 · 검토 요망</span>
+        <div class="acts">
+          <button class="btn btn--ghost btn--sm">반려</button>
+          <button class="btn btn--hide btn--sm">숨김</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

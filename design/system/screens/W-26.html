@@ -1,0 +1,38 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 알림 */
+  .notif-ic { width: 38px; height: 38px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .notif-ic .icon { width: 19px; height: 19px; }
+</style></head><body>
+      <div class="phone"><div class="screen surface-money">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <div class="appbar__title">알림</div>
+          <span class="t-caption" style="color:var(--color-primary);font-weight:var(--weight-semibold)">모두 읽음</span>
+        </header>
+        <div class="list" style="margin-top:4px">
+          <div class="list-row">
+            <div class="notif-ic" style="background:var(--color-primary-soft);color:var(--color-primary)"><svg class="icon"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="list-row__body"><div class="list-row__title" style="font-size:14px">정산 동의 요청 <span class="badge badge--progress">10분</span></div><div class="list-row__sub">수요풋살 클럽 — 지금 동의를 눌러야 정산에 포함돼요</div></div>
+            <span class="t-caption">방금</span>
+          </div>
+          <div class="list-row">
+            <div class="notif-ic" style="background:var(--color-danger-soft);color:var(--color-danger)"><svg class="icon"><path d="M12 4l9 16H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/><path d="M12 10v4M12 17v.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="list-row__body"><div class="list-row__title" style="font-size:14px">미납요금 안내 <span class="badge badge--danger">미납</span></div><div class="list-row__sub">봄 시즌 킥오프 추가 정산 4,875원이 아직 미납이에요</div></div>
+            <span class="t-caption">1시간</span>
+          </div>
+          <div class="list-row">
+            <div class="notif-ic" style="background:var(--color-success-soft);color:var(--color-success-strong)"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></div>
+            <div class="list-row__body"><div class="list-row__title" style="font-size:14px">정산 완료</div><div class="list-row__sub">디자인동아리 모디 정산이 끝났어요 · 환급 +12,300P</div></div>
+            <span class="t-caption">어제</span>
+          </div>
+          <div class="list-row">
+            <div class="notif-ic" style="background:var(--color-primary-soft);color:var(--color-primary)"><svg class="icon"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+            <div class="list-row__body"><div class="list-row__title" style="font-size:14px">총무 출금</div><div class="list-row__sub">총무가 출금했어요 — 정산 마감 24:00 타이머 시작</div></div>
+            <span class="t-caption">어제</span>
+          </div>
+        </div>
+      </div></div>
+</body></html>

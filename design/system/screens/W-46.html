@@ -1,0 +1,110 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 운영 — 푸시 발송 (W-46)</title>
+<!-- W-46 푸시 발송(웹): 세그먼트 select + 제목·본문 field + 미리보기 카드 + 발송(primary). 중립 톤. -->
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#EDF0F5;display:flex;justify-content:center;padding:32px 16px;min-height:100vh}
+  .admin-frame{width:600px;background:var(--surface-card);border-radius:var(--radius-2xl);box-shadow:var(--shadow-pop);overflow:hidden;border:1px solid var(--border-subtle)}
+  .admin-top{display:flex;align-items:center;gap:10px;padding:16px 22px;border-bottom:1px solid var(--border-subtle)}
+  .admin-top b{font:var(--text-title-1);color:var(--text-strong)}
+  .admin-top__logo{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--white);background:var(--color-primary)}
+  .admin-me{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted)}
+  .admin-me__av{width:26px;height:26px;border-radius:50%;background:var(--color-primary);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:var(--weight-bold)}
+  .admin-body{padding:18px 22px 24px;display:grid;grid-template-columns:1fr 236px;gap:20px}
+  .admin-body .field{margin:0}
+  .admin-body .field+.field{margin-top:14px}
+
+  .pf-label{display:block;font-size:var(--fs-caption);font-weight:var(--weight-semibold);color:var(--text-muted);margin-bottom:6px}
+  .pf-ta{width:100%;box-sizing:border-box;font-family:inherit;font-size:var(--fs-body);color:var(--text-strong);background:var(--surface-card);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:12px 14px;min-height:88px;resize:vertical;line-height:1.55}
+  .pf-ta:focus{outline:none;border-color:var(--border-focus);box-shadow:0 0 0 3px var(--color-primary-soft)}
+  .toggle-row{display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 14px;background:var(--surface-sunken);border-radius:var(--radius-md)}
+  .toggle-row .t{font-size:var(--fs-body);font-weight:var(--weight-semibold);color:var(--text-title)}
+  .toggle-row .s{font-size:11px;color:var(--text-muted);margin-top:2px}
+  .toggle-row .toggle{margin-left:auto}
+  .send-bar{display:flex;align-items:center;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border-subtle)}
+  .send-bar .meta{font-size:var(--fs-caption);color:var(--text-muted)}
+  .send-bar .meta b{color:var(--color-primary);font-weight:var(--weight-bold)}
+  .send-bar .acts{margin-left:auto;display:flex;gap:8px}
+
+  .prev-title{font-size:var(--fs-caption);font-weight:var(--weight-semibold);color:var(--text-muted);margin-bottom:8px}
+  .prev{background:var(--surface-inverse);border-radius:var(--radius-lg);padding:16px 14px 20px;min-height:220px}
+  .prev__status{display:flex;align-items:center;justify-content:space-between;color:rgba(255,255,255,.7);font-size:11px;font-weight:var(--weight-semibold);margin-bottom:14px}
+  .note{background:rgba(255,255,255,.95);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:12px 13px}
+  .note__head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+  .note__logo{width:20px;height:20px;border-radius:5px;background:var(--color-primary);display:flex;align-items:center;justify-content:center;color:var(--white)}
+  .note__app{font-size:11px;font-weight:var(--weight-semibold);color:var(--text-muted)}
+  .note__time{margin-left:auto;font-size:11px;color:var(--text-faint)}
+  .note__t{font-size:13px;font-weight:var(--weight-bold);color:var(--text-strong)}
+  .note__b{font-size:12px;color:var(--text-body);margin-top:3px;line-height:1.5}
+</style></head><body>
+
+<div class="admin-frame">
+  <header class="admin-top">
+    <span class="admin-top__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    <b>푸시 발송</b>
+    <span class="admin-me">발송 이력 관리<span class="admin-me__av">김</span></span>
+  </header>
+
+  <div class="admin-body">
+
+    <div>
+      <label class="field">
+        <span class="field__label">대상 세그먼트</span>
+        <span class="select">
+          <input class="field__input" readonly value="정산 대기 총무 (증빙 미제출)">
+        </span>
+      </label>
+
+      <label class="field">
+        <span class="field__label">제목</span>
+        <input class="field__input" value="증빙 제출 기한이 12시간 남았어요">
+      </label>
+
+      <div class="field">
+        <span class="pf-label">본문</span>
+        <textarea class="pf-ta">봄 시즌 킥오프 정산 증빙을 아직 제출하지 않으셨어요. 기한 내 미제출 시 신용등급 패널티가 자동 적용됩니다. 지금 영수증을 등록해 주세요.</textarea>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <div class="t">즉시 발송</div>
+          <div class="s">끄면 예약 시각을 지정합니다</div>
+        </div>
+        <label class="toggle"><input type="checkbox" checked><span class="toggle__track"></span></label>
+      </div>
+
+      <div class="send-bar">
+        <span class="meta">대상 규모 · 약 <b class="num">1,240</b>명</span>
+        <div class="acts">
+          <button class="btn btn--ghost btn--sm">테스트 발송</button>
+          <button class="btn btn--primary btn--sm">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M4 12l16-7-7 16-2.5-6.5L4 12z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>
+            발송
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="prev-title">미리보기</div>
+      <div class="prev">
+        <div class="prev__status">
+          <span class="num">9:41</span>
+          <span>오늘 · 잠금화면</span>
+        </div>
+        <div class="note">
+          <div class="note__head">
+            <span class="note__logo"><svg class="icon icon--sm" viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4-3 6.5-7 8-4-1.5-7-4-7-8V6l7-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/></svg></span>
+            <span class="note__app">모이쇼</span>
+            <span class="note__time">지금</span>
+          </div>
+          <div class="note__t">증빙 제출 기한이 12시간 남았어요</div>
+          <div class="note__b">봄 시즌 킥오프 정산 증빙을 아직 제출하지 않으셨어요. 지금 영수증을 등록해 주세요.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body></html>

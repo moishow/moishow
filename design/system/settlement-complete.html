@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>모이쇼 — 정산 완료</title>
+    <!-- 정산 완료 축하: money 화면이지만 '완료 축하 모먼트'라 마스코트 등장 허용(유일 예외).
+     금액은 잉크/민트. 코랄은 쓰지 않는다. -->
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="components.css" />
+    <style>
+      body {
+        background: #faf9f5;
+        display: flex;
+        justify-content: center;
+        padding: 24px 0;
+      }
+      .done-hero {
+        text-align: center;
+        padding: 40px 24px 8px;
+      }
+      .done-hero__art {
+        width: 132px;
+        height: 132px;
+        margin: 0 auto 10px;
+        display: block;
+      }
+      .done-hero__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--color-success-soft);
+        color: var(--color-success-strong);
+        font-size: var(--fs-caption);
+        font-weight: var(--weight-bold);
+        padding: 5px 12px;
+        border-radius: var(--radius-pill);
+      }
+      .done-hero__badge .icon {
+        width: 14px;
+        height: 14px;
+      }
+      .summary {
+        margin: 18px 20px 0;
+      }
+      .summary__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 13px 0;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+      .summary__row:last-child {
+        border-bottom: none;
+      }
+      .summary__k {
+        font-size: var(--fs-body);
+        color: var(--text-body);
+      }
+      .summary__v {
+        font-size: var(--fs-subtitle);
+        font-weight: var(--weight-bold);
+        color: var(--text-strong);
+        font-feature-settings: var(--font-feature-numeric);
+      }
+      .summary__v.refund {
+        color: var(--color-success-strong);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <div class="screen surface-money">
+        <div class="done-hero">
+          <img class="done-hero__art" src="assets/mascots/mascot_green.png" alt="" onerror="this.style.display = 'none'" />
+          <div class="done-hero__badge">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+            정산 완료
+          </div>
+          <h1 class="t-editorial" style="margin-top: 12px">
+            정산이 끝났어요
+            <br />
+            <span class="light">모두 고생하셨어요</span>
+          </h1>
+        </div>
+
+        <div class="card summary" style="margin-top: 6px">
+          <div class="summary__row">
+            <span class="summary__k">총 모인 금액</span>
+            <span class="summary__v num">1,820,000원</span>
+          </div>
+          <div class="summary__row">
+            <span class="summary__k">실제 사용</span>
+            <span class="summary__v num">1,547,200원</span>
+          </div>
+          <div class="summary__row">
+            <span class="summary__k">1인당 정산액</span>
+            <span class="summary__v num">44,206원</span>
+          </div>
+          <div class="summary__row">
+            <span class="summary__k">내 환급</span>
+            <span class="summary__v refund num">+12,300P</span>
+          </div>
+        </div>
+
+        <div class="cta-bar">
+          <div class="cta-bar__meta">
+            환급 포인트
+            <br />
+            <b class="num">12,300P</b>
+          </div>
+          <button class="btn btn--primary">바로 현금화</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  .field-hint { font-size: var(--fs-caption); color: var(--text-muted); margin: 7px 20px 0; line-height: var(--lh-normal); }
+  .ocr { margin: 12px 20px 0; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 14px 16px; box-shadow: var(--shadow-xs); }
+  .ocr__top { display: flex; align-items: center; gap: 8px; font-size: var(--fs-caption); font-weight: var(--weight-semibold); color: var(--color-success-strong); }
+  .ocr__top .icon { width: 15px; height: 15px; }
+  .ocr__amt { font-size: 26px; font-weight: var(--weight-extrabold); color: var(--text-strong); letter-spacing: var(--ls-display); font-feature-settings: var(--font-feature-numeric); margin-top: 4px; }
+  /* 정산 차액 breakdown */
+  .breakdown { margin-top: 4px; }
+  .breakdown__row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: 13.5px; color: var(--text-body); }
+  .breakdown__row .v { font-weight: var(--weight-semibold); color: var(--text-title); font-feature-settings: var(--font-feature-numeric); }
+  .breakdown__row.is-minus .v { color: var(--color-danger-strong); }
+  .breakdown__row.is-plus .v { color: var(--color-success-strong); }
+  .breakdown__total { display: flex; align-items: baseline; justify-content: space-between; padding: 13px 0 2px; margin-top: 4px; border-top: 1.5px solid var(--border-default); }
+  .breakdown__total .k { font-size: var(--fs-body); font-weight: var(--weight-bold); color: var(--text-title); }
+  .breakdown__total .v { font-size: 20px; font-weight: var(--weight-extrabold); color: var(--text-strong); letter-spacing: var(--ls-display); font-feature-settings: var(--font-feature-numeric); }
+</style></head><body>
+      <div class="phone"><div class="screen surface-money">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+          <div class="appbar__title">추가 정산하기</div>
+          <span style="width:24px"></span>
+        </header>
+        <div class="headline"><h1>예상보다 더 나왔어요<br><span class="light">추가 정산</span>으로 채워요</h1></div>
+        <div class="ocr">
+          <div class="ocr__top" style="color:var(--color-success-strong)"><svg class="icon"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>OCR 인식 완료 · 식대+대관+간식 3건</div>
+          <div class="ocr__amt num">1,820,000원</div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__title">정산 미리보기</div><span class="badge badge--danger">적자 · 추가 정산</span></div>
+          <div class="breakdown">
+            <div class="breakdown__row">모인 금액(출금)<span class="v num">1,664,000</span></div>
+            <div class="breakdown__row is-minus">실제 지출(OCR)<span class="v num">−1,820,000</span></div>
+            <div class="breakdown__total"><span class="k">부족액</span><span class="v num" style="color:var(--color-danger)">−156,000원</span></div>
+          </div>
+          <div class="field-hint" style="margin:8px 0 0">참여 32명에게 <b style="color:var(--text-body)">1인당 +4,875원</b> 추가 요청을 보내요. 미납이면 프로필에 <b style="color:var(--color-danger-strong)">미납요금</b>으로 뜨고 알림으로 계속 안내돼요.</div>
+        </div>
+        <div class="cta-bar">
+          <div class="cta-bar__meta">1인당 추가<br><b class="num">+4,875원</b></div>
+          <button class="btn btn--primary">추가 정산 요청</button>
+        </div>
+      </div></div>
+</body></html>

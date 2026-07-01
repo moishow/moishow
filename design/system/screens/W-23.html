@@ -1,0 +1,46 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 완료 hero */
+  .hero { text-align: center; padding: 26px 20px 6px; }
+  .hero__art { width: 100%; max-width: 300px; margin: 0 auto 4px; display: block; }
+  /* 정산 차액 breakdown */
+  .breakdown { margin-top: 4px; }
+  .breakdown__row { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: 13.5px; color: var(--text-body); }
+  .breakdown__row .v { font-weight: var(--weight-semibold); color: var(--text-title); font-feature-settings: var(--font-feature-numeric); }
+  .breakdown__row.is-minus .v { color: var(--color-danger-strong); }
+  .breakdown__row.is-plus .v { color: var(--color-success-strong); }
+  .breakdown__total { display: flex; align-items: baseline; justify-content: space-between; padding: 13px 0 2px; margin-top: 4px; border-top: 1.5px solid var(--border-default); }
+  .breakdown__total .k { font-size: var(--fs-body); font-weight: var(--weight-bold); color: var(--text-title); }
+  .breakdown__total .v { font-size: 20px; font-weight: var(--weight-extrabold); color: var(--text-strong); letter-spacing: var(--ls-display); font-feature-settings: var(--font-feature-numeric); }
+</style></head><body>
+      <div class="phone"><div class="screen surface-community" style="padding-bottom:96px">
+        <header class="appbar">
+          <span style="width:24px"></span>
+          <div class="appbar__title">정산 완료</div>
+          <svg class="icon"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </header>
+        <div class="hero" style="padding-top:18px">
+          <img class="hero__art" src="../assets/mascots/mascot_green.png" alt="완료 마스코트" style="max-width:150px" onerror="this.style.display='none'">
+          <h1 class="t-editorial" style="margin-top:6px">정산 완료!<br><span style="color:var(--color-success)">투명하게</span> 끝났어요</h1>
+          <p class="t-body" style="margin-top:8px;color:var(--text-muted)">봄 시즌 킥오프 · 6/30</p>
+        </div>
+        <div class="card" style="text-align:center;border-color:var(--mint-100);background:var(--color-success-soft)">
+          <div class="t-caption" style="color:var(--color-success-strong)">내 환급 포인트</div>
+          <div class="t-display num" style="color:var(--color-success-strong);margin-top:2px">+12,300P</div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__title">정산 요약</div><span class="badge badge--done">원장 균형 0</span></div>
+          <div class="breakdown">
+            <div class="breakdown__row">모은 금액<span class="v num">1,664,000</span></div>
+            <div class="breakdown__row">실제 지출<span class="v num">1,540,000</span></div>
+            <div class="breakdown__row is-plus">균등 환급<span class="v num">+124,000</span></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;padding:13px 20px 18px;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-top:1px solid var(--border-subtle);display:flex;gap:10px">
+          <button class="btn btn--secondary" style="flex:1">정산 내역</button>
+          <button class="btn btn--primary" style="flex:1">확인</button>
+        </div>
+      </div></div>
+</body></html>

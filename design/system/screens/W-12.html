@@ -1,0 +1,80 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — W-12 예치</title>
+<link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css">
+<style>
+  body{margin:0;background:#fff;display:flex;justify-content:center;padding:0}
+  /* 화면 고유 레이아웃: 보유 포인트 피겨 */
+  .pt-figure{display:flex;align-items:baseline;gap:6px;margin-top:12px}
+  .pt-figure .big{font-size:26px;font-weight:var(--weight-extrabold);color:var(--text-strong);letter-spacing:-.01em;font-feature-settings:var(--font-feature-numeric)}
+  .pt-figure .unit{font-size:var(--fs-body);font-weight:var(--weight-bold);color:var(--text-muted)}
+  .pt-rows{margin-top:14px;border-top:1px solid var(--border-subtle);padding-top:4px}
+  .pt-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0}
+  .pt-row .k{font-size:var(--fs-body);color:var(--text-body)}
+  .pt-row .v{font-size:var(--fs-subtitle);font-weight:var(--weight-bold);color:var(--text-strong);font-feature-settings:var(--font-feature-numeric)}
+  .pt-row .v.is-minus{color:var(--text-muted)}
+</style></head><body>
+  <div class="phone"><div class="screen surface-money">
+
+    <header class="appbar">
+      <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="appbar__title">예치</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <!-- 모임 정체성 행 — community 색 권한(코랄) 국소 적용 -->
+    <div class="identity">
+      <div class="identity__avatar">모디</div>
+      <div class="identity__name">디자인동아리 모디 <span class="chip">총무 김산</span></div>
+    </div>
+
+    <div class="headline">
+      <h1>봄 시즌 킥오프<br><span class="light">이번 차수</span> 예치</h1>
+      <div class="meta">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 9h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        6/30 19:00
+        <span class="meta__dot"></span>
+        성수동 글로우 스튜디오
+      </div>
+    </div>
+
+    <!-- 예상 회비 입력 (원 단위) -->
+    <label class="field field--amount" style="margin-top:16px">
+      <span class="field__label">예상 회비</span>
+      <input class="field__input num" inputmode="numeric" value="52,000">
+    </label>
+
+    <!-- 보유 포인트 -->
+    <div class="card">
+      <div class="card__head">
+        <div class="card__title">보유 포인트</div>
+        <button class="btn btn--secondary btn--sm">충전</button>
+      </div>
+      <div class="pt-figure"><span class="big num">128,400</span><span class="unit">P</span></div>
+      <div class="pt-rows">
+        <div class="pt-row"><span class="k">예치 예정</span><span class="v is-minus num">- 52,000P</span></div>
+        <div class="pt-row"><span class="k">예치 후 잔액</span><span class="v num">76,400P</span></div>
+      </div>
+    </div>
+
+    <!-- 부족 시 충전 안내 -->
+    <div class="notice">
+      <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 11v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1.1" fill="currentColor"/></svg>
+      <div class="notice__text">포인트가 부족하면 예치 전에 <b>충전</b>할 수 있어요. 충전 수수료는 0원이에요.</div>
+    </div>
+
+    <!-- 모금 안내 (블루 슬랩) -->
+    <div class="slab">
+      <div class="slab__label">기간 제한형 모금</div>
+      <div class="slab__note">
+        <svg class="icon" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 10.5V7.5a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>만남시각 전에는 <b>자유롭게 취소·환불</b>할 수 있어요. 만남시각이 지나면 잠금(락)돼요.</span>
+      </div>
+    </div>
+
+    <div class="cta-bar">
+      <div class="cta-bar__meta">예치 금액<br><b class="num">52,000P</b></div>
+      <button class="btn btn--primary">예치하기</button>
+    </div>
+
+  </div></div>
+</body></html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 페이지 스캐폴드 (복사 시작점)</title>
+<!--
+  ███ 새 페이지는 이 파일을 복사해서 시작한다. ███
+  1) tokens.css + components.css 를 항상 둘 다 링크 (아래 그대로).
+  2) 화면 루트 .screen 에 색 권한 클래스를 건다:
+       · 돈/정산/금액/출금 화면      → class="screen surface-money"   (코랄·크림슨 금지)
+       · 모임/온보딩/소셜 화면       → class="screen surface-community" (코랄 액센트 허용)
+  3) 아이콘은 icons.svg 의 symbol path 를 인라인으로 복사해 쓴다(이모지 금지).
+  4) 금액·인원·달성률 텍스트엔 class="num" (tabular numerals).
+  5) 컴포넌트는 직접 CSS 짜지 말고 components.css 클래스 사용:
+     .btn/.card/.badge/.chip/.stepper/.slab/.checklist/.avatars/.field/.toggle/.tabbar/.sheet ...
+  레이아웃·간격·색은 발명하지 말 것 — 토큰/클래스만.
+-->
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  body { background: #FAF9F5; display: flex; justify-content: center; padding: 24px 0; }
+</style>
+</head>
+<body>
+
+<!-- money 화면 예시. 모임 화면이면 surface-community 로 교체 -->
+<div class="phone"><div class="screen surface-money">
+
+  <!-- 헤더 -->
+  <header class="appbar">
+    <svg class="icon"><!-- chevron-left --><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div class="appbar__title">페이지 제목</div>
+    <svg class="icon"><!-- dots --><circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/></svg>
+  </header>
+
+  <!-- 에디토리얼 헤드라인 (앵커) -->
+  <div class="headline">
+    <h1>핵심 메시지<br><span class="light">보조 문구</span></h1>
+  </div>
+
+  <!-- 본문: 카드 / 슬랩 / 리스트 등 components.css 클래스 조합 -->
+  <div class="card">
+    <div class="card__head"><div class="card__title">카드 제목</div></div>
+    <!-- 내용 -->
+  </div>
+
+  <!-- 하단: CTA 바 또는 탭바 중 하나 -->
+  <div class="cta-bar">
+    <div class="cta-bar__meta">보조 정보<br><b class="num">0원</b></div>
+    <button class="btn btn--primary">기본 액션</button>
+  </div>
+
+  <!-- (대안) 탭바:
+  <nav class="tabbar">
+    <div class="tabbar__item is-active"><svg class="icon">…home…</svg>홈</div>
+    <div class="tabbar__item"><svg class="icon">…list…</svg>내역</div>
+    <div class="tabbar__fab"><svg class="icon">…plus…</svg></div>
+    <div class="tabbar__item"><svg class="icon">…bell…</svg>알림</div>
+    <div class="tabbar__item"><svg class="icon">…user…</svg>마이</div>
+  </nav>
+  -->
+
+</div></div>
+
+</body>
+</html>

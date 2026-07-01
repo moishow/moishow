@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>모이쇼 — 빈 상태</title>
+    <!-- 빈 상태: 마스코트 등장 허용 모먼트. community 톤. -->
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="components.css" />
+    <style>
+      body {
+        background: #faf9f5;
+        display: flex;
+        justify-content: center;
+        padding: 24px 0;
+      }
+      .center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 700px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <div class="screen surface-community">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+          <div class="appbar__title">정산 내역</div>
+          <span style="width: 24px"></span>
+        </header>
+
+        <div class="center">
+          <div class="empty">
+            <img class="empty__art" src="assets/mascots/mascot_blue.png" alt="" onerror="this.style.display = 'none'" />
+            <div class="empty__title">아직 정산 내역이 없어요</div>
+            <div class="empty__desc">
+              모임을 만들고 회비를 모으면
+              <br />
+              여기에 투명한 정산 기록이 쌓여요
+            </div>
+            <button class="btn btn--warm btn--lg" style="margin-top: 20px">첫 모임 만들기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
