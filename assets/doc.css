@@ -1,0 +1,52 @@
+/* 모이쇼 문서 뷰어 — 공유 스타일. design/system/tokens.css 의 변수(SoT)를 그대로 사용.
+   각 뷰어 .html 은 내용 사본이 아니라, 옆의 .md 를 fetch 해 렌더하는 얇은 껍데기다(단일 소스 유지). */
+
+body { background: var(--surface-sunken); color: var(--text-body); }
+
+.doc-topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px clamp(16px, 4vw, 32px);
+  background: rgba(255, 255, 255, .85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-default);
+}
+.doc-topbar .doc-title { font: var(--text-title-1); color: var(--text-strong); letter-spacing: var(--ls-title); }
+.doc-topbar a { font: var(--text-caption-1); font-weight: 700; color: var(--color-primary); }
+.doc-topbar a:hover { color: var(--color-primary-press); }
+.doc-topbar .doc-src { margin-left: auto; color: var(--text-muted); }
+
+.doc-wrap { max-width: 960px; margin: 0 auto; padding: clamp(24px, 5vw, 56px) clamp(16px, 4vw, 32px) 96px; }
+
+.doc-body { font-size: 15px; line-height: var(--lh-relaxed); color: var(--text-body); }
+.doc-body h1 { font: var(--text-editorial); font-size: clamp(26px, 4vw, 34px); color: var(--text-strong); letter-spacing: var(--ls-display); margin: 8px 0 18px; }
+.doc-body h2 { font: var(--text-heading); color: var(--text-strong); margin: 42px 0 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border-subtle); }
+.doc-body h3 { font: var(--text-title-1); color: var(--text-title); margin: 28px 0 10px; }
+.doc-body h4 { font: var(--text-body-strong); color: var(--text-title); margin: 20px 0 8px; }
+.doc-body p { margin: 12px 0; }
+.doc-body a { color: var(--color-primary); font-weight: 600; border-bottom: 1px solid var(--moisho-blue-100); }
+.doc-body a:hover { border-color: var(--color-primary); }
+.doc-body ul, .doc-body ol { margin: 12px 0; padding-left: 24px; }
+.doc-body li { margin: 6px 0; }
+.doc-body strong { color: var(--text-strong); font-weight: 700; }
+.doc-body code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .88em; background: var(--surface-sunken); padding: 2px 6px; border-radius: var(--radius-mini); color: var(--color-primary-press); }
+.doc-body pre { background: var(--surface-inverse); color: #e6ebff; padding: 16px 18px; border-radius: var(--radius-lg); overflow-x: auto; margin: 16px 0; }
+.doc-body pre code { background: none; color: inherit; padding: 0; }
+.doc-body blockquote { margin: 16px 0; padding: 12px 18px; border-left: 4px solid var(--color-primary); background: var(--color-primary-soft); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+.doc-body blockquote p { margin: 6px 0; }
+.doc-body hr { border: 0; border-top: 1px solid var(--border-default); margin: 32px 0; }
+
+/* 넓은 표(여정지도)는 가로 스크롤로 감싼다 — doc.js 가 각 table 을 .table-scroll 로 래핑 */
+.table-scroll { overflow-x: auto; margin: 16px 0; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+.doc-body table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 13px; }
+.doc-body th, .doc-body td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--border-subtle); }
+.doc-body th { background: var(--surface-sunken); color: var(--text-muted); font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .03em; white-space: nowrap; }
+.doc-body tr:last-child td { border-bottom: 0; }
+.doc-body td strong { color: var(--text-strong); }
+
+.mermaid { display: flex; justify-content: center; margin: 24px 0; padding: 16px; background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow-x: auto; }
+
+.doc-error { padding: 24px; background: var(--color-warning-soft); border: 1px solid var(--amber-100); border-radius: var(--radius-lg); }
+.doc-error a { color: var(--color-primary); font-weight: 700; }
+
+@media (max-width: 560px) { .doc-body { font-size: 14px; } }
