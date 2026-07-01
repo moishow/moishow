@@ -12,7 +12,7 @@
   · 8개 시나리오(S1~S8) 레인 · 화살표(전환)·다이아몬드(분기). 같은 화면은 시나리오마다 다시 등장(중복 허용).
   · 화면 소스: design/system/screens/*.html (각각 단독 실행 가능). 레지스트리는 하단 표 + README.
 -->
-<base href="../../../design/system/">
+<base href="../design/system/">
 <link rel="stylesheet" href="tokens.css">
 <style>
   body{margin:0;background:#e9ecf2;color:var(--text-body);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;}
@@ -388,6 +388,30 @@
         </div>
       </div>
     </div></div>
+  </section>
+
+  <!-- ============================= 화면 인덱스 (PRD 매핑) ============================= -->
+  <section class="reg">
+    <h2>화면 인덱스 · PRD 매핑</h2>
+    <p>제품 요구사항(PRD) 항목 ↔ 디자인 시스템 파일 대응. 경로는 <code>design/system/</code> 기준.</p>
+    <table>
+      <thead><tr><th>화면</th><th>PRD</th><th>디자인 시스템 기준 파일</th></tr></thead>
+      <tbody>
+        <tr><td>온보딩(로그인·가입·SNS)</td><td>AP-01</td><td><code>screens/W-01.html</code></td></tr>
+        <tr><td>탐색 / 홈(리스트·탭바)</td><td>AP-02 / AP-04</td><td><code>screens/W-05.html</code>(홈)·<code>W-06.html</code>(탐색)</td></tr>
+        <tr><td>모임 만들기(폼)</td><td>(총무)</td><td><code>screens/W-10.html</code></td></tr>
+        <tr><td>모임/차수 상세(모금 5단계 스테퍼) ⭐</td><td>AP-05</td><td><code>screens_v0/meeting-detail.html</code>(money baseline) · <code>screens/W-11.html</code></td></tr>
+        <tr><td>정산 완료(축하)</td><td>AP-06</td><td><code>screens_v0/settlement-complete.html</code></td></tr>
+        <tr><td>빈 상태(마스코트 모먼트)</td><td>—</td><td><code>screens_v0/empty-state.html</code></td></tr>
+        <tr><td>컴포넌트 갤러리(전 상태)</td><td>—</td><td><code>components.html</code></td></tr>
+        <tr><td>쇼 피드 / DM / 지갑·마이 / 알림 / 총무 대시보드</td><td>AP-07·09~12</td><td><code>screens/</code> (W-27·29·30·25·26·TR)</td></tr>
+        <tr class="adm"><td>어드민 (대시보드·심사·정산·입금·CS·푸시·리포트·설정)</td><td>AD-01~12</td><td><code>screens/W-40~47</code></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:12px">
+      <b>단일 소스</b>: 화면 원본은 <code>screens/W-xx.html</code>(40개, 각각 단독 실행), 이 보드가 iframe으로 조립·연결한다. 프로토타입 앱은 와이어프레임 확정 후 이 화면들로 생성한다(중복 사본 금지).<br>
+      <b>새 화면 추가 시</b>: <code>template.html</code>에서 시작하고 <code>AGENTS.md</code>의 6단계 체크리스트를 따른다.
+    </p>
   </section>
 
   <!-- ============================= 레지스트리 ============================= -->
