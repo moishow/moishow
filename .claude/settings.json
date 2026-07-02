@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./review/**)",
+      "Read(review/**)",
+      "Edit(./review/**)",
+      "Write(./review/**)"
+    ]
+  }
+}
