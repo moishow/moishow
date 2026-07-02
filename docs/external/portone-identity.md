@@ -21,6 +21,26 @@
 
 ## 호출 흐름 (단계별)
 
+전체 흐름을 시퀀스로 먼저 본 뒤, 아래 단계 설명을 참고한다.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 사용자
+    participant F as 프론트 SDK
+    participant P as 포트원
+    participant S as 우리 서버
+    F->>P: requestIdentityVerification(storeId, channelKey, id)
+    P-->>U: PASS/다날 본인인증 창
+    U->>P: 통신사 인증
+    P-->>F: identityVerificationId
+    F->>S: identityVerificationId 전달
+    S->>P: GET /identity-verifications/{id} · Authorization PortOne secret
+    P-->>S: status=VERIFIED · name/ci/di
+    Note over S: CI로 1인 1계정 중복가입 차단
+    S-->>U: 가입/인증 완료
+```
+
 1. **프론트: SDK 본인인증 요청**
    ```js
    const response = await PortOne.requestIdentityVerification({

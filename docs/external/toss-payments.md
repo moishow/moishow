@@ -17,6 +17,28 @@
 
 ## 호출 흐름 (단계별)
 
+전체 흐름을 시퀀스로 먼저 본 뒤, 아래 단계 설명을 참고한다.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 사용자
+    participant F as 프론트 SDK
+    participant S as 우리 서버
+    participant T as 토스페이먼츠
+    U->>F: 결제 시작
+    F->>T: requestPayment(orderId, amount, successUrl)
+    T-->>U: 결제창 인증/카드입력
+    U->>T: 결제수단 인증
+    T-->>F: successUrl 리다이렉트 · paymentKey/orderId/amount
+    F->>S: 세 값 전달
+    Note over S: 요청 금액과 대조(위변조 검증)
+    S->>T: POST /v1/payments/confirm · Basic secretKey
+    T-->>S: Payment status=DONE
+    T--)S: 웹훅 PAYMENT_STATUS_CHANGED
+    Note over S: GET /payments/paymentKey 재조회로 재검증
+```
+
 1. **SDK 로드**: `https://js.tosspayments.com/v2/standard` 스크립트 또는 npm `@tosspayments/tosspayments-sdk` → `TossPayments(clientKey)`로 초기화.
 2. **결제 요청**: `tossPayments.widgets({ customerKey })` → `widgets.setAmount({ value, currency })` → `widgets.renderPaymentMethods({ selector })` → `widgets.requestPayment({ orderId, orderName, successUrl, failUrl, customerEmail, customerName })`로 결제창 오픈.
    - `orderId`: 영문 대소문자·숫자·`-`·`_`·`=` 6~64자, 상점이 생성하는 **멱등 키**

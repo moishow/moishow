@@ -27,6 +27,30 @@ CODEF의 계좌 API 두 상품을 조합해 **"출금 계좌 소유주 확인 + 
 
 ## 호출 흐름 (단계별)
 
+전체 흐름을 시퀀스로 먼저 본 뒤, 아래 단계 설명을 참고한다.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 사용자
+    participant S as 우리 서버
+    participant C as CODEF
+    participant B as 은행망
+    Note over S,C: 사전 · OAuth2 토큰 발급(1주일 캐싱)
+    U->>S: 출금 계좌 등록(계좌번호, 생년월일)
+    S->>C: 예금주명 인증 holder-authentication
+    C->>B: 실명확인 조회
+    B-->>C: 예금주명
+    C-->>S: name(일치 시)
+    Note over S: 가입 실명(PASS CI)과 예금주명 교차검증
+    S->>C: 계좌 인증 transfer-authentication
+    C->>B: 1원 송금 · 입금자명=authCode
+    C-->>S: authCode(서버 임시 저장)
+    U->>S: 입금내역의 코드 입력
+    Note over S: 저장 authCode == 입력값(서비스 자체 대사)
+    S-->>U: 계좌 점유 인증 완료
+```
+
 1. **OAuth2 토큰 발급** — `POST https://oauth.codef.io/oauth/token`, 인증 `Basic base64(clientId:clientSecret)`, body `grant_type=client_credentials&scope=read`. `accessToken`은 **1주일 유효** → 캐싱 재사용. ⚠️ 응답 바디가 **URL-encoded**로 내려오므로 디코딩 후 JSON 파싱.
 2. **RSA 암호화** — 이 상품에는 해당 없음(비밀번호·인증서 필드 미전송).
 3. **connectedId** — 이 상품에는 해당 없음(로그인 정보 없이 계좌번호로 직접 조회).
