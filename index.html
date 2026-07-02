@@ -215,6 +215,52 @@
     </div>
   </section>
 
+  <!-- ===== 결제 · 외부 연동 ===== -->
+  <section aria-labelledby="pay-h">
+    <div class="sec-head">
+      <h2 id="pay-h">결제 · 외부 연동</h2>
+      <span class="count">샌드박스</span>
+    </div>
+    <p class="sec-desc">결제·정산 모델 결정과 외부 연동(PG·인증) 호출방식. 모든 API는 현재 <strong>샌드박스 기준</strong>입니다.</p>
+    <div class="grid">
+      <a class="card" href="docs/payment-model-comparison.html">
+        <div class="ico" aria-hidden="true">⚖️</div>
+        <div class="num">DECISION</div>
+        <h3>결제모델 비교노트 <span class="badge canon">정렬 필요</span></h3>
+        <p>앱 포인트 에스크로(정본) vs 라이선스 PG 경유(리뷰) — 상충점 · 열린 질문 · 방향 제안.</p>
+        <span class="go">열기 <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="card" href="docs/external/toss-payments.html">
+        <div class="ico" aria-hidden="true">💳</div>
+        <div class="num">PG</div>
+        <h3>토스페이먼츠 <span class="badge viewer">뷰어</span></h3>
+        <p>카드·간편결제 PG. 결제창 SDK → 서버 승인(confirm) API → 웹훅.</p>
+        <span class="go">열기 <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="card" href="docs/external/codef.html">
+        <div class="ico" aria-hidden="true">🏦</div>
+        <div class="num">ACCOUNT</div>
+        <h3>CODEF 1원 계좌인증 <span class="badge viewer">뷰어</span></h3>
+        <p>예금주명 인증 + 1원 이체 점유인증. 출금 계좌 소유주 확인·교차검증.</p>
+        <span class="go">열기 <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="card" href="docs/external/portone-identity.html">
+        <div class="ico" aria-hidden="true">🪪</div>
+        <div class="num">KYC</div>
+        <h3>포트원 본인인증 <span class="badge viewer">뷰어</span></h3>
+        <p>PASS 실명·CI 확보(1인 1계정). V2 서버 조회·검증.</p>
+        <span class="go">열기 <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+      <a class="card" href="docs/external/">
+        <div class="ico" aria-hidden="true">🔌</div>
+        <div class="num">OVERVIEW</div>
+        <h3>외부 연동 개요 <span class="badge html">index</span></h3>
+        <p>3종 연동의 공통 원칙(서버 검증 · 시크릿 보호 · 멱등)과 문서 색인.</p>
+        <span class="go">열기 <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
+    </div>
+  </section>
+
   <!-- ===== 와이어플로우 · 화면 ===== -->
   <section aria-labelledby="flow-h">
     <div class="sec-head">
