@@ -109,8 +109,8 @@
 
   <!-- ============================= S1 ============================= -->
   <section class="lane">
-    <div class="lane__h"><h3>S1 · 소셜 로그인 + KYC + 지갑 개설</h3><span class="persona">부원·총무</span><span class="must">Must</span></div>
-    <p class="lane__sum">신규 진입 → 3초 로그인 → (신규)본인인증 → 지갑 자동 개설 → 홈. 성공 기준: <b>verified</b> + 지갑 생성.</p>
+    <div class="lane__h"><h3>S1 · 소셜 로그인 + KYC + 지갑 개설 + 관심 카테고리</h3><span class="persona">부원·총무</span><span class="must">Must</span></div>
+    <p class="lane__sum">신규 진입 → 3초 로그인 → (신규)본인인증 → 지갑 자동 개설 → 관심 카테고리 2뎁스 선택 → 홈. 성공 기준: <b>verified</b> + 지갑 생성.</p>
     <div class="track"><div class="flow">
       <span class="chip start">시작</span>
       <span class="arr"><span>→</span></span>
@@ -123,6 +123,8 @@
           <figure class="wf"><figcaption class="wf__cap"><b>W-03</b> KYC 인증</figcaption><div class="slot"><span class="slot__badge">W-03</span><iframe src="screens/W-03.html" scrolling="no" loading="lazy"></iframe></div></figure>
           <span class="arr"><i>verified</i><span>→</span></span>
           <figure class="wf"><figcaption class="wf__cap"><b>W-04</b> 지갑 개설</figcaption><div class="slot"><span class="slot__badge">W-04</span><iframe src="screens/W-04.html" scrolling="no" loading="lazy"></iframe></div></figure>
+          <span class="arr"><i>관심 선택</i><span>→</span></span>
+          <figure class="wf"><figcaption class="wf__cap"><b>W-02</b> 관심 카테고리(2뎁스)</figcaption><div class="slot"><span class="slot__badge">W-02</span><iframe src="screens/W-02.html" scrolling="no" loading="lazy"></iframe></div></figure>
           <span class="arr"><span>→</span></span>
           <figure class="wf"><figcaption class="wf__cap"><b>W-05</b> 홈</figcaption><div class="slot"><span class="slot__badge">W-05</span><iframe src="screens/W-05.html" scrolling="no" loading="lazy"></iframe></div></figure>
           <span class="chip end">홈 진입</span>
@@ -161,12 +163,16 @@
 
   <!-- ============================= S3 ============================= -->
   <section class="lane">
-    <div class="lane__h"><h3>S3 · 차수 개설·예치 (에스크로 OPEN) + 만남 전 취소</h3><span class="persona">총무·부원</span><span class="must">Must ⭐</span></div>
-    <p class="lane__sum">총무가 차수 개설 → 부원이 차수 상세(달성 게이지)에서 예치(부족분 카카오페이 충전) → OPEN. 만남시각 전이면 자유 취소 → 즉시 환불(총무 출금 잠김 유지). 예치는 멱등.</p>
+    <div class="lane__h"><h3>S3 · 동아리 개설(무료) → 차수 개설·예치 (에스크로 OPEN) + 만남 전 취소</h3><span class="persona">총무·부원</span><span class="must">Must ⭐</span></div>
+    <p class="lane__sum">총무가 동아리 무료 개설(카테고리 2뎁스) → 차수 개설(돈은 여기서부터) → 부원이 차수 상세(달성 게이지)에서 예치(부족분 카카오페이 충전) → OPEN. 만남시각 전이면 자유 취소 → 즉시 환불(총무 출금 잠김 유지). 예치는 멱등.</p>
     <div class="track"><div class="flow">
       <span class="chip start">시작</span>
-      <span class="arr"><i>총무 개설</i><span>→</span></span>
-      <figure class="wf"><figcaption class="wf__cap"><b>W-10</b> 모임 만들기(총무)</figcaption><div class="slot"><span class="slot__badge">W-10</span><iframe src="screens/W-10.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>동아리 개설</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-20</b> 동아리 만들기(무료)</figcaption><div class="slot"><span class="slot__badge">W-20</span><iframe src="screens/W-20.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>카테고리</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-02</b> 카테고리 선택(2뎁스)</figcaption><div class="slot"><span class="slot__badge">W-02</span><iframe src="screens/W-02.html" scrolling="no" loading="lazy"></iframe></div></figure>
+      <span class="arr"><i>차수 개설</i><span>→</span></span>
+      <figure class="wf"><figcaption class="wf__cap"><b>W-10</b> 차수 개설(총무)</figcaption><div class="slot"><span class="slot__badge">W-10</span><iframe src="screens/W-10.html" scrolling="no" loading="lazy"></iframe></div></figure>
       <span class="arr"><i>부원 참여</i><span>→</span></span>
       <figure class="wf"><figcaption class="wf__cap"><b>W-11</b> 차수 상세</figcaption><div class="slot"><span class="slot__badge">W-11</span><iframe src="screens/W-11.html" scrolling="no" loading="lazy"></iframe></div></figure>
       <span class="arr"><i>예치</i><span>→</span></span>
@@ -398,8 +404,9 @@
       <thead><tr><th>화면</th><th>PRD</th><th>디자인 시스템 기준 파일</th></tr></thead>
       <tbody>
         <tr><td>온보딩(로그인·가입·SNS)</td><td>AP-01</td><td><code>screens/W-01.html</code></td></tr>
-        <tr><td>탐색 / 홈(리스트·탭바)</td><td>AP-02 / AP-04</td><td><code>screens/W-05.html</code>(홈)·<code>W-06.html</code>(탐색)</td></tr>
-        <tr><td>모임 만들기(폼)</td><td>(총무)</td><td><code>screens/W-10.html</code></td></tr>
+        <tr><td>카테고리 선택(2뎁스 · 대분류→세부, 관심/동아리 공용)</td><td>AP-02</td><td><code>screens/W-02.html</code></td></tr>
+        <tr><td>탐색 / 홈(오늘 챙길 일·캘린더·내 동아리·탭바)</td><td>AP-02 / AP-04</td><td><code>screens/W-05.html</code>(홈)·<code>W-06.html</code>(탐색)</td></tr>
+        <tr><td>동아리 만들기(무료 · 3스텝) / 차수 개설(총무)</td><td>(총무)</td><td><code>screens/W-20.html</code>(동아리)·<code>W-10.html</code>(차수)</td></tr>
         <tr><td>모임/차수 상세(모금 5단계 스테퍼) ⭐</td><td>AP-05</td><td><code>screens_v0/meeting-detail.html</code>(money baseline) · <code>screens/W-11.html</code></td></tr>
         <tr><td>정산 완료(축하)</td><td>AP-06</td><td><code>screens_v0/settlement-complete.html</code></td></tr>
         <tr><td>빈 상태(마스코트 모먼트)</td><td>—</td><td><code>screens_v0/empty-state.html</code></td></tr>
@@ -422,14 +429,15 @@
       <thead><tr><th>ID</th><th>화면</th><th>등장 시나리오</th><th>소스</th></tr></thead>
       <tbody>
         <tr><td><code>W-01</code></td><td>온보딩·SNS 로그인 (한 화면)</td><td>S1</td><td>screens/W-01.html</td></tr>
+        <tr><td><code>W-02</code></td><td>카테고리 선택 2뎁스(대분류→세부 · 관심/동아리 공용)</td><td>S1·S3</td><td>screens/W-02.html</td></tr>
         <tr><td><code>W-03</code></td><td>KYC 본인인증</td><td>S1</td><td>screens/W-03.html</td></tr>
         <tr><td><code>W-04</code></td><td>지갑 개설 완료</td><td>S1</td><td>screens/W-04.html</td></tr>
-        <tr><td><code>W-05</code></td><td>홈 (잔액·내 모임·4탭)</td><td>S1·S2·S6</td><td>screens/W-05.html</td></tr>
+        <tr><td><code>W-05</code></td><td>홈 (포인트·오늘 챙길 일·캘린더·내 동아리·4탭)</td><td>S1·S2·S6</td><td>screens/W-05.html</td></tr>
         <tr><td><code>W-06</code></td><td>모임 탐색(태그)</td><td>S2</td><td>screens/W-06.html</td></tr>
         <tr><td><code>W-07</code></td><td>클럽 상세(안심예산안)</td><td>S2</td><td>screens/W-07.html</td></tr>
         <tr><td><code>W-08</code></td><td>가입 신청서(폼빌더)</td><td>S2</td><td>screens/W-08.html</td></tr>
         <tr><td><code>W-09</code></td><td>신청 완료/대기</td><td>S2</td><td>screens/W-09.html</td></tr>
-        <tr><td><code>W-10</code></td><td>모임 만들기/차수 개설(총무)</td><td>S3</td><td>screens/W-10.html</td></tr>
+        <tr><td><code>W-10</code></td><td>차수 개설(총무 · 돈 시작점)</td><td>S3</td><td>screens/W-10.html</td></tr>
         <tr><td><code>W-11</code></td><td>차수/펀딩 상세(스테퍼)</td><td>S3·S4</td><td>screens/W-11.html</td></tr>
         <tr><td><code>W-12</code></td><td>예치</td><td>S3</td><td>screens/W-12.html</td></tr>
         <tr><td><code>W-13</code></td><td>카카오페이 충전</td><td>S3·S8</td><td>screens/W-13.html</td></tr>
@@ -439,13 +447,14 @@
         <tr><td><code>W-17</code></td><td>동의 마감 결과(노쇼·페널티)</td><td>S4</td><td>screens/W-17.html</td></tr>
         <tr><td><code>W-18</code></td><td>총무 출금</td><td>S4</td><td>screens/W-18.html</td></tr>
         <tr><td><code>W-19</code></td><td>차수 종료 OCR (흑자 환급 포함)</td><td>S5</td><td>screens/W-19.html</td></tr>
+        <tr><td><code>W-20</code></td><td>동아리 만들기(무료 · 3스텝 위저드)</td><td>S3</td><td>screens/W-20.html</td></tr>
         <tr><td><code>W-21</code></td><td>정산 미리보기 — 추가정산</td><td>S5</td><td>screens/W-21.html</td></tr>
         <tr><td><code>W-22</code></td><td>추가정산 납부(부원)</td><td>S5·S8</td><td>screens/W-22.html</td></tr>
         <tr><td><code>W-23</code></td><td>정산 완료(DONE)</td><td>S5</td><td>screens/W-23.html</td></tr>
         <tr><td><code>W-24</code></td><td>현금화(cashout)</td><td>S5</td><td>screens/W-24.html</td></tr>
         <tr><td><code>W-25</code></td><td>지갑·마이(미납·신용등급)</td><td>S5·S8</td><td>screens/W-25.html</td></tr>
         <tr><td><code>W-26</code></td><td>알림</td><td>S2·S4·S8</td><td>screens/W-26.html</td></tr>
-        <tr><td><code>W-27</code></td><td>쇼 피드(글·사진)</td><td>S6</td><td>screens/W-27.html</td></tr>
+        <tr><td><code>W-27</code></td><td>쇼 피드(소속·둘러보기 2탭 · 글·사진)</td><td>S6</td><td>screens/W-27.html</td></tr>
         <tr><td><code>W-28</code></td><td>쇼 글 작성</td><td>S6</td><td>screens/W-28.html</td></tr>
         <tr><td><code>W-29</code></td><td>DM 목록</td><td>S6</td><td>screens/W-29.html</td></tr>
         <tr><td><code>W-30</code></td><td>DM 대화방</td><td>S6</td><td>screens/W-30.html</td></tr>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>모이쇼 — 동아리 만들기 (W-20)</title>
+    <link rel="stylesheet" href="../tokens.css" />
+    <link rel="stylesheet" href="../components.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+      }
+      /* 3스텝 위저드 인디케이터 (에스크로 스테퍼와 별개 · community) */
+      .wiz {
+        display: flex;
+        gap: 6px;
+        padding: 12px 20px 0;
+      }
+      .wiz__seg {
+        flex: 1;
+        height: 4px;
+        border-radius: 999px;
+        background: var(--border-default);
+      }
+      .wiz__seg.is-on {
+        background: var(--color-warm);
+      }
+      .wiz__labels {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 20px 0;
+        font-size: var(--fs-micro);
+        color: var(--text-faint);
+        font-weight: var(--weight-semibold);
+      }
+      .wiz__labels .on {
+        color: var(--color-warm-strong);
+      }
+      /* 대표 이미지 픽커 */
+      .cover {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 18px 20px 0;
+      }
+      .cover__box {
+        width: 66px;
+        height: 66px;
+        border-radius: var(--radius-lg);
+        background: var(--color-warm-soft);
+        border: 1.5px dashed var(--coral-300);
+        color: var(--color-warm);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .cover__box .icon {
+        width: 26px;
+        height: 26px;
+      }
+      .cover__t {
+        font-size: var(--fs-body);
+        font-weight: var(--weight-bold);
+        color: var(--text-title);
+      }
+      .cover__d {
+        font-size: var(--fs-caption);
+        color: var(--text-muted);
+        margin-top: 2px;
+      }
+      textarea.field__input {
+        min-height: 88px;
+        resize: none;
+        line-height: var(--lh-normal);
+        font-family: inherit;
+      }
+      /* 카테고리 선택 필드 (W-02로 연결) */
+      .pick {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid var(--border-default);
+        border-radius: var(--radius-md);
+        padding: 13px 14px;
+        background: var(--surface-card);
+        color: var(--text-faint);
+        font-size: var(--fs-subtitle);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <div class="screen surface-community" style="padding-bottom: 96px">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+          <div class="appbar__title">동아리 만들기</div>
+          <span style="width: 24px"></span>
+        </header>
+
+        <!-- 3스텝 진행 -->
+        <div class="wiz">
+          <div class="wiz__seg is-on"></div>
+          <div class="wiz__seg"></div>
+          <div class="wiz__seg"></div>
+        </div>
+        <div class="wiz__labels">
+          <span class="on">1 기본정보</span>
+          <span>2 카테고리</span>
+          <span>3 공개설정</span>
+        </div>
+
+        <div class="headline" style="padding-top: 14px">
+          <h1>
+            어떤 동아리
+            <br />
+            <span class="light">인가요?</span>
+          </h1>
+        </div>
+        <div style="height: 6px"></div>
+
+        <div class="cover">
+          <div class="cover__box">
+            <svg class="icon">
+              <rect x="3" y="6" width="18" height="14" rx="3" stroke="currentColor" stroke-width="2" fill="none" />
+              <circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="2" fill="none" />
+              <path d="M8 6l1.2-2h5.6L16 6" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none" />
+            </svg>
+          </div>
+          <div>
+            <div class="cover__t">대표 이미지</div>
+            <div class="cover__d">동아리 아이콘 · 커버 (선택)</div>
+          </div>
+        </div>
+
+        <div style="height: 16px"></div>
+        <label class="field">
+          <span class="field__label">동아리 이름</span>
+          <input class="field__input" placeholder="예) 디자인동아리 모디" value="디자인동아리 모디" />
+        </label>
+        <label class="field">
+          <span class="field__label">카테고리</span>
+          <button class="pick">
+            <span style="color: var(--text-body)">운동 · 러닝</span>
+            <svg class="icon icon--sm" style="color: var(--text-muted)">
+              <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+            </svg>
+          </button>
+        </label>
+        <label class="field">
+          <span class="field__label">한줄 소개</span>
+          <textarea class="field__input" placeholder="동아리를 한 문장으로 소개해요">매주 모여 작업물을 나누고 시즌마다 전시를 여는 디자인 소모임이에요.</textarea>
+        </label>
+
+        <!-- 돈/차수와의 분리를 명시 -->
+        <div class="notice" style="margin-top: 16px">
+          <svg class="icon"><path d="M12 20s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.5-7 10-7 10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" fill="none" /></svg>
+          <div class="notice__text">
+            동아리는
+            <b>무료로</b>
+            만들어요. 회비·예치·정산은 나중에
+            <b>‘차수 개설’</b>
+            에서 따로 설정해요 — 돈은 그때부터.
+          </div>
+        </div>
+
+        <div class="cta-bar">
+          <div class="cta-bar__meta">
+            단계
+            <br />
+            <b class="num">1 / 3</b>
+          </div>
+          <button class="btn btn--warm">다음</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

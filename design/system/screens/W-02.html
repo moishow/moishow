@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>모이쇼 — 카테고리 선택 2뎁스 (W-02)</title>
+    <link rel="stylesheet" href="../tokens.css" />
+    <link rel="stylesheet" href="../components.css" />
+    <style>
+      body {
+        margin: 0;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+      }
+      /* 대분류 가로 칩 (W-06 패턴 재사용) */
+      .chips-row {
+        display: flex;
+        gap: 8px;
+        padding: 14px 20px 4px;
+        overflow-x: auto;
+      }
+      .chips-row::-webkit-scrollbar {
+        display: none;
+      }
+      .chips-row {
+        scrollbar-width: none;
+      }
+      .chips-row .chip {
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 8px 15px;
+        font-size: var(--fs-body);
+        cursor: pointer;
+      }
+      .chip--on {
+        background: var(--color-warm);
+        color: var(--color-warm-on);
+        box-shadow: var(--glow-warm);
+      }
+      /* 소분류 그리드 (단일 선택) */
+      .sub-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin: 12px 20px 0;
+      }
+      .sub {
+        padding: 10px 16px;
+        border-radius: var(--radius-pill);
+        border: 1.5px solid var(--border-default);
+        background: var(--surface-card);
+        color: var(--text-body);
+        font-size: var(--fs-body);
+        font-weight: var(--weight-semibold);
+        cursor: pointer;
+      }
+      .sub.is-on {
+        border-color: var(--color-warm);
+        background: var(--color-warm-soft);
+        color: var(--color-warm-strong);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <div class="screen surface-community" style="padding-bottom: 96px">
+        <header class="appbar">
+          <svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" /></svg>
+          <div class="appbar__title">카테고리</div>
+          <span style="width: 24px"></span>
+        </header>
+
+        <p class="t-caption" style="padding: 10px 20px 0">
+          대분류
+          <b>1개</b>
+          · 세부
+          <b>1개</b>
+          를 골라요 (동아리는 대표 카테고리 1개)
+        </p>
+
+        <!-- 1뎁스: 대분류 (8개) -->
+        <div class="section-title" style="padding-bottom: 2px">대분류</div>
+        <div class="chips-row">
+          <span class="chip chip--on">운동·스포츠</span>
+          <span class="chip">스터디·자기계발</span>
+          <span class="chip">취미·여가</span>
+          <span class="chip">문화·예술</span>
+          <span class="chip">봉사</span>
+          <span class="chip">푸드·드링크</span>
+          <span class="chip">여행</span>
+          <span class="chip">게임·보드</span>
+        </div>
+
+        <!-- 2뎁스: 소분류 (선택된 대분류의 하위) -->
+        <div class="section-title" style="padding-bottom: 2px">
+          세부 카테고리
+          <span class="t-caption" style="font-weight: var(--weight-semibold)">· 운동·스포츠</span>
+        </div>
+        <div class="sub-grid">
+          <span class="sub is-on">러닝·마라톤</span>
+          <span class="sub">풋살·축구</span>
+          <span class="sub">클라이밍</span>
+          <span class="sub">배드민턴</span>
+          <span class="sub">테니스</span>
+          <span class="sub">등산</span>
+          <span class="sub">헬스·크로스핏</span>
+          <span class="sub">자전거</span>
+          <span class="sub">수영</span>
+          <span class="sub">기타 구기</span>
+        </div>
+
+        <div class="cta-bar">
+          <div class="cta-bar__meta">
+            선택
+            <br />
+            <b>운동 · 러닝</b>
+          </div>
+          <button class="btn btn--warm">선택 완료</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
