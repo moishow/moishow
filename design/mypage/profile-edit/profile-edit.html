@@ -1,0 +1,92 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 프로필 편집</title>
+<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css">
+<style>
+  body{margin:0;background:#faf9f5;display:flex;justify-content:center;padding:24px 0}
+  .avatar-edit { display:flex; flex-direction:column; align-items:center; padding:16px 0 8px; }
+  .avatar-edit__img { width:88px; height:88px; border-radius:50%; background:var(--gray-700); color:var(--white); display:flex; align-items:center; justify-content:center; font-size:var(--fs-heading); font-weight:var(--weight-bold); }
+  .avatar-edit__btn { margin-top:10px; font-size:var(--fs-caption); font-weight:var(--weight-semibold); color:var(--color-primary); }
+  .field textarea.field__input { min-height:64px; resize:none; line-height:var(--lh-normal); }
+  .readonly { background:var(--surface-sunken); color:var(--text-muted); }
+  .save-btn { font-size:var(--fs-body); font-weight:var(--weight-bold); color:var(--color-primary); }
+  .field-hint { font-size:var(--fs-micro); color:var(--text-muted); margin-top:6px; }
+  .field-hint b { color:var(--color-primary); font-weight:var(--weight-semibold); }
+  .field-hint.is-near { color:var(--color-danger-strong); }
+  .row2 { display:flex; gap:12px; margin:12px 20px 0; }
+  .row2 .field { flex:1; margin:0; }
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+    <header class="appbar">
+      <a id="back-link" href="../mypage/mypage.html" aria-label="뒤로" style="display:inline-flex;padding:10px;margin:-10px"><svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="appbar__title">프로필 편집</div>
+      <button type="button" id="save-profile" class="save-btn">저장</button>
+    </header>
+
+    <div class="avatar-edit">
+      <div class="avatar-edit__img">김산</div>
+      <input id="photo-input" type="file" accept="image/*" hidden>
+      <button type="button" id="photo-button" class="avatar-edit__btn">사진 변경</button>
+      <span id="photo-name" class="field-hint" hidden></span>
+    </div>
+
+    <div class="field"><label class="field__label">닉네임</label><input class="field__input" value="김산"></div>
+    <div class="field"><label class="field__label" for="bio">자기소개</label><textarea id="bio" class="field__input" maxlength="60">주말엔 풋살·등산 다니는 개발자. 번개 자주 엽니다.</textarea><div id="bio-count" class="field-hint" aria-live="polite"></div></div>
+
+    <div class="row2">
+      <div class="field">
+        <label class="field__label">성별</label>
+        <div class="select"><select class="field__input"><option>남성</option><option>여성</option><option>기타</option><option>비공개</option></select></div>
+      </div>
+      <div class="field">
+        <label class="field__label">생년월일</label>
+        <input class="field__input" type="date" value="1996-03-12">
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:12px">
+      <label class="field__label">전화번호</label>
+      <div style="display:flex;gap:8px">
+        <input class="field__input readonly" value="010-1234-5678" readonly style="flex:1">
+        <button class="btn btn--secondary" style="flex:none;padding:0 16px">인증하고 변경</button>
+      </div>
+      <div class="field-hint">번호를 바꾸려면 <b>문자 인증</b>이 필요해요.</div>
+    </div>
+
+    <div class="notice">
+      <svg class="icon"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      <div class="notice__text">전화번호로 본인을 확인해요. 새 번호 입력 → <b>문자로 받은 인증번호</b>를 넣어야 변경돼요.</div>
+    </div>
+  </div></div>
+  <script>
+    const editableFields = [...document.querySelectorAll('input:not([readonly]), textarea, select')];
+    const initialValues = new Map(editableFields.map((field) => [field, field.value]));
+    let dirty = false;
+    const bio = document.getElementById('bio');
+    const bioCount = document.getElementById('bio-count');
+    const updateBioCount = () => {
+      const remaining = bio.maxLength - bio.value.length;
+      bioCount.textContent = `${bio.value.length} / ${bio.maxLength}자`;
+      bioCount.classList.toggle('is-near', remaining <= 10);
+    };
+    const updateDirty = () => { dirty = editableFields.some((field) => initialValues.get(field) !== field.value); };
+    editableFields.forEach((field) => field.addEventListener('input', updateDirty));
+    editableFields.forEach((field) => field.addEventListener('change', updateDirty));
+    updateBioCount();
+    bio.addEventListener('input', updateBioCount);
+
+    document.getElementById('photo-button').addEventListener('click', () => document.getElementById('photo-input').click());
+    document.getElementById('photo-input').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      document.getElementById('photo-name').textContent = file.name;
+      document.getElementById('photo-name').hidden = false;
+      dirty = true;
+    });
+    document.getElementById('back-link').addEventListener('click', (event) => {
+      if (dirty && !window.confirm('저장하지 않은 변경사항이 있어요. 나가시겠어요?')) event.preventDefault();
+    });
+    document.getElementById('save-profile').addEventListener('click', () => {
+      window.location.href = '../mypage/mypage.html';
+    });
+  </script>
+</body></html>

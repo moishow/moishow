@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>모이쇼 — 마이페이지 와이어프레임·와이어플로우</title>
+  <link rel="stylesheet" href="../design/system/tokens.css">
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { margin: 0; overflow-x: hidden; background: var(--surface-sunken); color: var(--text-body); font-family: var(--font-sans); }
+    .wrap { max-width: 1800px; margin: 0 auto; padding: 32px 28px 72px; }
+    .eyebrow { margin: 0; color: var(--color-primary); font-size: var(--fs-caption); font-weight: var(--weight-bold); letter-spacing: .04em; }
+    h1 { margin: 6px 0 0; color: var(--text-strong); font-size: var(--fs-heading); }
+    .intro { max-width: 760px; margin: 8px 0 0; color: var(--text-muted); font-size: var(--fs-body); line-height: var(--lh-relaxed); overflow-wrap: anywhere; }
+    .legend { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 20px; font-size: var(--fs-caption); color: var(--text-muted); }
+    .legend b { color: var(--text-strong); }
+    .legend__screen, .legend__flow { display: inline-flex; align-items: center; gap: 6px; }
+    .legend__phone { width: 14px; height: 22px; border: 1px solid var(--border-default); border-radius: 4px; background: var(--surface-card); }
+    .legend__arrow { color: var(--color-primary); font-size: var(--fs-title); line-height: 1; }
+    .lane { margin-top: 24px; padding: 18px; border: 1px solid var(--border-default); border-radius: var(--radius-xl); background: var(--surface-card); }
+    .lane__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .lane__title { margin: 0; color: var(--text-strong); font-size: var(--fs-title); }
+    .lane__tag { padding: 3px 8px; border-radius: var(--radius-pill); background: var(--color-primary-soft); color: var(--color-primary); font-size: var(--fs-micro); font-weight: var(--weight-bold); }
+    .lane__desc { margin: 6px 0 0; color: var(--text-muted); font-size: var(--fs-caption); line-height: var(--lh-normal); overflow-wrap: anywhere; }
+    .lane__routes { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .lane__routes span { padding:4px 8px; border-radius:var(--radius-pill); background:var(--surface-sunken); color:var(--text-muted); font-size:var(--fs-micro); font-weight:var(--weight-semibold); }
+    .track { overflow-x: auto; padding: 18px 2px 8px; }
+    .flow { display: inline-flex; min-width: 100%; align-items: center; gap: 12px; }
+      .parallel-flows { display:flex; flex-direction:column; gap:20px; margin-top:18px; }
+    .parallel-flow { min-width:0; }
+    .parallel-flow__title { margin:0 0 10px; color:var(--text-strong); font-size:var(--fs-caption); font-weight:var(--weight-bold); }
+    .parallel-flow__track { display:flex; align-items:center; gap:10px; overflow-x:auto; padding:2px 2px 8px; }
+    .branch { display: inline-flex; align-items: center; gap: 12px; }
+    .branch--stack { flex-direction: row; align-items: center; }
+    .connector { display: inline-flex; min-width: 72px; flex-direction: column; align-items: center; color: var(--text-muted); font-size: var(--fs-micro); font-weight: var(--weight-semibold); text-align: center; }
+    .connector::after { content: '→'; margin-top: 2px; color: var(--color-primary); font-size: 26px; font-weight: var(--weight-bold); line-height: 1; }
+    .node { width: 178px; flex: 0 0 178px; color: inherit; text-decoration: none; }
+    .node:focus-visible { outline: 3px solid var(--ring); outline-offset: 4px; border-radius: var(--radius-md); }
+    .node__title { display: block; min-height: 36px; color: var(--text-strong); font-size: var(--fs-caption); font-weight: var(--weight-bold); line-height: var(--lh-normal); }
+    .node__hint { display: block; min-height: 30px; margin-top: 2px; color: var(--text-muted); font-size: var(--fs-micro); line-height: var(--lh-normal); }
+    .phone { position: relative; display: block; width: 178px; height: 356px; overflow: hidden; border: 1px solid var(--border-default); border-radius: 18px; background: var(--surface-card); box-shadow: var(--shadow-card); }
+    .phone iframe { display: block; width: 390px; height: 860px; border: 0; transform: scale(.456); transform-origin: top left; pointer-events: none; }
+    .phone__label { position: absolute; top: 8px; left: 8px; z-index: 1; padding: 3px 6px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--text-strong) 84%, transparent); color: var(--white); font-size: 10px; font-weight: var(--weight-bold); }
+    .end { display: inline-flex; align-items: center; justify-content: center; min-width: 92px; padding: 10px; border-radius: var(--radius-md); background: var(--color-success-soft); color: var(--color-success-strong); font-size: var(--fs-caption); font-weight: var(--weight-bold); text-align: center; }
+    .external { background: var(--surface-sunken); }
+    @media (max-width: 640px) {
+      .wrap { padding: 24px 16px 48px; }
+      .lane { padding: 14px; }
+      .flow { gap: 8px; }
+      .connector { min-width: 48px; }
+      .node, .phone { width: 154px; flex-basis: 154px; }
+      .phone { height: 316px; }
+      .phone iframe { transform: scale(.395); }
+        .parallel-flows { gap:18px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="eyebrow">MOISHOW · MY PAGE</p>
+    <h1>마이페이지 와이어프레임 · 와이어플로우</h1>
+    <p class="intro">카드는 실제 화면을 축소해 보여 줍니다. 카드를 선택하면 원본 화면을 열고, 화살표 라벨은 사용자의 이동 행동을 뜻합니다.</p>
+
+    <div class="legend" aria-label="표시 안내">
+      <span class="legend__screen"><span class="legend__phone" aria-hidden="true"></span><b>화면 카드</b> 실제 iframe 와이어프레임</span>
+      <span class="legend__flow"><span class="legend__arrow" aria-hidden="true">→</span><b>화살표</b> 사용자 이동·상호작용</span>
+    </div>
+
+    <section class="lane" aria-labelledby="flow-overview">
+      <div class="lane__head"><h2 class="lane__title" id="flow-overview">S1 · 마이페이지 허브</h2><span class="lane__tag">개요</span></div>
+      <p class="lane__desc">마이 탭에서 프로필, 정산, 일정, 내역, 설정의 각 흐름으로 진입한다.</p>
+      <div class="lane__routes" aria-label="마이페이지 허브 분기"><span>프로필 편집</span><span>통계 → S2 소셜</span><span>정산 요약 → S3</span><span>일정 → S4</span><span>설정 → S5</span></div>
+      <div class="track"><div class="flow">
+        <a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지</span><span class="node__hint">프로필 · 정산 요약 · 일정 · 최근 내역</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a>
+        <span class="connector">프로필 편집</span>
+        <a class="node" href="../design/mypage/profile-edit/profile-edit.html" target="_blank"><span class="node__title">프로필 편집</span><span class="node__hint">사진·닉네임·소개 입력 후 저장</span><span class="phone"><span class="phone__label">PROFILE</span><iframe scrolling="no" title="프로필 편집" src="../design/mypage/profile-edit/profile-edit.html" loading="lazy"></iframe></span></a>
+        <span class="connector">저장</span><span class="end">마이페이지에 반영</span>
+      </div></div>
+    </section>
+
+    <section class="lane" aria-labelledby="flow-social">
+      <div class="lane__head"><h2 class="lane__title" id="flow-social">S2 · 소셜 프로필</h2><span class="lane__tag">게시글 · 팔로우</span></div>
+      <p class="lane__desc">세 통계 항목을 각각 시작점으로 삼아, 왼쪽에서 오른쪽으로 독립된 흐름을 확인한다.</p>
+      <div class="parallel-flows">
+        <div class="parallel-flow"><p class="parallel-flow__title">게시글 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지</span><span class="node__hint">게시글 수 선택</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지 게시글 흐름" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a><span class="connector">게시글 클릭</span><a class="node" href="../design/mypage/my-posts/my-posts.html" target="_blank"><span class="node__title">내 게시글</span><span class="node__hint">게시글 카드 선택</span><span class="phone"><span class="phone__label">POSTS</span><iframe scrolling="no" title="내 게시글" src="../design/mypage/my-posts/my-posts.html" loading="lazy"></iframe></span></a><span class="connector">게시글 선택</span><a class="node" href="../design/system/screens/W-33.html" target="_blank"><span class="node__title">쇼 상세</span><span class="node__hint">기존 W-33 화면</span><span class="phone external"><span class="phone__label">W-33</span><iframe scrolling="no" title="쇼 상세" src="../design/system/screens/W-33.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">팔로워 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지</span><span class="node__hint">팔로워 수 선택</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지 팔로워 흐름" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a><span class="connector">팔로워 클릭</span><a class="node" href="../design/mypage/followers/followers.html" target="_blank"><span class="node__title">팔로워</span><span class="node__hint">검색 · 맞팔로우 · 탭 전환</span><span class="phone"><span class="phone__label">FOLLOWERS</span><iframe scrolling="no" title="팔로워" src="../design/mypage/followers/followers.html" loading="lazy"></iframe></span></a><span class="connector">사용자 행 선택</span><a class="node" href="../design/mypage/relative-profile/relative-profile.html" target="_blank"><span class="node__title">상대 프로필</span><span class="node__hint">프로필 확인 · 팔로우 · 게시글 상세</span><span class="phone"><span class="phone__label">PROFILE</span><iframe scrolling="no" title="상대 프로필" src="../design/mypage/relative-profile/relative-profile.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">팔로잉 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지</span><span class="node__hint">팔로잉 수 선택</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지 팔로잉 흐름" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a><span class="connector">팔로잉 클릭</span><a class="node" href="../design/mypage/following/following.html" target="_blank"><span class="node__title">팔로잉</span><span class="node__hint">검색 · 언팔로우 · 탭 전환</span><span class="phone"><span class="phone__label">FOLLOWING</span><iframe scrolling="no" title="팔로잉" src="../design/mypage/following/following.html" loading="lazy"></iframe></span></a><span class="connector">사용자 행 선택</span><a class="node" href="../design/mypage/relative-profile/relative-profile.html" target="_blank"><span class="node__title">상대 프로필</span><span class="node__hint">프로필 확인 · 팔로우 · 게시글 상세</span><span class="phone"><span class="phone__label">PROFILE</span><iframe scrolling="no" title="상대 프로필" src="../design/mypage/relative-profile/relative-profile.html" loading="lazy"></iframe></span></a></div></div>
+      </div>
+    </section>
+
+    <section class="lane" aria-labelledby="flow-settlement">
+      <div class="lane__head"><h2 class="lane__title" id="flow-settlement">S3 · 모임 정산으로 이동</h2><span class="lane__tag">외부 도메인</span></div>
+      <p class="lane__desc">정산 요약의 항목별 진입 흐름을 나란히 확인한다. 상세 처리 화면은 기존 모임 정산 도메인으로 이동한다.</p>
+      <div class="parallel-flows">
+        <div class="parallel-flow"><p class="parallel-flow__title">보낼 돈 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지 정산 요약</span><span class="node__hint">보낼 돈 선택</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지 보낼 돈 흐름" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a><span class="connector">보낼 돈 선택</span><a class="node" href="../design/system/screens/W-22.html" target="_blank"><span class="node__title">모임 정산 화면</span><span class="node__hint">기존 W-22 · 보낼 돈·추가 정산</span><span class="phone external"><span class="phone__label">W-22</span><iframe scrolling="no" title="기존 모임 정산 화면" src="../design/system/screens/W-22.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">받을 돈 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지 정산 요약</span><span class="node__hint">받을 돈 선택</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지 받을 돈 흐름" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a><span class="connector">받을 돈 선택</span><a class="node" href="../design/system/screens/W-TR.html" target="_blank"><span class="node__title">모임 수금·환급 화면</span><span class="node__hint">기존 W-TR · 받을 돈·수금 현황</span><span class="phone external"><span class="phone__label">W-TR</span><iframe scrolling="no" title="기존 모임 수금 환급 화면" src="../design/system/screens/W-TR.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">정산 내역 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/mypage/mypage.html" target="_blank"><span class="node__title">마이페이지 정산 요약</span><span class="node__hint">최근 정산 내역 선택</span><span class="phone"><span class="phone__label">MYPAGE</span><iframe scrolling="no" title="마이페이지 정산 내역 흐름" src="../design/mypage/mypage/mypage.html" loading="lazy"></iframe></span></a><span class="connector">전체보기 선택</span><a class="node" href="../design/system/screens/W-23.html" target="_blank"><span class="node__title">정산 내역</span><span class="node__hint">기존 W-23 · 최근 정산 내역 전체보기</span><span class="phone external"><span class="phone__label">W-23</span><iframe scrolling="no" title="기존 정산 내역 화면" src="../design/system/screens/W-23.html" loading="lazy"></iframe></span></a></div></div>
+      </div>
+    </section>
+
+    <section class="lane" aria-labelledby="flow-schedule">
+      <div class="lane__head"><h2 class="lane__title" id="flow-schedule">S4 · 내 모임 일정</h2><span class="lane__tag">일정</span></div>
+      <p class="lane__desc">달력과 다가오는 일정에서 모임·차수 상세로 이동한다.</p>
+      <div class="track"><div class="flow">
+        <a class="node" href="../design/mypage/schedule/schedule.html" target="_blank"><span class="node__title">내 모임 일정</span><span class="node__hint">기간 이동 · 일정 마커 · 다가오는 일정</span><span class="phone"><span class="phone__label">SCHEDULE</span><iframe scrolling="no" title="내 모임 일정" src="../design/mypage/schedule/schedule.html" loading="lazy"></iframe></span></a>
+        <span class="connector">일정 선택</span>
+        <a class="node" href="../design/system/screens/W-11.html" target="_blank"><span class="node__title">모임·차수 상세</span><span class="node__hint">기존 W-11 화면</span><span class="phone external"><span class="phone__label">W-11</span><iframe scrolling="no" title="모임 차수 상세" src="../design/system/screens/W-11.html" loading="lazy"></iframe></span></a>
+      </div></div>
+    </section>
+
+    <section class="lane" aria-labelledby="flow-settings">
+      <div class="lane__head"><h2 class="lane__title" id="flow-settings">S5 · 설정 · 계정</h2><span class="lane__tag">설정</span></div>
+      <p class="lane__desc">설정의 분기별 이동과 계정 관리 후속 동작을 각각 좌→우 흐름으로 확인한다.</p>
+      <div class="parallel-flows">
+        <div class="parallel-flow"><p class="parallel-flow__title">알림 설정 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/settings/settings.html" target="_blank"><span class="node__title">설정</span><span class="node__hint">알림 설정 선택</span><span class="phone"><span class="phone__label">SETTINGS</span><iframe scrolling="no" title="설정 알림 흐름" src="../design/mypage/settings/settings.html" loading="lazy"></iframe></span></a><span class="connector">알림 설정 선택</span><a class="node" href="../design/mypage/notification-settings/notification-settings.html" target="_blank"><span class="node__title">알림 설정</span><span class="node__hint">카테고리별 수신 토글</span><span class="phone"><span class="phone__label">NOTIFY</span><iframe scrolling="no" title="알림 설정" src="../design/mypage/notification-settings/notification-settings.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">계좌 관리 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/settings/settings.html" target="_blank"><span class="node__title">설정</span><span class="node__hint">계정 설정 선택</span><span class="phone"><span class="phone__label">SETTINGS</span><iframe scrolling="no" title="설정 계좌 흐름" src="../design/mypage/settings/settings.html" loading="lazy"></iframe></span></a><span class="connector">계정 설정 선택</span><a class="node" href="../design/mypage/account-settings/account-settings.html" target="_blank"><span class="node__title">계정 설정</span><span class="node__hint">계좌 관리 선택</span><span class="phone"><span class="phone__label">ACCOUNT</span><iframe scrolling="no" title="계정 설정 계좌 흐름" src="../design/mypage/account-settings/account-settings.html" loading="lazy"></iframe></span></a><span class="connector">계좌 관리</span><a class="node" href="../design/mypage/bank-account/bank-account.html" target="_blank"><span class="node__title">계좌 등록·인증</span><span class="node__hint">계좌 입력 · 인증 요청 · 재시도</span><span class="phone"><span class="phone__label">BANK</span><iframe scrolling="no" title="계좌 등록 인증" src="../design/mypage/bank-account/bank-account.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">로그아웃 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/settings/settings.html" target="_blank"><span class="node__title">설정</span><span class="node__hint">계정 설정 선택</span><span class="phone"><span class="phone__label">SETTINGS</span><iframe scrolling="no" title="설정 로그아웃 흐름" src="../design/mypage/settings/settings.html" loading="lazy"></iframe></span></a><span class="connector">계정 설정 선택</span><a class="node" href="../design/mypage/account-settings/account-settings.html" target="_blank"><span class="node__title">계정 설정</span><span class="node__hint">로그아웃 선택</span><span class="phone"><span class="phone__label">ACCOUNT</span><iframe scrolling="no" title="계정 설정 로그아웃 흐름" src="../design/mypage/account-settings/account-settings.html" loading="lazy"></iframe></span></a><span class="connector">로그아웃 확인</span><a class="node" href="../design/system/screens/W-01.html" target="_blank"><span class="node__title">온보딩</span><span class="node__hint">기존 W-01 화면으로 복귀</span><span class="phone external"><span class="phone__label">W-01</span><iframe scrolling="no" title="온보딩" src="../design/system/screens/W-01.html" loading="lazy"></iframe></span></a></div></div>
+        <div class="parallel-flow"><p class="parallel-flow__title">회원 탈퇴 흐름</p><div class="parallel-flow__track"><a class="node" href="../design/mypage/settings/settings.html" target="_blank"><span class="node__title">설정</span><span class="node__hint">계정 설정 선택</span><span class="phone"><span class="phone__label">SETTINGS</span><iframe scrolling="no" title="설정 탈퇴 흐름" src="../design/mypage/settings/settings.html" loading="lazy"></iframe></span></a><span class="connector">계정 설정 선택</span><a class="node" href="../design/mypage/account-settings/account-settings.html" target="_blank"><span class="node__title">계정 설정</span><span class="node__hint">탈퇴 선택</span><span class="phone"><span class="phone__label">ACCOUNT</span><iframe scrolling="no" title="계정 설정 탈퇴 흐름" src="../design/mypage/account-settings/account-settings.html" loading="lazy"></iframe></span></a><span class="connector">탈퇴 확인</span><span class="end">탈퇴 요청</span></div></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 내 모임 일정</title>
+<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css">
+<style>
+  body{margin:0;background:#faf9f5;display:flex;justify-content:center;padding:24px 0}
+  .cal { margin:12px 20px 0; background:var(--surface-card); border:1px solid var(--border-subtle); border-radius:var(--radius-xl); padding:16px; box-shadow:var(--shadow-card); }
+  .cal__head { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+  .cal__title { font-size:var(--fs-subtitle); font-weight:var(--weight-bold); color:var(--text-title); font-feature-settings:var(--font-feature-numeric); }
+  .cal__nav { display:flex; gap:4px; }
+  .cal__nav button { width:36px; height:36px; border:none; background:var(--surface-sunken); border-radius:var(--radius-sm); color:var(--text-muted); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+  .cal__nav .icon { width:16px; height:16px; }
+  .cal__grid { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+  .cal__wd { text-align:center; font-size:var(--fs-caption); color:var(--text-muted); padding:4px 0 6px; font-weight:var(--weight-semibold); }
+  .cal__cell { position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--text-body); font-feature-settings:var(--font-feature-numeric); }
+  .cal__cell button { width:100%; height:100%; border:0; padding:0; background:transparent; color:inherit; cursor:pointer; font:inherit; }
+  .cal__cell--out { color:var(--text-faint); }
+  .cal__num { width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; }
+  .cal__cell--today .cal__num { background:var(--color-primary); color:var(--white); font-weight:var(--weight-bold); }
+  .cal__cell.is-selected .cal__num { box-shadow:0 0 0 2px var(--color-primary); font-weight:var(--weight-bold); }
+  .cal__cell--today.is-selected .cal__num { box-shadow:0 0 0 2px var(--text-strong); }
+  .cal__dot { position:absolute; bottom:3px; left:50%; transform:translateX(-50%); width:5px; height:5px; border-radius:50%; background:var(--color-primary); }
+  .cal__cell--today .cal__dot { background:var(--white); }
+  .sched-date { width:46px; height:46px; border-radius:var(--radius-md); background:var(--color-primary-soft); color:var(--color-primary); display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; line-height:1.1; }
+  .sched-date__d { font-size:16px; font-weight:var(--weight-extrabold); font-feature-settings:var(--font-feature-numeric); }
+  .sched-date__wd { font-size:10px; font-weight:var(--weight-semibold); }
+  .list-row.is-hidden { display:none; }
+  .schedule-empty { display:none; margin:12px 20px 0; padding:18px; background:var(--surface-sunken); border-radius:var(--radius-lg); color:var(--text-muted); font-size:var(--fs-caption); text-align:center; }
+  .schedule-empty.is-visible { display:block; }
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+    <header class="appbar">
+      <a href="../mypage/mypage.html" aria-label="뒤로" style="display:inline-flex;padding:10px;margin:-10px"><svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="appbar__title">내 모임 일정</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="cal">
+      <div class="cal__head">
+        <div class="cal__title">2026년 7월</div>
+        <div class="cal__nav">
+          <button id="prev-month" type="button" aria-label="이전 달"><svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+          <button id="next-month" type="button" aria-label="다음 달"><svg class="icon"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></button>
+        </div>
+      </div>
+      <div id="calendar-grid" class="cal__grid"></div>
+    </div>
+
+    <div class="section-title-row"><div id="schedule-heading" class="section-title">이 달 일정</div><button id="show-all" type="button" class="section-title-row__action" style="border:0;background:transparent">전체보기</button></div>
+    <div id="schedule-list" class="list" style="margin-top:0">
+      <a class="list-row" data-date="2026-07-11" href="../../system/screens/W-11.html" style="text-decoration:none"><div class="sched-date"><span class="sched-date__d num">11</span><span class="sched-date__wd">토</span></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">수요풋살 · 주말 정기전</div><div class="list-row__sub">오후 5:00 · 잠실 실내풋살장</div></div><span class="list-row__chevron"><svg class="icon"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></a>
+      <a class="list-row" data-date="2026-07-12" href="../../system/screens/W-11.html" style="text-decoration:none"><div class="sched-date"><span class="sched-date__d num">12</span><span class="sched-date__wd">일</span></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">주말 등산 모임 · 7월 정기</div><div class="list-row__sub">오후 2:00 · 북한산 우이역 2번 출구</div></div><span class="list-row__chevron"><svg class="icon"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></a>
+      <a class="list-row" data-date="2026-07-18" href="../../system/screens/W-11.html" style="text-decoration:none"><div class="sched-date"><span class="sched-date__d num">18</span><span class="sched-date__wd">토</span></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">보드게임 정모</div><div class="list-row__sub">오후 7:00 · 홍대입구 카페</div></div><span class="list-row__chevron"><svg class="icon"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></a>
+      <a class="list-row" data-date="2026-07-25" href="../../system/screens/W-11.html" style="text-decoration:none"><div class="sched-date"><span class="sched-date__d num">25</span><span class="sched-date__wd">토</span></div><div class="list-row__body"><div class="list-row__title" style="font-size:14px">봄 시즌 킥오프</div><div class="list-row__sub">오후 6:30 · 한강공원 잠원지구</div></div><span class="list-row__chevron"><svg class="icon"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></a>
+    </div>
+    <div id="schedule-empty" class="schedule-empty" aria-live="polite">선택한 날짜에는 예정된 모임이 없어요.</div>
+  </div></div>
+  <script>
+    const scheduleRows = [...document.querySelectorAll('#schedule-list [data-date]')];
+    const heading = document.getElementById('schedule-heading');
+    const empty = document.getElementById('schedule-empty');
+    const showAll = document.getElementById('show-all');
+    const calendarGrid = document.getElementById('calendar-grid');
+    const calendarTitle = document.querySelector('.cal__title');
+    let visibleMonth = new Date(2026, 6, 1);
+    const toDateKey = (year, month, day) => `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const showSchedule = (date) => {
+      calendarGrid.querySelectorAll('[data-date]').forEach((button) => button.parentElement.classList.toggle('is-selected', button.dataset.date === date));
+      let visible = 0;
+      scheduleRows.forEach((row) => {
+        const monthKey = `${visibleMonth.getFullYear()}-${String(visibleMonth.getMonth() + 1).padStart(2, '0')}`;
+        const matches = date ? row.dataset.date === date : row.dataset.date.startsWith(monthKey);
+        row.classList.toggle('is-hidden', !matches);
+        if (matches) visible += 1;
+      });
+      heading.textContent = date ? `${Number(date.slice(5, 7))}월 ${Number(date.slice(8))}일 일정` : '이 달 일정';
+      empty.textContent = date ? '선택한 날짜에는 예정된 모임이 없어요.' : '이 달에는 예정된 모임이 없어요.';
+      empty.classList.toggle('is-visible', visible === 0);
+      showAll.hidden = !date;
+    };
+    const renderCalendar = () => {
+      const year = visibleMonth.getFullYear();
+      const month = visibleMonth.getMonth();
+      const firstDay = new Date(year, month, 1).getDay();
+      const lastDate = new Date(year, month + 1, 0).getDate();
+      const days = ['일', '월', '화', '수', '목', '금', '토'];
+      calendarTitle.textContent = `${year}년 ${month + 1}월`;
+      calendarGrid.innerHTML = days.map((day) => `<div class="cal__wd">${day}</div>`).join('');
+      for (let index = 0; index < firstDay; index += 1) calendarGrid.insertAdjacentHTML('beforeend', '<div class="cal__cell cal__cell--out"></div>');
+      for (let day = 1; day <= lastDate; day += 1) {
+        const date = toDateKey(year, month, day);
+        const hasSchedule = scheduleRows.some((row) => row.dataset.date === date);
+        const isToday = date === '2026-07-09';
+        calendarGrid.insertAdjacentHTML('beforeend', `<div class="cal__cell${isToday ? ' cal__cell--today' : ''}"><button type="button" data-date="${date}" aria-label="${month + 1}월 ${day}일 일정 보기"><span class="cal__num">${day}</span>${hasSchedule ? '<span class="cal__dot"></span>' : ''}</button></div>`);
+      }
+      calendarGrid.querySelectorAll('[data-date]').forEach((button) => button.addEventListener('click', () => showSchedule(button.dataset.date)));
+      showSchedule('');
+    };
+    document.getElementById('prev-month').addEventListener('click', () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() - 1, 1); renderCalendar(); });
+    document.getElementById('next-month').addEventListener('click', () => { visibleMonth = new Date(visibleMonth.getFullYear(), visibleMonth.getMonth() + 1, 1); renderCalendar(); });
+    showAll.addEventListener('click', () => showSchedule(''));
+    renderCalendar();
+  </script>
+</body></html>

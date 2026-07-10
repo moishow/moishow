@@ -1,0 +1,32 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 알림 설정</title>
+<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css">
+<style>body{margin:0;background:#faf9f5;display:flex;justify-content:center;padding:24px 0}
+  .grouplabel { font-size:var(--fs-caption); font-weight:var(--weight-bold); color:var(--text-muted); padding:18px 20px 4px; }
+  .trow { display:flex; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid var(--border-subtle); }
+  .trow__b { flex:1; min-width:0; }
+  .trow__t { font-size:var(--fs-body); font-weight:var(--weight-semibold); color:var(--text-title); }
+  .trow__s { font-size:var(--fs-caption); color:var(--text-muted); margin-top:1px; }
+  .lock-note { font-size:var(--fs-micro); color:var(--text-faint); }
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+    <header class="appbar">
+      <a href="../settings/settings.html" aria-label="뒤로" style="display:inline-flex;padding:10px;margin:-10px"><svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="appbar__title">알림 설정</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="grouplabel">정산 · 송금 (필수)</div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">송금 요청 · 입금 확인</div><div class="trow__s"><span class="lock-note">정산에 꼭 필요해 끌 수 없어요</span></div></div><label class="toggle"><input type="checkbox" checked disabled><span class="toggle__track"></span></label></div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">미납 · 추가정산 독촉</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle__track"></span></label></div>
+
+    <div class="grouplabel">모임</div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">일정 · 참석 알림</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle__track"></span></label></div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">가입 승인 · 공지</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle__track"></span></label></div>
+
+    <div class="grouplabel">소셜</div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">쇼 댓글 · 좋아요</div></div><label class="toggle"><input type="checkbox"><span class="toggle__track"></span></label></div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">DM 메시지</div></div><label class="toggle"><input type="checkbox" checked><span class="toggle__track"></span></label></div>
+    <div class="trow"><div class="trow__b"><div class="trow__t">새 팔로워</div></div><label class="toggle"><input type="checkbox"><span class="toggle__track"></span></label></div>
+  </div></div>
+</body></html>

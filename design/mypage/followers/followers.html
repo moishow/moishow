@@ -1,0 +1,62 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 팔로워</title>
+<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css">
+<style>
+  body{margin:0;background:#faf9f5;display:flex;justify-content:center;padding:24px 0}
+  .tabs { display:flex; border-bottom:1px solid var(--border-default); margin:0 0 4px; }
+  .tabs a { flex:1; text-align:center; padding:12px 0; font-size:var(--fs-body); font-weight:var(--weight-semibold); color:var(--text-muted); text-decoration:none; }
+  .tabs a.is-on { color:var(--text-strong); border-bottom:2px solid var(--color-primary); }
+  .search { margin:12px 20px; display:flex; align-items:center; gap:8px; background:var(--surface-sunken); border-radius:var(--radius-md); padding:10px 12px; }
+  .search input { border:none; background:none; outline:none; flex:1; font-size:var(--fs-body); color:var(--text-body); }
+  .search .icon { width:18px; height:18px; color:var(--text-muted); }
+  .urow { display:flex; align-items:center; gap:12px; padding:10px 20px; }
+  .urow__profile { display:flex; align-items:center; gap:12px; flex:1; min-width:0; color:inherit; text-decoration:none; }
+  .urow__profile:focus-visible { outline:2px solid var(--color-primary); outline-offset:2px; border-radius:var(--radius-sm); }
+  .urow__av { width:44px; height:44px; border-radius:50%; background:var(--gray-300); color:var(--gray-700); display:flex; align-items:center; justify-content:center; font-weight:var(--weight-bold); font-size:14px; flex-shrink:0; }
+  .urow__b { flex:1; min-width:0; }
+  .urow__n { font-size:var(--fs-body); font-weight:var(--weight-semibold); color:var(--text-title); }
+  .urow__s { font-size:var(--fs-caption); color:var(--text-muted); margin-top:1px; }
+  .btn--follow { padding:7px 16px; font-size:var(--fs-caption); }
+  .urow.is-hidden { display:none; }
+  .search-empty { display:none; margin:24px 20px; color:var(--text-muted); font-size:var(--fs-caption); text-align:center; }
+  .search-empty.is-visible { display:block; }
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+    <header class="appbar">
+      <a href="../mypage/mypage.html" aria-label="뒤로" style="display:inline-flex;padding:10px;margin:-10px"><svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="appbar__title">김산</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="tabs">
+      <a href="../followers/followers.html" class="is-on">팔로워 128</a>
+      <a href="../following/following.html">팔로잉 96</a>
+    </div>
+
+    <div class="search"><svg class="icon"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="follower-search" aria-label="팔로워 이름 검색" placeholder="이름 검색"></div>
+
+    <div class="urow" data-name="이지훈"><a class="urow__profile" href="../relative-profile/relative-profile.html"><div class="urow__av">이</div><div class="urow__b"><div class="urow__n">이지훈</div><div class="urow__s">수요풋살 · 봄시즌킥오프</div></div></a><button type="button" class="btn btn--secondary btn--follow">맞팔로우</button></div>
+    <div class="urow" data-name="박서연"><a class="urow__profile" href="../relative-profile/relative-profile.html"><div class="urow__av">박</div><div class="urow__b"><div class="urow__n">박서연</div><div class="urow__s">주말 등산 모임</div></div></a><button type="button" class="btn btn--primary btn--follow">팔로우</button></div>
+    <div class="urow" data-name="최민준"><a class="urow__profile" href="../relative-profile/relative-profile.html"><div class="urow__av">최</div><div class="urow__b"><div class="urow__n">최민준</div><div class="urow__s">보드게임 정모</div></div></a><button type="button" class="btn btn--secondary btn--follow">맞팔로우</button></div>
+    <div class="urow" data-name="정하윤"><a class="urow__profile" href="../relative-profile/relative-profile.html"><div class="urow__av">정</div><div class="urow__b"><div class="urow__n">정하윤</div><div class="urow__s">금요 번개</div></div></a><button type="button" class="btn btn--primary btn--follow">팔로우</button></div>
+    <div class="urow" data-name="강도윤"><a class="urow__profile" href="../relative-profile/relative-profile.html"><div class="urow__av">강</div><div class="urow__b"><div class="urow__n">강도윤</div><div class="urow__s">수요풋살</div></div></a><button type="button" class="btn btn--secondary btn--follow">맞팔로우</button></div>
+    <div id="search-empty" class="search-empty" aria-live="polite">찾는 사용자가 없어요.</div>
+  </div></div>
+  <script>
+    const search = document.getElementById('follower-search');
+    const rows = [...document.querySelectorAll('.urow[data-name]')];
+    const empty = document.getElementById('search-empty');
+    search.addEventListener('input', () => {
+      const query = search.value.trim();
+      let visible = 0;
+      rows.forEach((row) => { const matches = row.dataset.name.includes(query); row.classList.toggle('is-hidden', !matches); if (matches) visible += 1; });
+      empty.classList.toggle('is-visible', Boolean(query) && visible === 0);
+    });
+    document.querySelectorAll('.btn--follow').forEach((button) => button.addEventListener('click', () => {
+      const isFollowing = button.dataset.following === 'true';
+      button.dataset.following = String(!isFollowing);
+      button.textContent = isFollowing ? '팔로우' : '팔로잉';
+      button.classList.toggle('btn--primary', isFollowing); button.classList.toggle('btn--secondary', !isFollowing);
+    }));
+  </script>
+</body></html>

@@ -1,0 +1,49 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모이쇼 — 계정 설정</title>
+<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css">
+<style>body{margin:0;background:#faf9f5;display:flex;justify-content:center;padding:24px 0}
+  .grouplabel { font-size:var(--fs-caption); font-weight:var(--weight-bold); color:var(--text-muted); padding:18px 20px 4px; }
+  .arow { display:flex; align-items:center; gap:12px; padding:14px 20px; border-bottom:1px solid var(--border-subtle); }
+  .arow__b { flex:1; min-width:0; }
+  .arow__t { font-size:var(--fs-body); font-weight:var(--weight-semibold); color:var(--text-title); }
+  .arow__s { font-size:var(--fs-caption); color:var(--text-muted); margin-top:1px; }
+  .danger-row .arow__t { color:var(--color-danger-strong); }
+  .arow--button { width:100%; border:0; background:transparent; text-align:left; cursor:pointer; }
+  dialog { width:calc(100% - 40px); max-width:350px; border:0; border-radius:var(--radius-xl); padding:20px; color:var(--text-body); box-shadow:var(--shadow-card); }
+  dialog::backdrop { background:color-mix(in srgb, var(--text-strong) 48%, transparent); }
+  .dialog__title { margin:0; color:var(--text-strong); font-size:var(--fs-title); }
+  .dialog__body { margin:8px 0 18px; color:var(--text-muted); font-size:var(--fs-caption); line-height:var(--lh-normal); }
+  .dialog__actions { display:flex; gap:8px; }
+  .dialog__actions .btn { flex:1; }
+</style></head><body>
+  <div class="phone"><div class="screen surface-community">
+    <header class="appbar">
+      <a href="../settings/settings.html" aria-label="뒤로" style="display:inline-flex;padding:10px;margin:-10px"><svg class="icon"><path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></a>
+      <div class="appbar__title">계정 설정</div>
+      <span style="width:24px"></span>
+    </header>
+
+    <div class="grouplabel">연결 계정</div>
+    <div class="arow"><div class="arow__b"><div class="arow__t">카카오 로그인</div><div class="arow__s">alswns5620@kakao</div></div><span class="badge badge--done">연결됨</span></div>
+    <div class="arow"><div class="arow__b"><div class="arow__t">전화번호 인증</div><div class="arow__s">010-1234-5678 · 문자 인증 완료</div></div><span class="badge badge--done">인증됨</span></div>
+
+    <div class="grouplabel">출금 · 수취 계좌</div>
+    <a class="arow" href="../bank-account/bank-account.html" style="text-decoration:none">
+      <div class="arow__b"><div class="arow__t">계좌 등록 · 인증</div><div class="arow__s num">카카오뱅크 3333-01-****567 · 김산</div></div>
+      <span class="badge badge--done">인증됨</span>
+      <span class="menu-row__chevron" style="margin-left:8px"><svg class="icon" style="width:18px;height:18px"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+    </a>
+
+    <div style="height:12px"></div>
+    <button id="logout-button" type="button" class="arow arow--button"><div class="arow__b"><div class="arow__t">로그아웃</div></div><span class="menu-row__chevron"><svg class="icon" style="width:18px;height:18px"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></button>
+    <button id="withdraw-button" type="button" class="arow arow--button danger-row"><div class="arow__b"><div class="arow__t">회원 탈퇴</div><div class="arow__s">미송금·받을 돈·진행 중 일정이 있으면 먼저 정리해야 해요</div></div><span class="menu-row__chevron" style="color:var(--color-danger)"><svg class="icon" style="width:18px;height:18px"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span></button>
+
+    <dialog id="logout-dialog"><h2 class="dialog__title">로그아웃할까요?</h2><p class="dialog__body">다음에 다시 로그인하면 마이페이지를 계속 이용할 수 있어요.</p><div class="dialog__actions"><button type="button" class="btn btn--secondary" data-close="logout-dialog">취소</button><a class="btn btn--primary" href="../../system/screens/W-01.html">로그아웃</a></div></dialog>
+    <dialog id="withdraw-dialog"><h2 class="dialog__title">회원 탈퇴를 시작할까요?</h2><p class="dialog__body">탈퇴 전에 진행 중인 모임과 정산 항목을 확인해요. 다음 단계에서 필요한 안내를 보여드려요.</p><div class="dialog__actions"><button type="button" class="btn btn--secondary" data-close="withdraw-dialog">취소</button><button type="button" class="btn btn--primary" data-close="withdraw-dialog">확인</button></div></dialog>
+  </div></div>
+  <script>
+    document.getElementById('logout-button').addEventListener('click', () => document.getElementById('logout-dialog').showModal());
+    document.getElementById('withdraw-button').addEventListener('click', () => document.getElementById('withdraw-dialog').showModal());
+    document.querySelectorAll('[data-close]').forEach((button) => button.addEventListener('click', () => document.getElementById(button.dataset.close).close()));
+  </script>
+</body></html>
