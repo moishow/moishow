@@ -160,6 +160,7 @@
 .badge--ended    { background: var(--surface-sunken); color: var(--text-muted); }
 .badge--waiting  { background: var(--color-warm-soft); color: var(--color-warm-strong); }
 .badge--danger   { background: var(--color-danger-soft); color: var(--color-danger-strong); }
+.badge--warning  { background: var(--color-warning-soft); color: var(--amber-600); }
 
 /* 카테고리 칩 (community) */
 .chip { background: var(--color-warm-soft); color: var(--color-warm-strong); font-size: var(--fs-micro); font-weight: var(--weight-semibold); padding: 3px 9px; border-radius: var(--radius-pill); }
