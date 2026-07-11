@@ -7,6 +7,7 @@
 | 시나리오 | 필요한 페이지 | 페이지별 기능 정의 |
 |---|---|---|
 | [마이페이지 진입·개요](mypage-overview/README.md) | 마이페이지 | [mypage](../../../design/mypage/mypage/README.md) |
+| [모임 레벨](trust-tier/README.md) | 내 모임 레벨 | [trust-tier](../../../design/mypage/mypage/trust-tier.html) |
 | [프로필 편집](profile-edit/README.md) | 프로필 편집 | [profile-edit](../../../design/mypage/profile-edit/README.md) |
 | [소셜 프로필](social-profile/README.md) | 내 게시글, 팔로워, 팔로잉, 상대 프로필 | [my-posts](../../../design/mypage/my-posts/README.md), [followers](../../../design/mypage/followers/README.md), [following](../../../design/mypage/following/README.md), [relative-profile](../../../design/mypage/relative-profile/README.md) |
 | [내 모임 일정](schedule/README.md) | 내 모임 일정, 모임·차수 상세 | [schedule](../../../design/mypage/schedule/README.md), 기존 W-11 |

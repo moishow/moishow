@@ -1,0 +1,28 @@
+/* 마이페이지 전용: 보낼 돈·받을 돈 전체 목록 */
+.settlement-list-page { padding-bottom: 24px; }
+.settlement-list-page .appbar { padding-top: 16px; }
+.settlement-list-page__back { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin: -8px 0 -8px -8px; color: var(--text-title); }
+.settlement-list-page__back .icon { width: 22px; height: 22px; }
+.settlement-list-page__balance { margin: 12px 20px 0; padding: 18px; border-radius: var(--radius-xl); background: var(--color-primary); color: var(--white); box-shadow: var(--glow-slab); }
+.settlement-list-page__label { font-size: var(--fs-caption); font-weight: var(--weight-semibold); color: #CBD6FF; }
+.settlement-list-page__amount { margin-top: 5px; font-size: 28px; font-weight: var(--weight-extrabold); font-feature-settings: var(--font-feature-numeric); }
+.settlement-list-page__hint { margin-top: 6px; font-size: var(--fs-caption); color: #DCE4FF; }
+.settlement-list-page__filters { display: flex; gap: 6px; overflow-x: auto; padding: 14px 20px 0; scrollbar-width: none; }
+.settlement-list-page__filters::-webkit-scrollbar { display: none; }
+.settlement-list-page__filter { flex: 0 0 auto; padding: 6px 10px; border-radius: var(--radius-pill); background: var(--surface-sunken); color: var(--text-muted); font-size: var(--fs-caption); font-weight: var(--weight-semibold); }
+.settlement-list-page__filter.is-active { background: var(--color-primary-soft); color: var(--color-primary); }
+.settlement-list-page__group-title { padding: 20px 20px 4px; font-size: var(--fs-caption); font-weight: var(--weight-bold); color: var(--text-muted); }
+.settlement-list-page__row { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--border-subtle); color: inherit; text-decoration: none; }
+.settlement-list-page__row:focus-visible { outline: 3px solid var(--color-primary-soft); outline-offset: -3px; }
+.settlement-list-page__icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: var(--radius-md); background: var(--color-primary-soft); color: var(--color-primary); }
+.settlement-list-page__icon .icon { width: 20px; height: 20px; }
+.settlement-list-page__icon--danger { background: var(--color-danger-soft); color: var(--color-danger-strong); }
+.settlement-list-page__icon--success { background: var(--color-success-soft); color: var(--color-success-strong); }
+.settlement-list-page__body { min-width: 0; flex: 1; }
+.settlement-list-page__title { overflow: hidden; color: var(--text-title); font-size: var(--fs-body); font-weight: var(--weight-semibold); text-overflow: ellipsis; white-space: nowrap; }
+.settlement-list-page__meta { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: var(--fs-caption); color: var(--text-muted); }
+.settlement-list-page__money { margin-left: auto; color: var(--text-strong); font-size: var(--fs-subtitle); font-weight: var(--weight-bold); font-feature-settings: var(--font-feature-numeric); }
+.settlement-list-page__money--receive { color: var(--color-success-strong); }
+.settlement-list-page__chevron { color: var(--text-faint); }
+.settlement-list-page__chevron .icon { width: 18px; height: 18px; }
+.settlement-list-page__empty-note { margin: 18px 20px 0; padding: 13px 14px; border-radius: var(--radius-lg); background: var(--surface-sunken); color: var(--text-muted); font-size: var(--fs-caption); line-height: var(--lh-normal); }

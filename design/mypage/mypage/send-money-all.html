@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>모이쇼 — 보낼 돈 전체</title>
+  <link rel="stylesheet" href="../../system/tokens.css">
+  <link rel="stylesheet" href="../../system/components.css">
+  <link rel="stylesheet" href="settlement-lists.css">
+</head>
+<body>
+  <div class="phone"><main class="screen surface-money settlement-list-page" aria-labelledby="page-title">
+    <header class="appbar">
+      <a class="settlement-list-page__back" href="mypage.html" aria-label="마이페이지로 돌아가기"><svg class="icon"><use href="../../system/icons.svg#chevron-left"/></svg></a>
+      <div id="page-title" class="appbar__title">보낼 돈 전체</div>
+      <span class="icon" aria-hidden="true"></span>
+    </header>
+
+    <section class="settlement-list-page__balance" aria-label="보낼 돈 요약">
+      <div class="settlement-list-page__label">지금 보내야 할 금액</div>
+      <div class="settlement-list-page__amount num">16,875원</div>
+      <div class="settlement-list-page__hint">미송금 1건 · 확인 대기 1건</div>
+    </section>
+
+    <div class="settlement-list-page__filters" aria-label="보낼 돈 상태 필터">
+      <span class="settlement-list-page__filter is-active">전체 2</span>
+      <span class="settlement-list-page__filter">미송금 1</span>
+      <span class="settlement-list-page__filter">확인 대기 1</span>
+    </div>
+
+    <div class="settlement-list-page__group-title">송금이 필요한 정산</div>
+    <a class="settlement-list-page__row" href="../../system/screens/W-22.html">
+      <span class="settlement-list-page__icon settlement-list-page__icon--danger"><svg class="icon"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="settlement-list-page__body"><span class="settlement-list-page__title">수요풋살 클럽 · 추가 정산</span><span class="settlement-list-page__meta"><span class="badge badge--danger">미송금</span>오늘까지 · 김총무에게</span></span>
+      <span class="settlement-list-page__money num">4,875원</span><span class="settlement-list-page__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+    </a>
+    <a class="settlement-list-page__row" href="../../system/screens/W-22.html">
+      <span class="settlement-list-page__icon"><svg class="icon"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="settlement-list-page__body"><span class="settlement-list-page__title">주말 등산 모임 · 회비</span><span class="settlement-list-page__meta"><span class="badge badge--progress">확인 대기</span>송금 완료 체크함</span></span>
+      <span class="settlement-list-page__money num">12,000원</span><span class="settlement-list-page__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+    </a>
+    <p class="settlement-list-page__empty-note">송금이 확인되면 이 목록에서 사라지고 최근 정산 내역으로 옮겨져요.</p>
+  </main></div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>모이쇼 — 마이페이지 (가상 와이어프레임)</title>
-<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css">
+<link rel="stylesheet" href="../../system/tokens.css"><link rel="stylesheet" href="../../system/components.css"><link rel="stylesheet" href="trust-tier.css">
 <style>
   body{margin:0;background:#faf9f5;display:flex;justify-content:center;padding:24px 0}
 
@@ -65,7 +65,7 @@
           <div class="profile__demo">남성 · 30세</div>
           <div class="profile__bio">주말엔 풋살·등산 다니는 개발자. 번개 자주 엽니다.</div>
           <div class="profile__badges">
-            <span class="badge badge--progress"><svg class="icon icon--sm" style="width:12px;height:12px"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="2" fill="none"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>신용등급 A</span>
+            <a class="trust-tier-trigger" href="trust-tier.html" aria-label="첫 모임, 내 모임 점수 25점 상세 보기"><img class="trust-tier-trigger__mascot" src="../../system/assets/mascots/mascot_blue.png" alt=""><span>첫 모임</span><span class="trust-tier-trigger__score num">25점</span><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></a>
           </div>
         </div>
         <a class="btn btn--secondary btn--sm" href="../profile-edit/profile-edit.html">편집</a>
@@ -82,7 +82,7 @@
     <!-- 보낼 돈 — 카카오페이 직접 송금 + 송금 여부 직접 체크 -->
     <div class="section-title-row">
       <div class="section-title">보낼 돈</div>
-      <a class="section-title-row__action" href="../../system/screens/W-22.html">정산 전체</a>
+      <a class="section-title-row__action" href="send-money-all.html">정산 전체</a>
     </div>
     <div class="list" style="margin-top:0">
       <a class="list-row pay-alert" href="../../system/screens/W-22.html" style="text-decoration:none">
@@ -96,7 +96,7 @@
     <!-- 받을 돈 — 환급 받기 + 내가 주최자로서 걷는 현황 -->
     <div class="section-title-row">
       <div class="section-title">받을 돈</div>
-      <a class="section-title-row__action" href="../../system/screens/W-TR.html">전체</a>
+      <a class="section-title-row__action" href="receive-money-all.html">전체</a>
     </div>
     <div class="list" style="margin-top:0">
       <a class="list-row" href="../../system/screens/W-TR.html" style="text-decoration:none">

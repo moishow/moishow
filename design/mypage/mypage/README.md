@@ -1,6 +1,6 @@
 # 마이페이지
 
-> 화면: [mypage.html](mypage.html) · 시나리오: [마이페이지 허브](../../../docs/scenario/user/mypage-overview/README.md)
+> 화면: [mypage.html](mypage.html) · [보낼 돈 전체](send-money-all.html) · [받을 돈 전체](receive-money-all.html) · [모임 레벨 UI 시안](trust-tier.html) · 시나리오: [마이페이지 허브](../../../docs/scenario/user/mypage-overview/README.md)
 
 ## 역할
 
@@ -10,12 +10,14 @@
 
 - 프로필 편집과 게시글·팔로워·팔로잉 목록 진입
 - 미송금·받을 돈·최근 정산 내역의 상태 요약과 기존 모임 정산 화면 진입
+- 보낼 돈·받을 돈의 전체 목록 확인과 개별 정산 상세 진입
 - 일정·설정·소셜 기능 진입
 - 설정 진입
+- 마스코트 기반 모임 레벨과 정산 지연 상태의 구분 표현
 
 ## 연결
 
-프로필 편집, 소셜 목록, 일정, 설정으로 연결한다. 정산 요약을 누르면 기존 모임 정산 화면으로 이동한다.
+프로필 편집, 소셜 목록, 일정, 설정으로 연결한다. 프로필의 모임 레벨 배지를 누르면 `trust-tier.html`로 이동한다. 정산 요약을 누르면 기존 모임 정산 화면으로 이동한다.
 
 ## 논의 필요
 

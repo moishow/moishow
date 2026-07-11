@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>모이쇼 — 내 모임 레벨</title>
+  <link rel="stylesheet" href="../../system/tokens.css">
+  <link rel="stylesheet" href="../../system/components.css">
+  <link rel="stylesheet" href="trust-tier.css">
+</head>
+<body class="preview-canvas">
+  <main class="phone" aria-labelledby="page-title">
+    <section class="screen surface-money trust-tier-demo">
+      <header class="appbar">
+        <div class="appbar__title">마이</div>
+        <svg class="icon" aria-label="설정" role="img"><use href="../../system/icons.svg#dots"/></svg>
+      </header>
+
+      <div class="trust-tier-demo__intro">
+        <h1 id="page-title">내 모임 레벨</h1>
+        <p>약속을 지킨 기록이 쌓일수록 친구가 자라요.</p>
+      </div>
+
+      <div class="trust-tier-demo__tabs" role="tablist" aria-label="모임 레벨 상태 예시">
+        <button class="trust-tier-demo__tab is-active" type="button" role="tab" aria-selected="true" aria-controls="state-new" data-target="state-new">처음 시작</button>
+        <button class="trust-tier-demo__tab" type="button" role="tab" aria-selected="false" aria-controls="state-growing" data-target="state-growing">기록 쌓임</button>
+        <button class="trust-tier-demo__tab" type="button" role="tab" aria-selected="false" aria-controls="state-late" data-target="state-late">정산 지연</button>
+      </div>
+
+      <section id="state-new" class="trust-tier-demo__state" role="tabpanel">
+        <a class="trust-tier" href="#state-new" aria-label="첫 모임, 내 모임 점수 25점 상세 보기">
+          <span class="trust-tier__mascot-wrap"><img class="trust-tier__mascot" src="../../system/assets/mascots/mascot_blue.png" alt="파랑 모이쇼 캐릭터"></span>
+          <span class="trust-tier__body">
+            <span class="trust-tier__eyebrow">내 모임 레벨</span>
+            <span class="trust-tier__headline"><span class="trust-tier__name">첫 모임</span><span class="trust-tier__score num">25점</span></span>
+            <span class="trust-tier__desc">첫 정산을 함께 해볼까요?</span>
+            <span class="trust-tier__progress" aria-label="5단계 중 1단계"><i class="trust-tier__progress-seg is-filled"></i><i class="trust-tier__progress-seg"></i><i class="trust-tier__progress-seg"></i><i class="trust-tier__progress-seg"></i><i class="trust-tier__progress-seg"></i></span>
+          </span>
+          <span class="trust-tier__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+        </a>
+        <div class="trust-tier-demo__summary"><span class="trust-tier-demo__summary-label">지금은 신규 회원이에요</span><span class="trust-tier-demo__summary-value">이력 쌓는 중</span></div>
+        <div class="trust-tier-demo__steps" aria-label="모임 레벨 단계">
+          <div class="trust-tier-demo__step is-current"><img src="../../system/assets/mascots/mascot_blue.png" alt=""><span>첫 모임</span></div>
+          <div class="trust-tier-demo__step"><img src="../../system/assets/mascots/mascot_yellow.png" alt=""><span>모임 새싹</span></div>
+          <div class="trust-tier-demo__step"><img src="../../system/assets/mascots/mascot_pink.png" alt=""><span>모임 친구</span></div>
+          <div class="trust-tier-demo__step"><img src="../../system/assets/mascots/mascot_red.png" alt=""><span>약속 지킴이</span></div>
+          <div class="trust-tier-demo__step"><img src="../../system/assets/mascots/mascot_green.png" alt=""><span>든든 친구</span></div>
+        </div>
+      </section>
+
+      <section id="state-growing" class="trust-tier-demo__state" role="tabpanel" hidden>
+        <a class="trust-tier" href="#state-growing" aria-label="약속 지킴이, 내 모임 점수 72점 상세 보기">
+          <span class="trust-tier__mascot-wrap"><img class="trust-tier__mascot" src="../../system/assets/mascots/mascot_red.png" alt="코랄 모이쇼 캐릭터"></span>
+          <span class="trust-tier__body">
+            <span class="trust-tier__eyebrow">내 모임 레벨</span>
+            <span class="trust-tier__headline"><span class="trust-tier__name">약속 지킴이</span><span class="trust-tier__score num">72점</span></span>
+            <span class="trust-tier__desc">정산 6회 완료 · 약속을 잘 지키고 있어요</span>
+            <span class="trust-tier__progress" aria-label="5단계 중 4단계"><i class="trust-tier__progress-seg is-filled"></i><i class="trust-tier__progress-seg is-filled"></i><i class="trust-tier__progress-seg is-filled"></i><i class="trust-tier__progress-seg is-filled"></i><i class="trust-tier__progress-seg"></i></span>
+          </span>
+          <span class="trust-tier__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+        </a>
+        <div class="trust-tier-demo__summary"><span class="trust-tier-demo__summary-label">다음 친구까지</span><span class="trust-tier-demo__summary-value num">정산 2회</span></div>
+      </section>
+
+      <section id="state-late" class="trust-tier-demo__state trust-tier-demo__state--attention" role="tabpanel" hidden>
+        <a class="trust-tier trust-tier--attention" href="#state-late" aria-label="정산 확인 필요, 내 모임 점수 15점 상세 보기">
+          <span class="trust-tier__mascot-wrap"><img class="trust-tier__mascot" src="../../system/assets/mascots/mascot_blue.png" alt="파랑 모이쇼 캐릭터"><span class="trust-tier__state-pin" aria-label="정산 지연"><svg class="icon"><use href="../../system/icons.svg#clock"/></svg></span></span>
+          <span class="trust-tier__body">
+            <span class="trust-tier__eyebrow">내 모임 레벨</span>
+            <span class="trust-tier__headline"><span class="trust-tier__name">정산 확인 필요</span><span class="trust-tier__score num">15점</span></span>
+            <span class="trust-tier__desc">정산 마감이 2일 지났어요</span>
+            <span class="trust-tier__progress" aria-label="정산 확인이 필요한 상태"><i class="trust-tier__progress-seg is-filled"></i><i class="trust-tier__progress-seg"></i><i class="trust-tier__progress-seg"></i><i class="trust-tier__progress-seg"></i><i class="trust-tier__progress-seg"></i></span>
+          </span>
+          <span class="trust-tier__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+        </a>
+        <div class="trust-tier-demo__summary"><span class="trust-tier-demo__summary-label">정산을 마치면 다시 회복할 수 있어요</span><span class="trust-tier-demo__summary-value">2일 지연</span></div>
+        <div class="notice"><svg class="icon"><use href="../../system/icons.svg#info"/></svg><div class="notice__text"><b>신규 회원과 달라요.</b> 정산이 늦어진 이유와 회복 방법을 이 화면에서 확인해요.</div></div>
+      </section>
+
+      <nav class="tabbar" aria-label="주요 메뉴">
+        <div class="tabbar__item"><svg class="icon"><use href="../../system/icons.svg#home"/></svg>홈</div>
+        <div class="tabbar__item"><svg class="icon"><use href="../../system/icons.svg#list"/></svg>쇼</div>
+        <div class="tabbar__fab"><svg class="icon"><use href="../../system/icons.svg#plus"/></svg></div>
+        <div class="tabbar__item"><svg class="icon"><use href="../../system/icons.svg#bell"/></svg>DM</div>
+        <div class="tabbar__item is-active"><svg class="icon"><use href="../../system/icons.svg#user"/></svg>마이</div>
+      </nav>
+    </section>
+  </main>
+
+  <script>
+    const tabs = [...document.querySelectorAll('.trust-tier-demo__tab')];
+    const states = [...document.querySelectorAll('.trust-tier-demo__state')];
+    const activate = (target) => {
+      const selectedTab = tabs.find((tab) => tab.dataset.target === target);
+      if (!selectedTab) return;
+      tabs.forEach((item) => {
+        const active = item === selectedTab;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-selected', String(active));
+      });
+      states.forEach((state) => { state.hidden = state.id !== target; });
+    };
+    tabs.forEach((tab) => tab.addEventListener('click', () => {
+      history.replaceState(null, '', `#${tab.dataset.target}`);
+      activate(tab.dataset.target);
+    }));
+    window.addEventListener('hashchange', () => activate(location.hash.slice(1)));
+    activate(location.hash.slice(1) || 'state-new');
+  </script>
+</body>
+</html>

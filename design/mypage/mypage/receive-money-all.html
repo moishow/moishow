@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>모이쇼 — 받을 돈 전체</title>
+  <link rel="stylesheet" href="../../system/tokens.css">
+  <link rel="stylesheet" href="../../system/components.css">
+  <link rel="stylesheet" href="settlement-lists.css">
+</head>
+<body>
+  <div class="phone"><main class="screen surface-money settlement-list-page" aria-labelledby="page-title">
+    <header class="appbar">
+      <a class="settlement-list-page__back" href="mypage.html" aria-label="마이페이지로 돌아가기"><svg class="icon"><use href="../../system/icons.svg#chevron-left"/></svg></a>
+      <div id="page-title" class="appbar__title">받을 돈 전체</div>
+      <span class="icon" aria-hidden="true"></span>
+    </header>
+
+    <section class="settlement-list-page__balance" aria-label="받을 돈 요약">
+      <div class="settlement-list-page__label">예정된 수금·환급</div>
+      <div class="settlement-list-page__amount num">111,200원</div>
+      <div class="settlement-list-page__hint">내가 받을 돈 2건 · 내가 걷을 돈 1건</div>
+    </section>
+
+    <div class="settlement-list-page__filters" aria-label="받을 돈 상태 필터">
+      <span class="settlement-list-page__filter is-active">전체 3</span>
+      <span class="settlement-list-page__filter">환급·환불 2</span>
+      <span class="settlement-list-page__filter">수금 1</span>
+    </div>
+
+    <div class="settlement-list-page__group-title">내가 받을 돈</div>
+    <a class="settlement-list-page__row" href="../../system/screens/W-TR.html">
+      <span class="settlement-list-page__icon settlement-list-page__icon--success"><svg class="icon"><path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="settlement-list-page__body"><span class="settlement-list-page__title">봄 시즌 킥오프 · 환급 예정</span><span class="settlement-list-page__meta"><span class="badge badge--progress">지급 대기</span>총무 정산 완료 후</span></span>
+      <span class="settlement-list-page__money settlement-list-page__money--receive num">+8,200원</span><span class="settlement-list-page__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+    </a>
+    <a class="settlement-list-page__row" href="../../system/screens/W-TR.html">
+      <span class="settlement-list-page__icon settlement-list-page__icon--success"><svg class="icon"><path d="M9 14l-4-4 4-4M5 10h9a5 5 0 010 10h-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg></span>
+      <span class="settlement-list-page__body"><span class="settlement-list-page__title">보드게임 정모 · 참가 취소 환불</span><span class="settlement-list-page__meta"><span class="badge badge--progress">환불 대기</span>주최자 확인 후</span></span>
+      <span class="settlement-list-page__money settlement-list-page__money--receive num">+8,000원</span><span class="settlement-list-page__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+    </a>
+
+    <div class="settlement-list-page__group-title">내가 걷을 돈</div>
+    <a class="settlement-list-page__row" href="../../system/screens/W-TR.html">
+      <span class="settlement-list-page__icon"><svg class="icon"><use href="../../system/icons.svg#users"/></svg></span>
+      <span class="settlement-list-page__body"><span class="settlement-list-page__title">금요 번개 · 회비 걷기</span><span class="settlement-list-page__meta"><span class="badge badge--progress">3 / 5명 송금</span>2명 확인 대기</span></span>
+      <span class="settlement-list-page__money num">95,000원</span><span class="settlement-list-page__chevron"><svg class="icon"><use href="../../system/icons.svg#chevron-right"/></svg></span>
+    </a>
+  </main></div>
+</body>
+</html>
