@@ -21,3 +21,12 @@ node scripts/check-handoff.mjs
 
 ## 브랜치
 haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 반영했다. 신규 dev 대신 기존 develop을 사용한다. dev/design·kyung·mypage의 기존 이력은 보존한다. 작업은 develop의 `issue/<번호>-<주제>`에서 시작하고 PR 대상도 develop이다. 과거 모델은 Git 이력에서 확인한다.
+
+## 첫 구현 — 이슈 #11
+
+```sh
+npm test
+npm run check:handoff
+```
+
+[실행 가능한 정산 계산기](examples/settlement.html)에서 같은 계산 모듈을 확인한다. [설계](docs/superpowers/specs/2026-10-22-settlement-core-design.md) · [실행 계획](docs/superpowers/plans/2026-10-22-settlement-core.md).

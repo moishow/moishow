@@ -267,4 +267,10 @@ node scripts/check-handoff.mjs
 ## 브랜치
 haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 반영했다. 신규 dev 대신 기존 develop을 사용한다. dev/design·kyung·mypage의 기존 이력은 보존한다. 작업은 develop의 `issue/<번호>-<주제>`에서 시작하고 PR 대상도 develop이다. 과거 모델은 Git 이력에서 확인한다.
 ''')
+if (ROOT / 'examples/settlement.html').exists():
+    readme = (ROOT / 'README.md').read_text(encoding='utf-8')
+    write('README.md', readme + '\n## 첫 구현 — 이슈 #11\n\n`npm test` · `npm run check:handoff`\n\n[실행 가능한 정산 계산기](examples/settlement.html) · [설계](docs/superpowers/specs/2026-10-22-settlement-core-design.md) · [실행 계획](docs/superpowers/plans/2026-10-22-settlement-core.md).')
+    hub = (ROOT / 'index.html').read_text(encoding='utf-8')
+    write('index.html', hub.replace('<a href="docs/wireframe.html">전체 화면</a>', '<a href="docs/wireframe.html">전체 화면</a><a href="examples/settlement.html">실행 정산 계산기</a>'))
+
 print(f'Built documentation and {len(catalog)} current screens; {len(mapping)} legacy routes mapped.')

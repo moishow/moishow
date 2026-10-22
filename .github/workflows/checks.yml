@@ -1,0 +1,18 @@
+name: Policy and settlement checks
+on:
+  push:
+    branches: [main, develop, 'issue/**']
+  pull_request:
+    branches: [main, develop]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+      - run: node scripts/check-handoff.mjs
