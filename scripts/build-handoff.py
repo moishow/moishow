@@ -269,7 +269,7 @@ haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 �
 ''')
 if (ROOT / 'apps/api/build.gradle').exists():
     readme=(ROOT/'README.md').read_text(encoding='utf-8')
-    write('README.md', readme+'\n## Spring 서버 기반\n\n서버는 [Spring Boot + Java25](docs/architecture/TECH-STACK.md)로 진행한다. [apps/api 실행/검증](apps/api/README.md). 현재 순수 정산·dev 미리보기 API만 구현됐으며 DB·실인증·채팅은 후속 이슈다.')
+    write('README.md', readme+'\n## Spring 서버 기반\n\n서버는 [Spring Boot + Java25](docs/architecture/TECH-STACK.md)로 진행한다. [apps/api 실행/검증](apps/api/README.md). 순수 정산·dev 미리보기와 db 프로필의 PostgreSQL 계정·모임·참가 API를 구현했다. [권한 계약](docs/implementation/IDENTITY-API.md). 소셜/SMS 실제 자격·수신 검증과 채팅·금액 원장은 후속이다.')
     roadmap=(ROOT/'docs/implementation/ROADMAP.md').read_text(encoding='utf-8')
     old='첫 구현은 ESM JavaScript 순수 정산 모듈과 Node 내장 테스트를 사용한다. 저장소의 정적 HTML에서 같은 모듈을 실행해 정책 예제를 검증할 수 있고 서버/모바일 기술 스택을 확정하기 전에 계산 규칙을 분리할 수 있다. Flutter 테마 파일은 디자인 참고이며 Flutter 앱이 생성된 것은 아니다. 후속 서버·모바일 기술 선정은 이슈별 설계로 명시한다.'
     new='서버는 사용자 선택에 따라 Spring Boot/Java로 진행한다. [기술 기준](../architecture/TECH-STACK.md)과 [Spring 실행 계획](SPRING-BOOT-PLAN.md)을 따른다. 기존 PR #17의 JS 코어는 정책 대조용으로 보존하며 실제 서버 계산은 #18에서 Java로 이식한다. DB·인증·채팅·모바일은 후속 이슈에서 연결한다.'

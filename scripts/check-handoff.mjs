@@ -12,7 +12,7 @@ for (const screen of catalog) {
 }
 for(const screen of catalog) for(const action of screen.actions) if(!ids.has(action.target)) failures.push(`unknown target ${screen.id} -> ${action.target}`);
 const pages=[];
-async function walk(folder){for(const file of await readdir(folder,{withFileTypes:true})){if(['.git','review','node_modules','.superpowers'].includes(file.name))continue;const p=join(folder,file.name);if(file.isDirectory())await walk(p);else if(file.name.endsWith('.html'))pages.push(p);}}
+async function walk(folder){for(const file of await readdir(folder,{withFileTypes:true})){if(['.git','review','node_modules','.superpowers','.gradle','build','target'].includes(file.name))continue;const p=join(folder,file.name);if(file.isDirectory())await walk(p);else if(file.name.endsWith('.html'))pages.push(p);}}
 await walk(root);
 let references=0;
 for(const page of pages){
