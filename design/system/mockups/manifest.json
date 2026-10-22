@@ -1,0 +1,461 @@
+[
+  {
+    "screen": "LOGIN",
+    "file": "LOGIN.jpg",
+    "width": 1264,
+    "height": 880,
+    "sha256": "688f98dde0a18cd98f24ce9adfbb12581b61cb3b8d3bff08f138209fc7d84736",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "SMS",
+    "file": "SMS.jpg",
+    "width": 1264,
+    "height": 913,
+    "sha256": "0e5565da54b3e8dbca820fcf2ccf29d2bdc0b2e187f16a5185fbb80324ab777e",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "ONBOARD",
+    "file": "ONBOARD.jpg",
+    "width": 1264,
+    "height": 880,
+    "sha256": "b16fe6f0a45f7551458ff05c7c09efef204529c88a06a4f2a4e9fa21c75ccea7",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "HOME",
+    "file": "HOME.jpg",
+    "width": 1264,
+    "height": 1113,
+    "sha256": "aca7c177225672510c1f2d1856d24f6221943d19fe864e5a86f7ad0ec4ec1ba0",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "TODO",
+    "file": "TODO.jpg",
+    "width": 1264,
+    "height": 861,
+    "sha256": "714c0f14106571452d5ef3838bfceebe89f45474ca2b104f95495efcb036a098",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "SCHEDULE",
+    "file": "SCHEDULE.jpg",
+    "width": 1264,
+    "height": 838,
+    "sha256": "64c39f86491ef7569f0494a6eb1d49bb241dc8985902a83a5508d0a65ddbeb2c",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "EXPLORE",
+    "file": "EXPLORE.jpg",
+    "width": 1264,
+    "height": 812,
+    "sha256": "46c14a8c0237a2c71a0250f4410809f022664bbaf737bb3be37db30570785616",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CREATE",
+    "file": "CREATE.jpg",
+    "width": 1264,
+    "height": 953,
+    "sha256": "8d43dbb7a30a597647a0a66210a5e589f3ae2b546b13f594cb57f930b2bbb07e",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CLUB_CREATE",
+    "file": "CLUB_CREATE.jpg",
+    "width": 1264,
+    "height": 865,
+    "sha256": "b01c3c39946488183e314009623ed25bae9e79156a0ee550e07022d0f8f45ca7",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CLUB_PREVIEW",
+    "file": "CLUB_PREVIEW.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "c5320e84695f51a7cd8f58c5a95699582594b19baf58b22545a6841652088d12",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CLUB",
+    "file": "CLUB.jpg",
+    "width": 1264,
+    "height": 826,
+    "sha256": "a3917775ecaa32b5cf93256730ed30735f35354fe0a392045d87ecc5a476dca5",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "JOIN",
+    "file": "JOIN.jpg",
+    "width": 1264,
+    "height": 913,
+    "sha256": "50ce59237ef86ccbc5930de26a2f1e99040148ac52173d45e364cb398829e0ea",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "JOIN_REVIEW",
+    "file": "JOIN_REVIEW.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "d49b29093ca07a88caa892a22c348623f0a333181fadbd9a725901ac0c1a605b",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "EVENT",
+    "file": "EVENT.jpg",
+    "width": 1264,
+    "height": 861,
+    "sha256": "6db3aa243c54cbef32eba1f717ba10d3da5da0b4b8e927172d1939d4c78a84cd",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "ROUND",
+    "file": "ROUND.jpg",
+    "width": 1264,
+    "height": 861,
+    "sha256": "26ad1997b32a38561347c398eb8efe3b2b9ed8ef6759094eb1644d2236a26fa3",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "WAITLIST",
+    "file": "WAITLIST.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "e95b60d7da8ed47bca2b56e2d05733ffc5fe4c6976c4a413866d2f80b9e4fa01",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "JOIN_LATE",
+    "file": "JOIN_LATE.jpg",
+    "width": 1264,
+    "height": 880,
+    "sha256": "a4512380160f2317b69bb068a4039d19e7a75ff74557162a7ec5b16339fedca6",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "ATTENDANCE",
+    "file": "ATTENDANCE.jpg",
+    "width": 1264,
+    "height": 812,
+    "sha256": "55e031420297ddc3e506d87176a4d47d47665f88edac49b012fe79d6cb659bba",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "PAY",
+    "file": "PAY.jpg",
+    "width": 1264,
+    "height": 1039,
+    "sha256": "e307fd644af174f05caa708da4294e86a63b034c138d714c0e0141429150ce5c",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "PAY_PENDING",
+    "file": "PAY_PENDING.jpg",
+    "width": 1264,
+    "height": 812,
+    "sha256": "56308b3d84b6ee7d8c32f7f9b51bb976af4f6ea51f8408efdafdebefa27d7c1f",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "COLLECT",
+    "file": "COLLECT.jpg",
+    "width": 1264,
+    "height": 1014,
+    "sha256": "7a3e186da13132442629a7f89218899fd284fc009bbef67acbd39203bf962e21",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CANCEL",
+    "file": "CANCEL.jpg",
+    "width": 1264,
+    "height": 965,
+    "sha256": "38223622cdf1f325e080d3a4588c23fe3914d1ca70fc7086c7ad0566ea082e2e",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CONSENT",
+    "file": "CONSENT.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "c874581b526f9ae2c445d10b204c0b692d859127ff39a7c48edd7687280bbe21",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "EXPENSE",
+    "file": "EXPENSE.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "d9594a3750aded2bbe05e7cfaaa1ce6f28d10a96e25407294b182b2682231adb",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "SETTLE",
+    "file": "SETTLE.jpg",
+    "width": 1264,
+    "height": 1087,
+    "sha256": "903bde25aa14e22ae17e3f783f5dfd9460d3a13742ae8c63f94dfefb1d99ff80",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "REFUND",
+    "file": "REFUND.jpg",
+    "width": 1264,
+    "height": 965,
+    "sha256": "fa336eeaff4e63afd9e621af27aa0dc3a51d3f998ac7781c8a3c1b2b68a1c70f",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CLOSED",
+    "file": "CLOSED.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "f335b9d272cb98c9691a5701307d8ad9729b3d03d4b8b119baec3bbf2d2aa258",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CORRECTION",
+    "file": "CORRECTION.jpg",
+    "width": 1264,
+    "height": 871,
+    "sha256": "cdd9a92d69a9b8a93bff7f445e1e2100255aa2ebb238d79c999260e0c3d6fe22",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "DISPUTE",
+    "file": "DISPUTE.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "edfc2289f92c385430bed73a0e22dd43eb230dee77f9547e2bda8f06ecab01c6",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "DISPUTE_REVIEW",
+    "file": "DISPUTE_REVIEW.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "90ec385e1c93b4c1c3221461cb691a35cf9e4f40e5c274e1d58e950fd4c86182",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "HANDOVER",
+    "file": "HANDOVER.jpg",
+    "width": 1264,
+    "height": 1039,
+    "sha256": "4a31956c711cb98c888c1ca226c07c107a968a12deffa641124be62685ad36b1",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "RESERVE",
+    "file": "RESERVE.jpg",
+    "width": 1264,
+    "height": 1014,
+    "sha256": "f66b487b3e8ca9e6edb6934d5f61f376eac7a7643bc2db0449e2438e6327e0f5",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "RESERVE_ADD",
+    "file": "RESERVE_ADD.jpg",
+    "width": 1264,
+    "height": 916,
+    "sha256": "950103dbf847a6009474ac7c44ae91211e11e2228faef3009eb3dbb995d29cd3",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "RESERVE_USE",
+    "file": "RESERVE_USE.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "2b600a4e909a9ca40e6a9568beba3e8286c40faf29c6ca31b6c78f8a43a29ae1",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "DISSOLVE",
+    "file": "DISSOLVE.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "28703382a1704a9ed78f23ea088e0beda24e4d8ed6c7b20d2f303f4e43ad17a8",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "MY",
+    "file": "MY.jpg",
+    "width": 1264,
+    "height": 861,
+    "sha256": "8754c6ec3dcad43559ad7674542f80d768ce536d8c23f773afac899b21d632a3",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "HISTORY",
+    "file": "HISTORY.jpg",
+    "width": 1264,
+    "height": 828,
+    "sha256": "cf6691234f6127187a98b224212db618694d86a7b111a31038eef7baa085b9b2",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "LEVEL",
+    "file": "LEVEL.jpg",
+    "width": 1264,
+    "height": 990,
+    "sha256": "29eefdd43b39014c6b7ad1904f2b7951dd50e244ec7e39c7415932b934e979fe",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "PROFILE",
+    "file": "PROFILE.jpg",
+    "width": 1264,
+    "height": 865,
+    "sha256": "cf2c3668e88eb26df78012573567f76a7c847981762ca22693ac63b76a5b9b3c",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "SETTINGS",
+    "file": "SETTINGS.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "651d717468c931f5b29e89909ced5b0a5833aa3e0b514f224b9c75ba07710493",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "BANK",
+    "file": "BANK.jpg",
+    "width": 1264,
+    "height": 831,
+    "sha256": "f90746a656e625b1adff89e3413f7376af6d5bed6d4aa40a19c350fc44840352",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "ACCOUNT",
+    "file": "ACCOUNT.jpg",
+    "width": 1264,
+    "height": 861,
+    "sha256": "48227693aa7b2d8436d32400b2c0002789c570cc7cb0590a44cfea425c69aee2",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "NOTIFICATIONS",
+    "file": "NOTIFICATIONS.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "f31981d0c71f1068e649d35303c39815f0df0da1f2bf9bf64d42397fbf08492a",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CHAT",
+    "file": "CHAT.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "080693fb323787359b2237b5698a12934cd06baa226ee73656c025bec573b76c",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "CHAT_ROOM",
+    "file": "CHAT_ROOM.jpg",
+    "width": 1264,
+    "height": 825,
+    "sha256": "a6b20b2b71032cd57d29687979a673065249d0e929a8094d5a02021c2e6bfbd8",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "FEED",
+    "file": "FEED.jpg",
+    "width": 1264,
+    "height": 812,
+    "sha256": "0888219ce97f1d335cf985d70199dd5d8071027efc068b3cac46f5807d4a39f2",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "POST",
+    "file": "POST.jpg",
+    "width": 1264,
+    "height": 812,
+    "sha256": "a5e59013a55e6cf4d7a4ce421a25641d69975eead1876bc3971b79b2a4e51a3c",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "COMPOSE",
+    "file": "COMPOSE.jpg",
+    "width": 1264,
+    "height": 865,
+    "sha256": "ea2a379d05d9f45a99e5cae372171edda1399eb05089a1a58829c447f5010815",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "REPORT",
+    "file": "REPORT.jpg",
+    "width": 1264,
+    "height": 880,
+    "sha256": "9f2d61ac1269dfcd04984c5f0b8c2c176a49b59c4d6e9b0070e75c368920ccb8",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "MODERATION",
+    "file": "MODERATION.jpg",
+    "width": 1264,
+    "height": 809,
+    "sha256": "882c0c34c42ddaade5dbec40c1dfbf485accc27edeef8c3953e85ae7361d6425",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "OPS",
+    "file": "OPS.jpg",
+    "width": 1264,
+    "height": 861,
+    "sha256": "25c3c4a0f7ab17ec799dc448e9778d5a7014ba8268976430ee259cda8114dcbe",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  }
+]

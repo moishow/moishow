@@ -44,8 +44,16 @@
 
       if (window.mermaid && body.querySelector('.mermaid')) {
         try {
-          mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
-          mermaid.run({ nodes: body.querySelectorAll('.mermaid') });
+          mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'strict' });
+          var nodes = body.querySelectorAll('.mermaid');
+          var originals = Array.from(nodes).map(function (node) { return node.textContent; });
+          Promise.resolve(mermaid.run({ nodes: nodes })).catch(function () {
+            nodes.forEach(function (node, index) {
+              node.textContent = originals[index];
+              node.className = 'diagram-fallback';
+              node.setAttribute('aria-label', '다이어그램 원문 — 렌더링 실패');
+            });
+          });
         } catch (e) { /* 렌더 실패 시 원본 텍스트 유지 */ }
       }
     })

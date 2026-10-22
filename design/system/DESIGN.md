@@ -1,3 +1,5 @@
+> 현재 제품 기준 · 2026-10-22: UI 정본은 `screen_v1/`, 제품 정책은 `docs/product/POLICY.md`다. 아래 문서의 색·토큰 규칙은 재사용하되 포인트/에스크로·충전·출금 모델과 구 screens 화면 설명은 이전 디자인 이력이며 현재 기능 요구사항이 아니다.
+
 # 모이쇼 디자인시스템 v2
 
 > 정본 문서. 토큰 값은 [`tokens.css`](tokens.css)가 단일 출처(SoT)이고, 디자인 기준화면은 [`screens_v0/meeting-detail.html`](screens_v0/meeting-detail.html)이다.
