@@ -1,3 +1,5 @@
+> 참고 자료 · 구 결제모델 연동 조사. 현재 구현 계약이 아니며 호출 예제는 공급자 최신 문서로 재검증해야 한다. 현재 가입은 소셜+SMS, 예금주 확인은 별도이며 앱은 자금을 보관하지 않는다.
+
 # 토스페이먼츠 (Toss Payments) — 샌드박스 결제 연동
 
 > 샌드박스 기준 · 2026-07-02 · 운영 전환 시 키를 `live_...`로 교체·재검증. 근거: 공식 문서(하단 링크).
@@ -10,8 +12,8 @@
 
 | 항목 | 내용 |
 |---|---|
-| 클라이언트 키 | `test_ck_...` (브라우저 SDK 초기화용) |
-| 시크릿 키 | `test_sk_...` (서버 승인 API 인증용, 외부 노출 금지) |
+| 클라이언트 키 | `test_gck_...` (브라우저 SDK 초기화용) |
+| 시크릿 키 | `test_gsk_...` (서버 승인 API 인증용, 외부 노출 금지) |
 | 사업자 없이 사용 | 가능 — 이메일·전화번호만으로 개발자센터 가입 시 테스트 키 발급. 회원가입 없이 쓰는 문서용 테스트 키도 있으나 카카오페이 등 일부 수단은 테스트 불가 |
 | 환경 격리 | 테스트 키 결제는 실제 매입 없이 가상 처리되며 라이브와 완전 분리 |
 
@@ -59,7 +61,7 @@ sequenceDiagram
 
 ```bash
 curl -X POST "https://api.tosspayments.com/v1/payments/confirm" \
-  -u "test_sk_XXXXXXXXXXXXXXXXXXXXXXXX:" \
+  -u "test_gsk_XXXXXXXXXXXXXXXXXXXXXXXX:" \
   -H "Content-Type: application/json" \
   -d '{
         "paymentKey": "5EnNZRJGvNZ1MyPjYellet6L2K0edvbNBpqAo5c",
@@ -85,7 +87,7 @@ curl -X POST "https://api.tosspayments.com/v1/payments/confirm" \
 - **금액 위변조 방지**: `successUrl`로 온 `amount`가 결제 요청 시 값과 일치하는지 서버에서 먼저 확인한 뒤 승인 API 호출(클라이언트 값만 믿지 말 것).
 - **멱등성**: `orderId`는 주문마다 고유. 승인 재시도 시 상태를 먼저 조회해 중복 승인 방지.
 - **웹훅 신뢰 검증**: 웹훅 payload만으로 확정하지 말고 `GET /v1/payments/{paymentKey}`로 재조회. `payout.changed`/`seller.changed`에는 `tosspayments-webhook-signature`(HMAC) 헤더 포함.
-- **시크릿 키 보호**: `test_sk_`/`live_sk_`는 서버에서만 사용.
+- **시크릿 키 보호**: `test_gsk_`/`live_gsk_`는 서버에서만 사용.
 
 ## 공식 문서
 

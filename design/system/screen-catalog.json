@@ -1,0 +1,1999 @@
+[
+  {
+    "id": "LOGIN",
+    "group": "가입·계정",
+    "title": "로그인",
+    "headline": "모이는 순간부터\n정산까지, 모이쇼",
+    "subtitle": "함께한 돈의 흐름을 분명하게.",
+    "note": "소셜 로그인 후 신규 사용자만 SMS. 실명/CI 필수 아님.",
+    "rows": [
+      {
+        "title": "카카오로 계속하기",
+        "detail": "기존 로그인 방식 확인",
+        "value": ""
+      },
+      {
+        "title": "Google로 계속하기",
+        "detail": "다른 소셜의 동일 번호는 가입 차단",
+        "value": ""
+      },
+      {
+        "title": "Apple로 계속하기",
+        "detail": "소셜 인증은 실제 연동 전 목업",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "로그인 흐름 보기",
+        "target": "SMS"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "onboard"
+  },
+  {
+    "id": "SMS",
+    "group": "가입·계정",
+    "title": "전화번호 인증",
+    "headline": "내 번호를\n확인해요",
+    "subtitle": "소셜 로그인 다음, SMS로 번호 소유를 확인해요.",
+    "note": "입력/재전송/오류/중복 번호·기존 로그인 안내.",
+    "rows": [
+      {
+        "title": "전화번호",
+        "detail": "010-1234-5678",
+        "value": ""
+      },
+      {
+        "title": "인증번호",
+        "detail": "6자리 코드를 입력해요",
+        "value": ""
+      },
+      {
+        "title": "다른 소셜로 가입한 번호",
+        "detail": "기존 로그인 방식을 이용해주세요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "번호 확인",
+        "target": "ONBOARD"
+      },
+      {
+        "label": "기존 로그인",
+        "target": "LOGIN"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "ONBOARD",
+    "group": "가입·계정",
+    "title": "첫 설정",
+    "headline": "어떤 모임을\n좋아하세요?",
+    "subtitle": "닉네임과 관심사를 정하고 시작해요.",
+    "note": "닉네임 필수·관심사 건너뛰기 허용.",
+    "rows": [
+      {
+        "title": "닉네임",
+        "detail": "산책왕",
+        "value": ""
+      },
+      {
+        "title": "관심사",
+        "detail": "산책 · 운동 · 여행",
+        "value": ""
+      },
+      {
+        "title": "첫 모임 찾기",
+        "detail": "가입 전 소개를 확인해요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "모이쇼 시작하기",
+        "target": "HOME"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "onboard"
+  },
+  {
+    "id": "HOME",
+    "group": "홈·탐색",
+    "title": "홈",
+    "headline": "산책왕님,\n오늘 챙길 일이 있어요",
+    "subtitle": "금요 산책 모임 · 10월 23일 금요일",
+    "note": "할 일과 일정은 홈, 돈 기록은 마이. 일반 주최자도 운영 todo.",
+    "rows": [
+      {
+        "title": "저녁 식사 회비",
+        "detail": "1차 · 금요일 12:00까지",
+        "value": "30,000원"
+      },
+      {
+        "title": "입금 확인 2건",
+        "detail": "내가 주최한 번개 · 부분 입금 포함",
+        "value": "확인하기"
+      },
+      {
+        "title": "이의 처리 요청",
+        "detail": "참가자와 계산 근거 확인",
+        "value": "진행 중"
+      }
+    ],
+    "actions": [
+      {
+        "label": "지금 처리하기",
+        "target": "TODO"
+      },
+      {
+        "label": "내 모임",
+        "target": "CLUB"
+      }
+    ],
+    "figure": "3",
+    "label": "지금 처리할 정산 할 일",
+    "surface": "money",
+    "kind": "home"
+  },
+  {
+    "id": "TODO",
+    "group": "홈·탐색",
+    "title": "정산 할 일",
+    "headline": "해야 할 정산을\n한곳에서",
+    "subtitle": "계산을 마감해도 남은 일은 계속 보여요.",
+    "note": "미납/확인 대기/환불/이의 구분·중복 요청 방지.",
+    "rows": [
+      {
+        "title": "내 회비 보내기",
+        "detail": "1차 저녁 식사 · 잔여액",
+        "value": "20,000원"
+      },
+      {
+        "title": "참가자 입금 확인",
+        "detail": "내가 주최한 이벤트",
+        "value": "2건"
+      },
+      {
+        "title": "환불 수령 확인",
+        "detail": "계산 마감 후에도 유지",
+        "value": "5,000원"
+      }
+    ],
+    "actions": [
+      {
+        "label": "내 회비",
+        "target": "PAY"
+      },
+      {
+        "label": "운영 현황",
+        "target": "COLLECT"
+      },
+      {
+        "label": "환불 확인",
+        "target": "REFUND"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "SCHEDULE",
+    "group": "홈·탐색",
+    "title": "내 일정",
+    "headline": "다가오는 모임을\n확인해요",
+    "subtitle": "날짜를 선택하면 해당 일정만 보여요.",
+    "note": "홈 날짜 선택·취소/빈 상태·마이에 일정 중복 없음.",
+    "rows": [
+      {
+        "title": "금요 산책 모임",
+        "detail": "10월 23일 · 1차 18:00 / 2차 20:00",
+        "value": "참여 확정"
+      },
+      {
+        "title": "함께 걷는 토요일",
+        "detail": "10월 24일 · 한강공원",
+        "value": "합류 대기"
+      }
+    ],
+    "actions": [
+      {
+        "label": "이벤트 보기",
+        "target": "EVENT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "schedule"
+  },
+  {
+    "id": "EXPLORE",
+    "group": "홈·탐색",
+    "title": "모임 탐색",
+    "headline": "취향이 맞는\n모임을 찾아요",
+    "subtitle": "산책 · 운동 · 스터디 · 취미",
+    "note": "팔로우해도 비가입 내부 글/이벤트 숨김.",
+    "rows": [
+      {
+        "title": "금요 산책 모임",
+        "detail": "매주 가볍게 걷고 저녁을 함께해요",
+        "value": "32명"
+      },
+      {
+        "title": "가을 한강 번개",
+        "detail": "공개 번개 · 비부원도 참여 가능",
+        "value": "10.24"
+      },
+      {
+        "title": "가입한 모임",
+        "detail": "이미 가입한 모임은 구분해요",
+        "value": "가입됨"
+      }
+    ],
+    "actions": [
+      {
+        "label": "모임 소개",
+        "target": "CLUB_PREVIEW"
+      },
+      {
+        "label": "공개 번개",
+        "target": "EVENT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "explore"
+  },
+  {
+    "id": "CREATE",
+    "group": "홈·탐색",
+    "title": "정모·번개 만들기",
+    "headline": "함께할 순간을\n만들어보세요",
+    "subtitle": "모임 화면에서 열면 모임이 미리 선택돼요.",
+    "note": "정모=모임장/관리자·번개=부원. 공통 폼/검증.",
+    "rows": [
+      {
+        "title": "모임",
+        "detail": "금요 산책 모임",
+        "value": "선택됨"
+      },
+      {
+        "title": "이벤트 종류",
+        "detail": "정모 / 공개 번개 / 내부 번개",
+        "value": ""
+      },
+      {
+        "title": "정산 방식",
+        "detail": "사전 걷기 / 사후 정산",
+        "value": ""
+      },
+      {
+        "title": "차수 구성",
+        "detail": "시간 · 장소 · 정원 · 신청/납부 기한",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "차수 설정",
+        "target": "ROUND"
+      },
+      {
+        "label": "미리보기",
+        "target": "EVENT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "CLUB_CREATE",
+    "group": "모임·참여",
+    "title": "모임 만들기",
+    "headline": "우리 모임을\n소개해요",
+    "subtitle": "개설한 사람은 모임장이 돼요.",
+    "note": "모임 이름 중복·가입 방식·모임별 닉네임 필수.",
+    "rows": [
+      {
+        "title": "모임 이름",
+        "detail": "금요 산책 모임",
+        "value": ""
+      },
+      {
+        "title": "소개",
+        "detail": "걷고, 먹고, 함께 정산하는 모임",
+        "value": ""
+      },
+      {
+        "title": "가입 방식",
+        "detail": "즉시 가입 / 승인제",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "모임 개설 흐름",
+        "target": "CLUB"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "CLUB_PREVIEW",
+    "group": "모임·참여",
+    "title": "모임 소개",
+    "headline": "가볍게 걷고,\n기분 좋게 모여요",
+    "subtitle": "금요 산책 모임 · 산책/친목",
+    "note": "비부원 소개·인원/역할만 공개, 내부 글/정산은 잠금.",
+    "rows": [
+      {
+        "title": "모임 소개",
+        "detail": "금요일 저녁 함께 걷고 식사해요",
+        "value": "32명"
+      },
+      {
+        "title": "가입 방식",
+        "detail": "모임별 닉네임을 입력하면 가입",
+        "value": "즉시 가입"
+      },
+      {
+        "title": "내부 게시판·정산",
+        "detail": "가입한 부원만 확인할 수 있어요",
+        "value": "잠김"
+      }
+    ],
+    "actions": [
+      {
+        "label": "가입하기",
+        "target": "JOIN"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "CLUB",
+    "group": "모임·참여",
+    "title": "모임 홈",
+    "headline": "금요 산책 모임",
+    "subtitle": "함께한 기록과 다음 모임을 확인해요.",
+    "note": "부원/운영 권한 분기·정모/번개 생성 양쪽 진입.",
+    "rows": [
+      {
+        "title": "이번 주 산책 안내",
+        "detail": "모임 공지 · 산책길",
+        "value": "공지"
+      },
+      {
+        "title": "금요 저녁 모임",
+        "detail": "1차 식사 · 2차 카페",
+        "value": "10.23"
+      },
+      {
+        "title": "모임 적립금",
+        "detail": "부원 전체가 관련 내역 열람",
+        "value": "12,001원"
+      }
+    ],
+    "actions": [
+      {
+        "label": "다가오는 모임",
+        "target": "EVENT"
+      },
+      {
+        "label": "정모·번개 만들기",
+        "target": "CREATE"
+      },
+      {
+        "label": "적립금",
+        "target": "RESERVE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "JOIN",
+    "group": "모임·참여",
+    "title": "모임 가입",
+    "headline": "이 모임에서는\n어떤 이름으로 만날까요?",
+    "subtitle": "모임별 닉네임은 정산과 채팅에도 사용해요.",
+    "note": "즉시 가입/승인제·강퇴 이력 승인·블랙 차단 우선.",
+    "rows": [
+      {
+        "title": "모임별 닉네임",
+        "detail": "산책왕",
+        "value": ""
+      },
+      {
+        "title": "가입 안내",
+        "detail": "초대여도 강퇴 이력자는 관리자 승인 필요",
+        "value": ""
+      },
+      {
+        "title": "블랙리스트",
+        "detail": "해당 모임 가입·공개 번개·합류 차단",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "가입 흐름 확인",
+        "target": "CLUB"
+      },
+      {
+        "label": "승인제 상태",
+        "target": "JOIN_REVIEW"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "JOIN_REVIEW",
+    "group": "모임·참여",
+    "title": "가입 신청 검토",
+    "headline": "새로운 멤버를\n확인해요",
+    "subtitle": "모임 관리자가 신청 내용을 검토해요.",
+    "note": "초대/강퇴/블랙 우선순위·승인/거절 이력.",
+    "rows": [
+      {
+        "title": "산책왕",
+        "detail": "가입 질문 응답 · 강퇴 이력 없음",
+        "value": "대기"
+      },
+      {
+        "title": "등산왕",
+        "detail": "초대 경유 · 강퇴 이력",
+        "value": "승인 필요"
+      }
+    ],
+    "actions": [
+      {
+        "label": "모임 보기",
+        "target": "CLUB"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "EVENT",
+    "group": "모임·참여",
+    "title": "정모 상세",
+    "headline": "금요일 저녁,\n함께 걸어요",
+    "subtitle": "금요 산책 모임 · 주최 산책왕",
+    "note": "차수 선택·정원 내 즉시 확정/초과 대기·공개 정보 제한.",
+    "rows": [
+      {
+        "title": "1차 저녁 식사",
+        "detail": "18:00 · 연남동 · 8/10명",
+        "value": "30,000원"
+      },
+      {
+        "title": "2차 카페",
+        "detail": "20:00 · 신청 마감 19:00",
+        "value": "10,000원"
+      },
+      {
+        "title": "참여와 회비",
+        "detail": "참여 확정과 회비 요청은 별개예요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "차수 선택·신청",
+        "target": "ROUND"
+      },
+      {
+        "label": "이벤트 채팅",
+        "target": "CHAT_ROOM"
+      },
+      {
+        "label": "최종 정산",
+        "target": "SETTLE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "ROUND",
+    "group": "모임·참여",
+    "title": "차수 신청",
+    "headline": "내가 함께할\n차수를 선택해요",
+    "subtitle": "정원 안이면 신청 즉시 참여가 확정돼요.",
+    "note": "차수별 마감·비용 고지·납부기한 별도·마감 후 합류.",
+    "rows": [
+      {
+        "title": "1차 저녁 식사",
+        "detail": "신청 마감 금 12:00 · 취소 비용 5,000원",
+        "value": "8/10명"
+      },
+      {
+        "title": "2차 카페",
+        "detail": "신청 마감 금 19:00 · 취소 비용 없음",
+        "value": "6/8명"
+      },
+      {
+        "title": "회비 요청",
+        "detail": "각 차수 마감 때 해당자에게 요청해요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "참여 확정 보기",
+        "target": "EVENT"
+      },
+      {
+        "label": "정원 초과 대기",
+        "target": "WAITLIST"
+      },
+      {
+        "label": "마감 후 합류",
+        "target": "JOIN_LATE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "choices"
+  },
+  {
+    "id": "WAITLIST",
+    "group": "모임·참여",
+    "title": "참여 대기",
+    "headline": "지금은 정원이\n모두 찼어요",
+    "subtitle": "확정자를 나중에 선정·탈락시키지 않아요.",
+    "note": "대기 상태·미납만으로 자리 취소/승격하지 않음.",
+    "rows": [
+      {
+        "title": "1차 저녁 식사",
+        "detail": "정원 10명 · 확정 10명",
+        "value": "참여 대기"
+      },
+      {
+        "title": "인원 조정",
+        "detail": "주최자가 대화로 안내해요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "이벤트로",
+        "target": "EVENT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "JOIN_LATE",
+    "group": "모임·참여",
+    "title": "마감 후 합류",
+    "headline": "늦게라도\n함께할 수 있을까요?",
+    "subtitle": "신청 마감 후에는 주최자의 승인이 필요해요.",
+    "note": "요청/승인/거절·승인 후 해당자 회비만 요청.",
+    "rows": [
+      {
+        "title": "합류할 차수",
+        "detail": "2차 카페",
+        "value": "10,000원"
+      },
+      {
+        "title": "주최자에게 한마디",
+        "detail": "7시 반쯤 도착할 수 있어요",
+        "value": ""
+      },
+      {
+        "title": "승인 후",
+        "detail": "명단 추가와 회비 요청이 생겨요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "합류 요청 상태",
+        "target": "PAY_PENDING"
+      },
+      {
+        "label": "이벤트로",
+        "target": "EVENT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "ATTENDANCE",
+    "group": "모임·참여",
+    "title": "참석 확인",
+    "headline": "함께한 사람을\n확인해요",
+    "subtitle": "실참석 차수에 따라 비용을 계산해요.",
+    "note": "노쇼=고지 취소 비용·0명도 정산 가능.",
+    "rows": [
+      {
+        "title": "산책왕",
+        "detail": "1차·2차 참석",
+        "value": "참석"
+      },
+      {
+        "title": "구름",
+        "detail": "1차 불참 · 고지 취소 비용",
+        "value": "5,000원"
+      },
+      {
+        "title": "새벽",
+        "detail": "2차 불참 · 비용 미설정",
+        "value": "0원"
+      }
+    ],
+    "actions": [
+      {
+        "label": "지출 입력",
+        "target": "EXPENSE"
+      },
+      {
+        "label": "취소 처리",
+        "target": "CANCEL"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "PAY",
+    "group": "납부·확인",
+    "title": "회비 보내기",
+    "headline": "남은 회비를\n확인해요",
+    "subtitle": "1차 저녁 식사 · 금요 산책 모임",
+    "note": "외부 송금→신고→실입금 확인·부분입금 잔여만 요청.",
+    "rows": [
+      {
+        "title": "요청 금액",
+        "detail": "1차 저녁 식사",
+        "value": "30,000원"
+      },
+      {
+        "title": "확인된 입금",
+        "detail": "실입금 10월 23일 10:32",
+        "value": "10,000원"
+      },
+      {
+        "title": "수취인",
+        "detail": "예금주 김민준 · 계좌 정보는 송금 시 별도",
+        "value": ""
+      },
+      {
+        "title": "납부 기한",
+        "detail": "10월 23일 12:00",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "납부 신고 화면",
+        "target": "PAY_PENDING"
+      },
+      {
+        "label": "입금 확인 보기",
+        "target": "COLLECT"
+      }
+    ],
+    "figure": "20,000원",
+    "label": "이번에 보낼 잔여 금액",
+    "surface": "money",
+    "kind": "pay"
+  },
+  {
+    "id": "PAY_PENDING",
+    "group": "납부·확인",
+    "title": "확인 대기",
+    "headline": "신고와 실제 확인을\n구분해요",
+    "subtitle": "앱 복귀만으로 납부 완료되지 않아요.",
+    "note": "확인 대기는 실제 미납과 구분·지연 판정 보류.",
+    "rows": [
+      {
+        "title": "내 납부 신고",
+        "detail": "잔여 회비 20,000원을 보냈어요",
+        "value": "확인 대기"
+      },
+      {
+        "title": "실제 입금 확인",
+        "detail": "주최자가 내역·금액·시각을 확인해요",
+        "value": "대기"
+      },
+      {
+        "title": "처리 중 이의",
+        "detail": "확인 지연만으로 바로 감점하지 않아요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "내 정산 기록",
+        "target": "HISTORY"
+      },
+      {
+        "label": "이의 제기",
+        "target": "DISPUTE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "COLLECT",
+    "group": "납부·확인",
+    "title": "입금 확인",
+    "headline": "실제로 받은 금액을\n확인해요",
+    "subtitle": "이벤트 정산 담당자용 · 일반 부원 주최자 포함",
+    "note": "실입금액/시각 확인·부분입금·중복확인 방지.",
+    "rows": [
+      {
+        "title": "산책왕",
+        "detail": "요청 30,000 · 확인 입금 10,000",
+        "value": "부분 납부"
+      },
+      {
+        "title": "바람",
+        "detail": "납부 신고 30,000 · 실제 내역 확인 필요",
+        "value": "확인 대기"
+      },
+      {
+        "title": "새벽",
+        "detail": "납부 기한 경과 · 참여는 유지",
+        "value": "미납"
+      }
+    ],
+    "actions": [
+      {
+        "label": "입금 확인 양식",
+        "target": "PAY_PENDING"
+      },
+      {
+        "label": "이벤트 정산",
+        "target": "SETTLE"
+      },
+      {
+        "label": "담당자 인계",
+        "target": "HANDOVER"
+      }
+    ],
+    "figure": "10,000원",
+    "label": "현재 확인된 입금",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "CANCEL",
+    "group": "취소·환불",
+    "title": "참여 취소",
+    "headline": "취소 전에\n환불 금액을 확인해요",
+    "subtitle": "미리 고지한 차수별 비용만 적용해요.",
+    "note": "기납부 비용 차감/미납 비용만청구·주최자 취소 전액.",
+    "rows": [
+      {
+        "title": "확인된 납부",
+        "detail": "1차 저녁 식사",
+        "value": "30,000원"
+      },
+      {
+        "title": "사전 고지 취소 비용",
+        "detail": "노쇼에도 동일 · 미설정이면 0원",
+        "value": "5,000원"
+      },
+      {
+        "title": "예상 환불",
+        "detail": "실제 외부 송금 후 수령 확인",
+        "value": "25,000원"
+      }
+    ],
+    "actions": [
+      {
+        "label": "취소·환불 상태",
+        "target": "REFUND"
+      },
+      {
+        "label": "비용 변경 재동의",
+        "target": "CONSENT"
+      }
+    ],
+    "figure": "25,000원",
+    "label": "취소 후 받을 금액",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "CONSENT",
+    "group": "취소·환불",
+    "title": "변경 동의",
+    "headline": "조건이 바뀌었어요",
+    "subtitle": "취소 비용 변경은 기존 신청자 동의 후 적용해요.",
+    "note": "미응답 참여 유지/동의 대기·새 비용 미적용·거부무료취소.",
+    "rows": [
+      {
+        "title": "기존 취소 비용",
+        "detail": "내가 신청할 때 확인한 비용",
+        "value": "5,000원"
+      },
+      {
+        "title": "변경 제안",
+        "detail": "주최자가 변경 동의를 요청했어요",
+        "value": "10,000원"
+      },
+      {
+        "title": "응답하지 않으면",
+        "detail": "참여 유지 · 새 비용 적용 안 함",
+        "value": "동의 대기"
+      }
+    ],
+    "actions": [
+      {
+        "label": "동의 상태 보기",
+        "target": "EVENT"
+      },
+      {
+        "label": "동의하지 않고 취소",
+        "target": "REFUND"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "EXPENSE",
+    "group": "정산·이의",
+    "title": "지출 입력",
+    "headline": "쓴 만큼,\n근거와 함께 기록해요",
+    "subtitle": "이벤트 종료 후 72시간 안에 최초 정산을 등록해요.",
+    "note": "항목명/금액/차수 필수·증빙 선택·미첨부 표시.",
+    "rows": [
+      {
+        "title": "저녁 식사",
+        "detail": "1차 · 일반 영수증 첨부",
+        "value": "100,000원"
+      },
+      {
+        "title": "카페",
+        "detail": "2차 · 증빙 없음",
+        "value": "40,000원"
+      },
+      {
+        "title": "확인된 취소 비용",
+        "detail": "1차 지출에 보태요",
+        "value": "20,000원"
+      }
+    ],
+    "actions": [
+      {
+        "label": "계산 미리보기",
+        "target": "SETTLE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "form"
+  },
+  {
+    "id": "SETTLE",
+    "group": "정산·이의",
+    "title": "이벤트 최종 정산",
+    "headline": "차수별로 계산하고,\n한 번에 정산해요",
+    "subtitle": "입금 확인액·이미 지급한 환불을 함께 반영해요.",
+    "note": "개인별 순차액 상계·지출/비용/분담 합계 보존.",
+    "rows": [
+      {
+        "title": "1차 분담",
+        "detail": "지출 100,000 − 수령 취소비 20,000 / 4명",
+        "value": "20,000원"
+      },
+      {
+        "title": "2차 분담",
+        "detail": "지출 40,000 / 4명",
+        "value": "10,000원"
+      },
+      {
+        "title": "내 확인 입금",
+        "detail": "1차 30,000 + 2차 10,000",
+        "value": "40,000원"
+      },
+      {
+        "title": "이벤트 순차액",
+        "detail": "내 부담 30,000 − 순입금 40,000",
+        "value": "10,000원 환불"
+      }
+    ],
+    "actions": [
+      {
+        "label": "환불 처리",
+        "target": "REFUND"
+      },
+      {
+        "label": "계산 마감",
+        "target": "CLOSED"
+      },
+      {
+        "label": "계산 근거·이의",
+        "target": "DISPUTE"
+      }
+    ],
+    "figure": "10,000원",
+    "label": "산책왕님 최종 환불",
+    "surface": "money",
+    "kind": "settlement"
+  },
+  {
+    "id": "REFUND",
+    "group": "취소·환불",
+    "title": "환불 확인",
+    "headline": "돌려받은 금액을\n직접 확인해요",
+    "subtitle": "환불 요청과 실제 송금·수령은 별개예요.",
+    "note": "실송금→수령확인·마감 후 미수령 요청 유지.",
+    "rows": [
+      {
+        "title": "환불 사유",
+        "detail": "최종 정산 차액",
+        "value": "10,000원"
+      },
+      {
+        "title": "담당자 송금",
+        "detail": "실제 거래 확인 필요",
+        "value": "송금 대기"
+      },
+      {
+        "title": "내 수령 확인",
+        "detail": "내 계좌 내역과 대조해요",
+        "value": "미확인"
+      }
+    ],
+    "actions": [
+      {
+        "label": "정산 내역",
+        "target": "HISTORY"
+      },
+      {
+        "label": "환불 이의",
+        "target": "DISPUTE"
+      }
+    ],
+    "figure": "10,000원",
+    "label": "수령 확인할 금액",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "CLOSED",
+    "group": "정산·이의",
+    "title": "계산 마감",
+    "headline": "계산은 마감,\n남은 처리는 계속해요",
+    "subtitle": "마감은 납부 완료나 채무 면제가 아니에요.",
+    "note": "미납/환불/이의 계속·원본 잠금·후속 입금 기록.",
+    "rows": [
+      {
+        "title": "계산 원본",
+        "detail": "개인별 부담과 지출 근거 보존",
+        "value": "마감됨"
+      },
+      {
+        "title": "남은 납부",
+        "detail": "부분 납부 1명",
+        "value": "20,000원"
+      },
+      {
+        "title": "환불 확인",
+        "detail": "수령 확인 필요",
+        "value": "10,000원"
+      },
+      {
+        "title": "이의 처리",
+        "detail": "마감 후에도 진행해요",
+        "value": "1건"
+      }
+    ],
+    "actions": [
+      {
+        "label": "정정 기록 추가",
+        "target": "CORRECTION"
+      },
+      {
+        "label": "미납 추적",
+        "target": "COLLECT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "CORRECTION",
+    "group": "정산·이의",
+    "title": "정정 기록",
+    "headline": "원본은 남기고,\n바뀐 근거를 더해요",
+    "subtitle": "완납자는 차액 환불, 미납자는 요청액 조정",
+    "note": "원본 보존·사유/변경금액·영향자 알림·기지급 환불 반영.",
+    "rows": [
+      {
+        "title": "원래 개인 부담",
+        "detail": "정정 전 계산",
+        "value": "30,000원"
+      },
+      {
+        "title": "정정 후 개인 부담",
+        "detail": "중복 영수증 항목 수정",
+        "value": "25,000원"
+      },
+      {
+        "title": "변경 사유",
+        "detail": "중복 입력을 발견했어요",
+        "value": ""
+      },
+      {
+        "title": "이미 납부한 사람",
+        "detail": "실제 입금액 기준 차액 처리",
+        "value": "5,000원 환불"
+      }
+    ],
+    "actions": [
+      {
+        "label": "정정 후 내역",
+        "target": "HISTORY"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "form"
+  },
+  {
+    "id": "DISPUTE",
+    "group": "정산·이의",
+    "title": "이의 제기",
+    "headline": "계산이 궁금하면\n근거를 물어보세요",
+    "subtitle": "납부와 이의는 함께 진행할 수 있어요.",
+    "note": "상세/증빙 당사자·담당자만·타부원 상태/결과/정정금액.",
+    "rows": [
+      {
+        "title": "대상 항목",
+        "detail": "1차 저녁 식사 분담",
+        "value": "20,000원"
+      },
+      {
+        "title": "이의 사유",
+        "detail": "금액 오류 / 내역 의문 / 입금 반려",
+        "value": ""
+      },
+      {
+        "title": "상세·증빙",
+        "detail": "당사자와 실제 처리 담당자만 열람해요",
+        "value": "비공개"
+      }
+    ],
+    "actions": [
+      {
+        "label": "처리 상태",
+        "target": "DISPUTE_REVIEW"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "form"
+  },
+  {
+    "id": "DISPUTE_REVIEW",
+    "group": "정산·이의",
+    "title": "이의 처리",
+    "headline": "요청을 확인하고\n결과를 남겨요",
+    "subtitle": "미응답 24시간 재안내 · 72시간 후 대리 요청 가능",
+    "note": "모임장→운영자·주최자가모임장이면운영자직접·증빙권한.",
+    "rows": [
+      {
+        "title": "검토 요청",
+        "detail": "정산 항목 금액 확인",
+        "value": "진행 중"
+      },
+      {
+        "title": "당사자 증빙",
+        "detail": "이 건 담당자에게만 노출",
+        "value": "열람 제한"
+      },
+      {
+        "title": "다른 부원에게 공개",
+        "detail": "처리 상태·결과·정정 금액만",
+        "value": ""
+      },
+      {
+        "title": "대리 처리",
+        "detail": "모임장 / 플랫폼 운영자",
+        "value": "72시간 기준"
+      }
+    ],
+    "actions": [
+      {
+        "label": "인정·정정 흐름",
+        "target": "CORRECTION"
+      },
+      {
+        "label": "운영자 큐",
+        "target": "OPS"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "HANDOVER",
+    "group": "인계·적립금",
+    "title": "정산 인계",
+    "headline": "돈과 책임을\n함께 넘겨요",
+    "subtitle": "인수 수락만으로 권한을 먼저 옮기지 않아요.",
+    "note": "모임장/관리자/참여자수락→실제입금확인→권한이전·0원확인.",
+    "rows": [
+      {
+        "title": "새 담당자",
+        "detail": "같은 이벤트 참여자 · 인수 수락",
+        "value": "수락됨"
+      },
+      {
+        "title": "인계할 실제 잔여금",
+        "detail": "인계 명세와 외부 송금 일치 확인",
+        "value": "40,000원"
+      },
+      {
+        "title": "실제 입금 확인",
+        "detail": "새 담당자 확인 후 권한 이전",
+        "value": "대기"
+      },
+      {
+        "title": "잔여금 0원이면",
+        "detail": "내역과 0원 확인만 진행",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "인계 내역",
+        "target": "COLLECT"
+      },
+      {
+        "label": "계정 삭제 조건",
+        "target": "ACCOUNT"
+      }
+    ],
+    "figure": "40,000원",
+    "label": "실제로 인계할 금액",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "RESERVE",
+    "group": "인계·적립금",
+    "title": "모임 적립금",
+    "headline": "공동 자금의 흐름을\n함께 확인해요",
+    "subtitle": "모임 관련 기록만 공개 · 개인 계좌의 다른 거래 제외",
+    "note": "부원전체내역·실확인잔액·사용권한모임장관리자.",
+    "rows": [
+      {
+        "title": "입금 확인 담당",
+        "detail": "실제 계좌 관리자 1명",
+        "value": "지정됨"
+      },
+      {
+        "title": "정산 원 단위 잔액",
+        "detail": "10월 20일 · 확인 완료",
+        "value": "+1원"
+      },
+      {
+        "title": "늦은 수금 적립",
+        "detail": "주최자 선택 · 참석자 안내",
+        "value": "+12,000원"
+      }
+    ],
+    "actions": [
+      {
+        "label": "적립 입금 확인",
+        "target": "RESERVE_ADD"
+      },
+      {
+        "label": "적립금 사용",
+        "target": "RESERVE_USE"
+      },
+      {
+        "label": "해산 정리",
+        "target": "DISSOLVE"
+      }
+    ],
+    "figure": "12,001원",
+    "label": "실제 확인된 적립금 잔액",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "RESERVE_ADD",
+    "group": "인계·적립금",
+    "title": "적립 입금 확인",
+    "headline": "선택만으로\n적립 완료되지 않아요",
+    "subtitle": "이벤트 담당자의 송금 후 실제 계좌를 확인해요.",
+    "note": "전환요청/송금/입금확인 상태·확인전잔액미반영.",
+    "rows": [
+      {
+        "title": "적립 출처",
+        "detail": "늦게 받은 1차 취소 비용",
+        "value": "12,000원"
+      },
+      {
+        "title": "송금자",
+        "detail": "이벤트 정산 담당자",
+        "value": "산책왕"
+      },
+      {
+        "title": "확인 담당",
+        "detail": "모임장·관리자 중 실제 계좌 담당 1명",
+        "value": "입금 대기"
+      }
+    ],
+    "actions": [
+      {
+        "label": "적립금 내역",
+        "target": "RESERVE"
+      }
+    ],
+    "figure": "12,000원",
+    "label": "입금 확인할 적립 요청",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "RESERVE_USE",
+    "group": "인계·적립금",
+    "title": "적립금 사용",
+    "headline": "목적을 남기고,\n실제 거래 후 차감해요",
+    "subtitle": "모임장·관리자만 사용 요청을 등록할 수 있어요.",
+    "note": "요청등록만으로차감안함·계좌담당실거래후완료·자기사용동일.",
+    "rows": [
+      {
+        "title": "사용 목적",
+        "detail": "다음 모임 공용 준비물",
+        "value": ""
+      },
+      {
+        "title": "사용 금액",
+        "detail": "확인 잔액 범위 내",
+        "value": "5,000원"
+      },
+      {
+        "title": "계좌 담당자",
+        "detail": "실제 송금·출금 후 완료 확인",
+        "value": "실행 대기"
+      }
+    ],
+    "actions": [
+      {
+        "label": "사용 내역",
+        "target": "RESERVE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "form"
+  },
+  {
+    "id": "DISSOLVE",
+    "group": "인계·적립금",
+    "title": "모임 해산",
+    "headline": "마지막 잔액도\n분명하게 정리해요",
+    "subtitle": "해산 잔여 적립금은 모임장에게 귀속돼요.",
+    "note": "잔액0원/입출금확인·기존기록보존·미납환불이의의무유지.",
+    "rows": [
+      {
+        "title": "잔여 적립금",
+        "detail": "모임장 귀속 지급/정리 확인 필요",
+        "value": "12,001원"
+      },
+      {
+        "title": "입출금 확인",
+        "detail": "0원과 실제 확인이 끝나야 해산 가능",
+        "value": "대기"
+      },
+      {
+        "title": "남은 이벤트 처리",
+        "detail": "담당자 유지 시 해산 후에도 계속",
+        "value": "유지"
+      },
+      {
+        "title": "기존 정산·적립금 기록",
+        "detail": "해산 후에도 보존해요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "적립금 정리",
+        "target": "RESERVE"
+      },
+      {
+        "label": "정산 인계",
+        "target": "HANDOVER"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "MY",
+    "group": "기록·설정",
+    "title": "마이",
+    "headline": "산책왕님의\n함께한 기록",
+    "subtitle": "현재 할 일과 일정은 홈에서 확인해요.",
+    "note": "마이는기록/레벨/프로필/설정·돈액션/일정중복없음.",
+    "rows": [
+      {
+        "title": "모임 레벨",
+        "detail": "참가 납부·주최 정산 이력",
+        "value": "52점"
+      },
+      {
+        "title": "최근 정산",
+        "detail": "금요 산책 모임 · 개인 순차액",
+        "value": "10,000원 환불"
+      },
+      {
+        "title": "프로필·설정",
+        "detail": "닉네임·계좌·푸시·계정",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "과거 정산",
+        "target": "HISTORY"
+      },
+      {
+        "label": "모임 레벨",
+        "target": "LEVEL"
+      },
+      {
+        "label": "설정",
+        "target": "SETTINGS"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "profile"
+  },
+  {
+    "id": "HISTORY",
+    "group": "기록·설정",
+    "title": "개인 정산 내역",
+    "headline": "지난 돈의 흐름을\n다시 확인해요",
+    "subtitle": "탈퇴해도 본인이 참여한 기록과 처리는 유지돼요.",
+    "note": "이벤트개인합산·차수근거·마감후미완요청과같은원본.",
+    "rows": [
+      {
+        "title": "금요 산책 모임",
+        "detail": "최종 개인 부담 30,000 · 확인 입금 40,000",
+        "value": "10,000원 환불"
+      },
+      {
+        "title": "봄길 번개",
+        "detail": "입금 확인 · 실제 입금 시각 기준",
+        "value": "완납"
+      },
+      {
+        "title": "이의 진행 중",
+        "detail": "상세 증빙은 당사자·담당자만",
+        "value": "진행 중"
+      }
+    ],
+    "actions": [
+      {
+        "label": "계산 근거",
+        "target": "SETTLE"
+      },
+      {
+        "label": "이의 기록",
+        "target": "DISPUTE_REVIEW"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "LEVEL",
+    "group": "기록·설정",
+    "title": "모임 레벨",
+    "headline": "숫자보다 중요한\n함께 지킨 약속",
+    "subtitle": "같은 모임 부원 또는 같은 이벤트 참여자에게만 공개",
+    "note": "50점시작·0~100·역할별1회·실입금기준·보류/회복.",
+    "rows": [
+      {
+        "title": "기한 내 납부",
+        "detail": "이벤트당 한 번",
+        "value": "+1"
+      },
+      {
+        "title": "72시간 내 최초 정산",
+        "detail": "주최 역할 이벤트당 한 번",
+        "value": "+2"
+      },
+      {
+        "title": "확인 대기·이의",
+        "detail": "즉시 감점하지 않아요",
+        "value": "판정 보류"
+      },
+      {
+        "title": "신규 사용자",
+        "detail": "낮은 이력은 미납이 아니에요",
+        "value": "이력 없음"
+      }
+    ],
+    "actions": [
+      {
+        "label": "개인 기록",
+        "target": "HISTORY"
+      }
+    ],
+    "figure": "52점",
+    "label": "모임 활동 지표 · 금융 신용등급 아님",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "PROFILE",
+    "group": "기록·설정",
+    "title": "프로필",
+    "headline": "모임에서 부를\n이름을 정해요",
+    "subtitle": "닉네임 변경 후 과거 화면도 현재 이름으로 보여요.",
+    "note": "사용자ID유지·예금주명별도·탈퇴후마지막닉네임표시.",
+    "rows": [
+      {
+        "title": "서비스 닉네임",
+        "detail": "산책왕",
+        "value": ""
+      },
+      {
+        "title": "소개",
+        "detail": "함께 걷는 시간을 좋아해요",
+        "value": ""
+      },
+      {
+        "title": "모임별 닉네임",
+        "detail": "모임 설정에서 변경",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "저장 흐름",
+        "target": "MY"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "SETTINGS",
+    "group": "기록·설정",
+    "title": "설정",
+    "headline": "내가 받을 푸시를\n선택해요",
+    "subtitle": "모든 푸시를 꺼도 앱 알림함에는 남아요.",
+    "note": "필수정산강제푸시없음·알림함과업무기록유지.",
+    "rows": [
+      {
+        "title": "정산·송금",
+        "detail": "푸시 수신 · 앱 알림함 유지",
+        "value": "켜짐"
+      },
+      {
+        "title": "환불·이의",
+        "detail": "푸시 수신 · 개별 표시",
+        "value": "켜짐"
+      },
+      {
+        "title": "소셜",
+        "detail": "유사 알림 묶음",
+        "value": "꺼짐"
+      },
+      {
+        "title": "계좌·계정",
+        "detail": "예금주 확인 / 로그아웃 / 계정 삭제",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "계좌 관리",
+        "target": "BANK"
+      },
+      {
+        "label": "계정 관리",
+        "target": "ACCOUNT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "toggles"
+  },
+  {
+    "id": "BANK",
+    "group": "기록·설정",
+    "title": "계좌 등록·확인",
+    "headline": "송금할 계좌를\n정확하게 확인해요",
+    "subtitle": "가입 SMS와 예금주 확인은 별도예요.",
+    "note": "실제외부API미연동·형식검증·실패재시도·비밀값서버만.",
+    "rows": [
+      {
+        "title": "은행",
+        "detail": "은행을 선택해주세요",
+        "value": ""
+      },
+      {
+        "title": "계좌번호",
+        "detail": "숫자만 입력해주세요",
+        "value": ""
+      },
+      {
+        "title": "예금주 확인",
+        "detail": "실제 공급자 연결 전 목업",
+        "value": "미연동"
+      }
+    ],
+    "actions": [
+      {
+        "label": "계정 설정",
+        "target": "ACCOUNT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "form"
+  },
+  {
+    "id": "ACCOUNT",
+    "group": "기록·설정",
+    "title": "계정 관리",
+    "headline": "계정을 지워도\n남은 책임은 확인해요",
+    "subtitle": "모임 탈퇴와 서비스 계정 삭제는 다른 일이에요.",
+    "note": "담당업무완료또는실제인계후삭제·계산마감만으론불가.",
+    "rows": [
+      {
+        "title": "로그인 방식",
+        "detail": "카카오 · 동일 번호 다른 소셜 가입 차단",
+        "value": ""
+      },
+      {
+        "title": "전화번호",
+        "detail": "SMS 인증 확인",
+        "value": "인증됨"
+      },
+      {
+        "title": "남은 담당 업무",
+        "detail": "환불·이의 또는 인계 확인 필요",
+        "value": "계정 삭제 대기"
+      }
+    ],
+    "actions": [
+      {
+        "label": "담당 업무",
+        "target": "TODO"
+      },
+      {
+        "label": "정산 인계",
+        "target": "HANDOVER"
+      },
+      {
+        "label": "로그인 화면",
+        "target": "LOGIN"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "NOTIFICATIONS",
+    "group": "알림·채팅",
+    "title": "알림함",
+    "headline": "놓친 일도\n다시 확인해요",
+    "subtitle": "푸시를 꺼도 이 목록에는 남아요.",
+    "note": "소셜묶음·정산개별·딥링크권한/만료폴백.",
+    "rows": [
+      {
+        "title": "회비 요청",
+        "detail": "1차 저녁 식사 · 잔여 20,000원",
+        "value": "정산"
+      },
+      {
+        "title": "환불 확인",
+        "detail": "실제 수령을 확인해주세요",
+        "value": "환불"
+      },
+      {
+        "title": "이의 처리 결과",
+        "detail": "정정 금액 5,000원",
+        "value": "이의"
+      },
+      {
+        "title": "구름 외 9명",
+        "detail": "내 산책 사진을 좋아해요",
+        "value": "소셜"
+      }
+    ],
+    "actions": [
+      {
+        "label": "정산 요청",
+        "target": "PAY"
+      },
+      {
+        "label": "알림 설정",
+        "target": "SETTINGS"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "list"
+  },
+  {
+    "id": "CHAT",
+    "group": "알림·채팅",
+    "title": "채팅",
+    "headline": "함께 나눈 대화를\n한곳에 모아요",
+    "subtitle": "개인·모임 상시·이벤트방을 최근 메시지순으로",
+    "note": "모임상시방누락없음·종류구분·권한있는방만.",
+    "rows": [
+      {
+        "title": "금요 저녁 모임",
+        "detail": "카페에서 만나요 · 방금",
+        "value": "이벤트"
+      },
+      {
+        "title": "금요 산책 모임",
+        "detail": "이번 주 산책길 안내 · 10분 전",
+        "value": "모임 상시"
+      },
+      {
+        "title": "구름",
+        "detail": "다음 모임도 함께해요 · 1시간 전",
+        "value": "개인"
+      }
+    ],
+    "actions": [
+      {
+        "label": "대화방",
+        "target": "CHAT_ROOM"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "chat"
+  },
+  {
+    "id": "CHAT_ROOM",
+    "group": "알림·채팅",
+    "title": "이벤트 채팅",
+    "headline": "금요 저녁 모임",
+    "subtitle": "이벤트와 연결된 대화방",
+    "note": "닉네임표시·정산권한과개인차단분리·기록보존.",
+    "rows": [
+      {
+        "title": "산책왕",
+        "detail": "입금 확인은 정산 화면에서 진행할게요.",
+        "value": "18:05"
+      },
+      {
+        "title": "구름",
+        "detail": "확인했어요. 조금 뒤에 만나요!",
+        "value": "18:06"
+      },
+      {
+        "title": "시스템",
+        "detail": "1차 회비 요청이 등록됐어요.",
+        "value": "18:07"
+      }
+    ],
+    "actions": [
+      {
+        "label": "연결 정산",
+        "target": "SETTLE"
+      },
+      {
+        "label": "채팅 목록",
+        "target": "CHAT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "chatroom"
+  },
+  {
+    "id": "FEED",
+    "group": "피드·안전",
+    "title": "피드",
+    "headline": "함께한 순간을\n나눠요",
+    "subtitle": "팔로우해도 비가입 모임 내부 글은 숨겨요.",
+    "note": "개인/모임글분리·공개번개허용정보·차단필터.",
+    "rows": [
+      {
+        "title": "구름의 산책 기록",
+        "detail": "개인 글 · 가을길을 걸었어요",
+        "value": "좋아요 12"
+      },
+      {
+        "title": "금요 저녁 모임",
+        "detail": "소속 모임 모집 카드 · 자동 생성",
+        "value": "참여"
+      },
+      {
+        "title": "가을 한강 번개",
+        "detail": "공개 번개 · 비부원 허용 정보만",
+        "value": "공개"
+      }
+    ],
+    "actions": [
+      {
+        "label": "게시글 상세",
+        "target": "POST"
+      },
+      {
+        "label": "글쓰기",
+        "target": "COMPOSE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "feed"
+  },
+  {
+    "id": "POST",
+    "group": "피드·안전",
+    "title": "게시글 상세",
+    "headline": "가을길을\n함께 걸었어요",
+    "subtitle": "구름 · 개인 글 · 1시간 전",
+    "note": "글권한·댓글·삭제/만료·신고대상유형분리.",
+    "rows": [
+      {
+        "title": "산책 기록",
+        "detail": "이번 주에도 같은 길에서 새로운 풍경을 만났어요.",
+        "value": ""
+      },
+      {
+        "title": "산책왕",
+        "detail": "다음에도 함께 걸어요!",
+        "value": "댓글"
+      },
+      {
+        "title": "게시글 신고",
+        "detail": "개인 글은 운영자에게 전달돼요",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "댓글·반응 보기",
+        "target": "FEED"
+      },
+      {
+        "label": "신고",
+        "target": "REPORT"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "feed"
+  },
+  {
+    "id": "COMPOSE",
+    "group": "피드·안전",
+    "title": "글쓰기",
+    "headline": "어디에\n이야기를 남길까요?",
+    "subtitle": "개인 글과 모임 글은 공개 범위가 달라요.",
+    "note": "모임글멤버십·공지권한·모집카드는이벤트자동생성.",
+    "rows": [
+      {
+        "title": "작성 대상",
+        "detail": "개인 글 / 금요 산책 모임",
+        "value": ""
+      },
+      {
+        "title": "내용",
+        "detail": "함께 나눌 이야기를 적어주세요",
+        "value": ""
+      },
+      {
+        "title": "공개 범위",
+        "detail": "개인 피드 / 모임 부원 전용",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "미리보기",
+        "target": "POST"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "REPORT",
+    "group": "피드·안전",
+    "title": "신고",
+    "headline": "문제가 있는 내용을\n알려주세요",
+    "subtitle": "정산 금액 이의는 정산 화면에서 제기해요.",
+    "note": "모임글관리자→운영자·개인/사람/관리자대상운영자직접.",
+    "rows": [
+      {
+        "title": "신고 대상",
+        "detail": "개인 게시글",
+        "value": "운영자 처리"
+      },
+      {
+        "title": "신고 사유",
+        "detail": "괴롭힘 / 사기 의심 / 부적절한 콘텐츠",
+        "value": ""
+      },
+      {
+        "title": "상세·증빙",
+        "detail": "신고 처리에 필요한 정보만 첨부",
+        "value": ""
+      }
+    ],
+    "actions": [
+      {
+        "label": "처리 큐 예시",
+        "target": "MODERATION"
+      },
+      {
+        "label": "정산 이의",
+        "target": "DISPUTE"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "community",
+    "kind": "form"
+  },
+  {
+    "id": "MODERATION",
+    "group": "운영",
+    "title": "신고 처리",
+    "headline": "신고 대상에 맞게\n담당자를 나눠요",
+    "subtitle": "모임 관리자 대상 신고는 운영자에게 바로",
+    "note": "관리자자기신고처리금지·처리근거·필요최소증빙.",
+    "rows": [
+      {
+        "title": "모임 글·댓글",
+        "detail": "해당 모임 관리자 1차 · 미해결 시 운영자",
+        "value": "1건"
+      },
+      {
+        "title": "개인 글·사용자",
+        "detail": "운영자 직접 처리",
+        "value": "2건"
+      },
+      {
+        "title": "모임장·관리자 대상",
+        "detail": "운영자에게 바로 전달",
+        "value": "1건"
+      }
+    ],
+    "actions": [
+      {
+        "label": "운영 대시보드",
+        "target": "OPS"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  },
+  {
+    "id": "OPS",
+    "group": "운영",
+    "title": "운영 대시보드",
+    "headline": "미해결 요청을\n근거와 함께 처리해요",
+    "subtitle": "운영자 최초 회신 목표 72시간",
+    "note": "증빙/소명·정정/인계요청·강제송금/허위입금확인불가.",
+    "rows": [
+      {
+        "title": "무응답 상향",
+        "detail": "요청 72시간·모임장 단계 확인",
+        "value": "2건"
+      },
+      {
+        "title": "개인/관리자 대상 신고",
+        "detail": "콘텐츠 조치·경고·필요한 이용 제한",
+        "value": "3건"
+      },
+      {
+        "title": "실제 돈의 인계",
+        "detail": "수령자 확인 전 완료 처리 불가",
+        "value": "확인 대기"
+      }
+    ],
+    "actions": [
+      {
+        "label": "이의 요청",
+        "target": "DISPUTE_REVIEW"
+      },
+      {
+        "label": "신고 큐",
+        "target": "MODERATION"
+      },
+      {
+        "label": "인계 흐름",
+        "target": "HANDOVER"
+      }
+    ],
+    "figure": "",
+    "label": "",
+    "surface": "money",
+    "kind": "list"
+  }
+]

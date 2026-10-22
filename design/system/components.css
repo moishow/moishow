@@ -1,3 +1,41 @@
+/* Current policy v1 screen layouts. Shared by every generated screen. */
+.prototype-page { margin:0; padding:var(--space-6); background:var(--surface-sunken); display:flex; justify-content:center; font-family:var(--font-sans); }
+.proto-screen { min-height:860px; padding-bottom:var(--tabbar-height); background:var(--surface-page); }
+.proto-status { display:flex; justify-content:space-between; padding:var(--space-4) var(--space-6) var(--space-1); font-size:var(--fs-micro); color:var(--text-muted); }
+.proto-status .num { font-weight:var(--weight-bold); color:var(--text-strong); }
+.proto-headline { padding-top:var(--space-6); }
+.proto-kicker { color:var(--color-primary); font:var(--text-caption-1); margin-bottom:var(--space-2); font-weight:var(--weight-bold); }
+.proto-description { margin-top:var(--space-3); color:var(--text-muted); font:var(--text-body-1); }
+.proto-hero { margin:var(--space-5); padding:var(--space-5); }
+.proto-figure { font:var(--text-display-lg); margin-top:var(--space-3); color:var(--white); }
+.proto-hero-caption { margin-top:var(--space-4); font-size:var(--fs-micro); line-height:var(--lh-normal); opacity:.85; }
+.proto-list { margin-top:var(--space-5); padding:0 var(--space-4); box-shadow:none; }
+.proto-row { display:flex; gap:var(--space-3); align-items:center; justify-content:space-between; padding:var(--space-4) 0; border-bottom:1px solid var(--border-subtle); }
+.proto-row:last-child { border-bottom:0; }
+.proto-row-copy { flex:1; min-width:0; }
+.proto-row h2 { font:var(--text-body-strong); color:var(--text-strong); }
+.proto-row p { margin-top:var(--space-1); font:var(--text-caption-1); color:var(--text-muted); }
+.proto-value { max-width:104px; text-align:right; color:var(--color-primary); font-size:var(--fs-caption); font-weight:var(--weight-bold); flex-shrink:0; }
+.proto-actions { display:flex; flex-direction:column; gap:var(--space-2); margin:var(--space-5); }
+.proto-limit { color:var(--text-muted); text-align:center; margin:var(--space-5); padding-bottom:var(--space-3); font-size:var(--fs-micro); }
+.proto-calendar { margin:var(--space-5); padding:var(--space-4); background:var(--surface-sunken); border-radius:var(--radius-lg); }
+.proto-section-label { font-size:var(--fs-caption); font-weight:var(--weight-bold); color:var(--text-strong); }
+.proto-days { display:flex; justify-content:space-between; gap:var(--space-1); margin:var(--space-3) 0; }
+.proto-day { border:0; border-radius:var(--radius-sm); padding:var(--space-2) var(--space-1); font-size:var(--fs-caption); color:var(--text-muted); background:transparent; }
+.proto-day.is-selected { background:var(--color-primary); color:var(--white); }
+.proto-calendar-result { font:var(--text-caption-1); color:var(--text-body); }
+.proto-field { display:flex; flex-direction:column; gap:var(--space-2); padding:var(--space-4) 0; color:var(--text-strong); font-size:var(--fs-body); }
+.proto-field input { width:100%; box-sizing:border-box; padding:var(--space-3); border:1px solid var(--border-default); border-radius:var(--radius-md); font:var(--text-body-1); background:var(--surface-page); }
+.proto-mascot { display:flex; justify-content:center; margin-top:var(--space-5); }
+.proto-mascot img { width:96px; height:96px; object-fit:contain; }
+.proto-toggle { width:48px; height:28px; padding:var(--space-1); border:0; border-radius:var(--radius-pill); background:var(--border-strong); flex-shrink:0; }
+.proto-toggle span { display:block; width:20px; height:20px; border-radius:var(--radius-full); background:var(--white); transition:transform var(--dur-base); }
+.proto-toggle.is-on { background:var(--color-primary); }
+.proto-toggle.is-on span { transform:translateX(20px); }
+.proto-message { background:var(--surface-sunken); border-radius:var(--radius-lg); padding:var(--space-4); margin:var(--space-3) 0; }
+.proto-screen a:focus-visible,.proto-screen button:focus-visible,.proto-screen input:focus-visible { outline:2px solid var(--color-primary); outline-offset:var(--space-1); }
+@media(max-width:460px){.prototype-page{padding:0}.prototype-page .phone{width:100%;border:0;border-radius:0;box-shadow:none}.proto-screen{min-height:100dvh}}
+
 /* ============================================================
    모이쇼 디자인시스템 v2 — Components
    재사용 컴포넌트 클래스. tokens.css 위에서 동작한다.
