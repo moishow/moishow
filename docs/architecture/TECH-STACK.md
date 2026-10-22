@@ -27,7 +27,7 @@
 
 ## 이슈 #18 첫 구현
 
-`apps/api/`: 공식 Spring Initializr 기반 Java25/Boot4.1.1, Gradle Wrapper, 순수 정산 코어·정책 테스트·개발용 미리보기 API·보안 기본값. 로컬 JDK25를 사용한다. DB/JPA/Flyway/실제 OAuth·SMS·채팅·Quartz·S3는 이슈 #12~#16에서 단계적으로 연결한다. 스택에 기재된 모든 기능을 현재 구현했다고 주장하지 않는다.
+`apps/api/`: 공식 Spring Initializr 기반 Java25/Boot4.1.1, Gradle Wrapper, 순수 정산 코어·정책 테스트·개발용 미리보기 API·보안 기본값. 로컬 JDK25를 사용한다. 이슈12에서 PostgreSQL/JPA/Flyway, db 프로필의 계정·모임·참가 API와 외부 소셜/SMS 어댑터를 구현했다. 실제 공급자 자격·수신과 채팅·Quartz·S3는 후속 검증/구현이다. 스택에 기재된 모든 기능을 현재 구현했다고 주장하지 않는다.
 
 기본 프로필은 health 외 모든 요청 거부. `dev` 프로필에서만 loopback에 입력 숫자를 계산하는 미리보기 API를 제공하며 실제 이체/저장/사용자 데이터에 접근하지 않는다. 테스트는 이 경계와 정상/비정상 금액 응답을 검사한다.
 
@@ -39,3 +39,7 @@
 - [Quartz JDBC 지원](https://docs.spring.io/spring-boot/reference/io/quartz.html), [Flutter STOMP client](https://pub.dev/packages/stomp_dart_client).
 
 - [Gradle 호환성](https://docs.gradle.org/current/userguide/compatibility.html), [Boot Gradle 플러그인](https://docs.spring.io/spring-boot/gradle-plugin/index.html): Java25 실행/도구체인 지원 조합으로 Gradle9.8.2를 고정. 공식 Initializr wrapper 사용, 배포 SHA-256 검증.
+
+## 이슈12 영속 기반
+
+[API 계약](../implementation/IDENTITY-API.md)과 [실행 계획](../implementation/IDENTITY-DB-PLAN.md). PostgreSQL17/Flyway V1·Hibernate validate, db 프로필만 영속 기능 활성화. 권한은 매 요청의 DB 세션/관계에서 검사한다. 테스트는 실제 PostgreSQL Testcontainers이며 H2 대체·Docker 없을 때 자동 생략을 사용하지 않는다. Compose는 로컬 loopback 전용이다.

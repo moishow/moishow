@@ -13,3 +13,5 @@
 | 6 | [#16 정책 v1 화면을 모바일 앱과 실연동으로 구현](https://github.com/moishow/moishow/issues/16) | `issue/16-mobile` |
 
 서버 스택은 Spring Boot로 확정했다. #11/PR #17의 JavaScript는 참고 예제로 보존하고, 실제 서버 시작은 #18을 기준으로 한다. #12~#16의 서버 구현도 Java/JPA/Spring Security/STOMP/Quartz 기준이다.
+
+PR19는 develop71251b3에 병합됐다. 현재12는 [DB·계정·모임·참가 계약](IDENTITY-API.md), [진행 계획](IDENTITY-DB-PLAN.md)을 기준으로 한다.
