@@ -1,11 +1,20 @@
 """Build current documentation, screen wrappers and flow board from reviewed sources."""
 from pathlib import Path
 import json
+import sys
 from html import escape
 
 ROOT = Path(__file__).resolve().parents[1]
 
 def write(path, content):
+    # Refresh reviewed screens without overwriting newer implementation/stack prose.
+    if '--screen-refresh' in sys.argv and not (
+        path.startswith('design/system/screen_v1/') or path in {
+            'docs/screens.md', 'docs/wireframe.html',
+            'docs/scenario/domains/회원.md', 'docs/scenario/domains/모임.md'
+        }
+    ):
+        return
     target = ROOT / path
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(content.strip() + '\n', encoding='utf-8')
@@ -48,7 +57,7 @@ domain_docs = {
 정산/채팅은 닉네임, 송금에 필요한 예금주명은 별도. 변경 후 과거 화면도 현재 닉네임으로 표시하되 원래 사용자 ID·행위/금액은 보존한다. 탈퇴 후 마지막 닉네임+탈퇴한 멤버. 레벨은 50점 시작·0~100점, 같은 모임/이벤트 관계자만 열람. 납부/주최 이력, 시각·가점·보류는 정책 P12 그대로 적용한다.
 
 ## 채팅·차단·신고
-개인 대화·모임 상시·이벤트방을 종류 구분해 최근 메시지순으로 통합한다. 개인 채팅의 모르는 상대 첫 메시지는 요청함을 사용한다. 차단은 피드/개인 채팅에 적용하고 정산 권한은 유지한다. 개인 글/사용자 신고는 운영자 처리. 모임장·관리자가 신고 대상인 건도 바로 운영자에게 보낸다.
+개인 대화·임의 다인원 그룹 DM·모임 상시·이벤트방을 종류 구분해 최근 메시지순으로 통합한다. 그룹은 초대 수락 후 대화에 참여하고 나가면 접근이 끝난다. 생성자에게 별도 소유권이나 금융 권한을 주지 않는다. 개인 채팅의 모르는 상대 첫 메시지는 요청함을 사용한다. 차단은 피드/개인 채팅에 적용하고 정산 권한은 유지한다. 개인 글/사용자 신고는 운영자 처리. 모임장·관리자가 신고 대상인 건도 바로 운영자에게 보낸다.
 
 ## 설정·탈퇴
 푸시는 모든 종류를 끌 수 있지만 인앱 알림함은 유지한다. 일반 모임 탈퇴와 서비스 계정 삭제를 구분한다. 주최자 계정 삭제는 담당 업무 완료 또는 수락한 인수자의 잔여금 실제 확인 후 허용한다. 개인의 미납만으로 모든 기록을 삭제하거나 주최자 의무를 없애지 않는다.
@@ -80,7 +89,7 @@ MY/HISTORY/LEVEL/PROFILE/SETTINGS/BANK/CHAT/REPORT/ACCOUNT 화면. 닉네임을 
 종료 후 72시간 최초 등록. 미납/이의가 남아도 계산 마감 가능, 업무 기록과 요청 유지. 원본 보존·정정 기록 추가, 납부액 대비 순차액 재계산. 이의는 납부와 병행하며 필요 시 모임장→운영자로 상향한다. 실제 처리 담당자만 분쟁 증빙을 열람한다.
 
 ## 인계·해산
-모임 탈퇴 후 주최 책임 유지. 인수자 수락→내역/금액→외부 송금→실입금 확인→권한 이전, 0원은 내역/0원 확인. 계정 삭제는 직접 업무 완료 또는 인계 완료 후 가능. 적립금 계좌 담당은 모임장/관리자 중 1명이며 사용 권한은 모임장/관리자만. 실제 입출금 확인 후 잔액 반영한다. 해산 잔액은 모임장 귀속 정리·확인 후 0원으로 만든다. 담당자 유지·계산 마감 시 미납/환불/이의가 남아도 해산 가능, 기록과 의무는 유지한다.
+모임 탈퇴 후 주최 책임 유지. 인수자 수락→내역/금액→외부 송금→실입금 확인→권한 이전, 0원은 내역/0원 확인. 기존 주최자에게 돌려줄 선지출 의무도 인계한다. 지출은 개인 자금/모인 돈·실제 지급자를 구분하고 자기 부담·외부 납부·실제 반환을 중복 계산하지 않는다. 보관금에서 본인 선지출을 회수할 때는 명시적 비현금 회수 기록을 남긴다. 송금 뒤 명세가 바뀌어도 실수령 사실은 보존하며 재수락 전 권한은 옮기지 않는다. 계정 삭제는 직접 업무 완료 또는 인계 완료 후 가능. 적립금 계좌 담당은 모임장/관리자 중 1명이며 사용 권한은 모임장/관리자만. 실제 입출금 확인 후 잔액 반영한다. 해산 잔액은 모임장 귀속 정리·확인 후 0원으로 만든다. 담당자 유지·계산 마감 시 미납/환불/이의가 남아도 해산 가능, 기록과 의무는 유지한다.
 
 ## 인수 기준
 JOIN/EVENT/ROUND/JOIN_LATE/PAY/COLLECT/EXPENSE/SETTLE/REFUND/DISPUTE/CORRECTION/HANDOVER/RESERVE/DISSOLVE. 모든 금액은 원화 정수, 참가자 분담+비용 수령+주최 부담과 지출/환불이 보존되는 예제로 검증한다. 모임장 역할만으로 정산 인수를 자동 완료하지 않는다.''',
@@ -232,7 +241,9 @@ flows = [
  ('F07 실제 인계와 계정 종료', ['COLLECT','HANDOVER','ACCOUNT']),
  ('F08 적립금과 해산', ['RESERVE_ADD','RESERVE','RESERVE_USE','DISSOLVE']),
  ('F09 소셜과 안전', ['FEED','POST','REPORT','MODERATION','OPS']),
- ('F10 개인 기록과 알림', ['HOME','MY','HISTORY','LEVEL','SETTINGS','NOTIFICATIONS','CHAT'])
+ ('F10 개인 기록과 알림', ['HOME','MY','HISTORY','LEVEL','SETTINGS','NOTIFICATIONS','CHAT']),
+ ('F11 그룹 대화', ['CHAT','GROUP_CREATE','GROUP_INVITE','GROUP_MEMBERS']),
+ ('F12 선지출과 변경 인계', ['EXPENSE','ADVANCE','SELF_RECOVERY','HANDOVER','HANDOVER_REVIEW'])
 ]
 sections = '<section><h2>시나리오별 화면 전환</h2>'
 for name, route in flows:

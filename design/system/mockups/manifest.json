@@ -210,8 +210,8 @@
     "screen": "EXPENSE",
     "file": "EXPENSE.jpg",
     "width": 1264,
-    "height": 809,
-    "sha256": "d9594a3750aded2bbe05e7cfaaa1ce6f28d10a96e25407294b182b2682231adb",
+    "height": 886,
+    "sha256": "df71a98b36f326b8fc81387e3305f21260e742a6cd7e36644aa7beb1821d4f21",
     "capture": "browser-full-page",
     "policy": "1.0"
   },
@@ -273,8 +273,8 @@
     "screen": "HANDOVER",
     "file": "HANDOVER.jpg",
     "width": 1264,
-    "height": 1039,
-    "sha256": "4a31956c711cb98c888c1ca226c07c107a968a12deffa641124be62685ad36b1",
+    "height": 1161,
+    "sha256": "9ae594a80c5c6ce1da1bda222981a04af086d6372fddc1f38f0b3f98232e0200",
     "capture": "browser-full-page",
     "policy": "1.0"
   },
@@ -390,8 +390,8 @@
     "screen": "CHAT",
     "file": "CHAT.jpg",
     "width": 1264,
-    "height": 809,
-    "sha256": "080693fb323787359b2237b5698a12934cd06baa226ee73656c025bec573b76c",
+    "height": 934,
+    "sha256": "939828c480baca406e9ebb1c18394badff3a178463b5bf4fcf29ba65ffad55fd",
     "capture": "browser-full-page",
     "policy": "1.0"
   },
@@ -455,6 +455,60 @@
     "width": 1264,
     "height": 861,
     "sha256": "25c3c4a0f7ab17ec799dc448e9778d5a7014ba8268976430ee259cda8114dcbe",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "GROUP_CREATE",
+    "file": "GROUP_CREATE.jpg",
+    "width": 1264,
+    "height": 846,
+    "sha256": "fbf5b66619a46039ec1e5cbd0d5d6b2f131427921d27115aa7fc3c8ba1075482",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "GROUP_INVITE",
+    "file": "GROUP_INVITE.jpg",
+    "width": 1264,
+    "height": 812,
+    "sha256": "a8678bd370ed39d564339aa38fc3f56ba1bdad11f04a718178a1644893e7da77",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "GROUP_MEMBERS",
+    "file": "GROUP_MEMBERS.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "a4292155069fffa44fed7113dde523e446b29617f4f310c11608ef55c5e0fac0",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "ADVANCE",
+    "file": "ADVANCE.jpg",
+    "width": 1264,
+    "height": 1087,
+    "sha256": "0f1567212cbd88d4a9c032f74de8fccee9cb33f3af63568c983905ae4f2edc3d",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "SELF_RECOVERY",
+    "file": "SELF_RECOVERY.jpg",
+    "width": 1264,
+    "height": 1039,
+    "sha256": "f491347a232540c9a74183e107e4b395311dc0b09c3daf9ed00bca5504cfe7ec",
+    "capture": "browser-full-page",
+    "policy": "1.0"
+  },
+  {
+    "screen": "HANDOVER_REVIEW",
+    "file": "HANDOVER_REVIEW.jpg",
+    "width": 1264,
+    "height": 886,
+    "sha256": "31ba4354818c7260773f42581d3caaeeacb241fa69b3eb0d3f4bf9ceeab13f9d",
     "capture": "browser-full-page",
     "policy": "1.0"
   }
