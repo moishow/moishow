@@ -51,7 +51,13 @@ class ClubService {
    .map(m->Map.of("userId",m.userId,"nickname",m.nickname,"status",m.status,"memo",m.requestMemo,"expelledHistory",m.expelledHistory,"version",club.version)).toList();
  }
  void decision(Actor actor,UUID club,UUID round,UUID user,String kind,String status,String memo,String reason){var d=new IdentityFollowupModels.Decision();d.clubId=club;d.roundId=round;d.userId=user;d.kind=kind;d.status=status;d.memo=memo;d.reason=reason;d.createdAt=Instant.now();d.createdBy=actor.userId();db.save(d);}
- Map<String,Object> decisionView(IdentityFollowupModels.Decision d){return Map.of("id",d.id,"userId",d.userId,"status",d.status,"memo",d.memo,"reason",d.reason,"createdAt",d.createdAt,"createdBy",d.createdBy);}
+ Map<String,Object> decisionView(IdentityFollowupModels.Decision d){
+  var view=new LinkedHashMap<String,Object>(Map.of("id",d.id,"userId",d.userId,"status",d.status,"memo",d.memo,"reason",d.reason,"createdAt",d.createdAt,"createdBy",d.createdBy));
+  var name=AdvanceNames.view(db,d.clubId,d.userId);var actor=AdvanceNames.view(db,d.clubId,d.createdBy);
+  var applicant=db.member(d.clubId,d.userId);var author=db.member(d.clubId,d.createdBy);
+  view.put("nickname",applicant!=null&&applicant.nickname!=null&&Set.of("PENDING","REJECTED").contains(applicant.status)?applicant.nickname:name.get("nickname"));view.put("departed",name.get("departed"));
+  view.put("actorNickname",author!=null&&author.nickname!=null&&Set.of("PENDING","REJECTED").contains(author.status)?author.nickname:actor.get("nickname"));view.put("actorDeparted",actor.get("departed"));return view;
+ }
  @Transactional(readOnly=true) public Object requestHistory(Actor actor,UUID clubId){db.find(Club.class,clubId);boolean manager=db.admin(clubId,actor.userId());return db.list(IdentityFollowupModels.Decision.class,"from RequestDecision where clubId=?1 and kind='MEMBERSHIP' order by createdAt,id",clubId).stream().filter(d->manager||d.userId.equals(actor.userId())).map(this::decisionView).toList();}
  private Map<String,Object> clubView(Club c,Membership m){var v=new LinkedHashMap<String,Object>();v.put("id",c.id);v.put("name",c.name);v.put("description",c.description);v.put("region",c.region);v.put("category",c.category);v.put("imageFileId",c.imageFileId);v.put("activeMemberCount",db.list(Membership.class,"from Membership where clubId=?1 and status='ACTIVE' and blacklisted=false",c.id).size());v.put("joinMode",c.joinMode);v.put("status",c.status);v.put("version",c.version);v.put("membershipStatus",m==null?"NONE":m.status);v.put("role",m==null?"NONE":m.role);return v;}
 }

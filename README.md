@@ -27,7 +27,7 @@ haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 �
 
 ## 구현과 검증 상태
 
-서버는 Java25/Gradle/Boot4.1.1, 실제 PostgreSQL17/Flyway V1~V10을 사용한다. 2026-10-22 전체 `build`에서 테스트158개가 실패·오류·생략 없이 통과했다. 임의 기본값/권한/예외는 [요구 대조 원장](docs/implementation/REQUIREMENTS-AUDIT.md)에 기록하고 원본 정책과 함께 검토한다.
+서버는 Java25/Gradle/Boot4.1.1, 실제 PostgreSQL17/Flyway V1~V11을 사용한다. 2026-10-22 전체 `build`에서 테스트168개가 실패·오류·생략 없이 통과했다. 임의 기본값/권한/예외는 [요구 대조 원장](docs/implementation/REQUIREMENTS-AUDIT.md)에 기록하고 원본 정책과 함께 검토한다.
 
 - [납부·지출·정정·이의](docs/implementation/FINANCE-API.md): 원본 보존, 개인 지출 출처·선지출 회수, 실제 입금 시각, 비참가 주최자 부담.
 - [인계·적립·해산](docs/implementation/RESERVE-API.md): 실제 수령 뒤 책임 이전, 반환 의무 인계, 출처 부족·기존 실거래 보존.

@@ -122,13 +122,18 @@ class ClubRequestApiTest {
   var pending=post("/clubs/"+cid+"/join",applicant,Map.of("nickname","신청자","version",version(c),"memo","가입 메모"));assertEquals(200,pending.status);
   assertFalse(get("/clubs/"+cid,other).body.toString().contains("가입 메모"));
   assertEquals("가입 메모",get("/clubs/"+cid+"/join-requests",owner).body.get(0).path("memo").asText());
+  var pendingHistory=get("/clubs/"+cid+"/join-history",applicant);assertEquals("신청자",pendingHistory.body.get(0).path("nickname").asText());assertEquals("신청자",pendingHistory.body.get(0).path("actorNickname").asText());assertTrue(pendingHistory.body.get(0).has("departed"));assertFalse(pendingHistory.body.get(0).path("departed").asBoolean());
   assertEquals(403,post("/clubs/"+cid+"/members/"+uid+"/reject",other,Map.of("version",version(pending),"reason","사유")).status);
   String rejectKey=UUID.randomUUID().toString();var rejectBody=Map.of("version",version(pending),"reason","가입 거절 사유");var rejected=call("POST","/clubs/"+cid+"/members/"+uid+"/reject",owner,rejectBody,rejectKey);assertEquals(rejected.body,call("POST","/clubs/"+cid+"/members/"+uid+"/reject",owner,rejectBody,rejectKey).body);assertEquals(200,rejected.status,rejected.body.toString());assertEquals("REJECTED",text(rejected,"membershipStatus"));
-  var history=get("/clubs/"+cid+"/join-history",applicant);assertEquals(2,history.body.size());assertTrue(history.body.toString().contains("가입 거절 사유"));assertEquals(0,get("/clubs/"+cid+"/join-history",other).body.size());
+  var history=get("/clubs/"+cid+"/join-history",applicant);assertEquals(2,history.body.size());assertTrue(history.body.toString().contains("가입 거절 사유"));assertEquals("신청자",history.body.get(1).path("nickname").asText());assertEquals("requestOwner",history.body.get(1).path("actorNickname").asText());assertTrue(history.body.get(1).has("actorDeparted"));assertFalse(history.body.get(1).path("actorDeparted").asBoolean());assertEquals(0,get("/clubs/"+cid+"/join-history",other).body.size());
   var again=join(applicant,cid,version(rejected),null);assertEquals("PENDING",text(again,"membershipStatus"));
   var approved=post("/clubs/"+cid+"/members/"+uid+"/approve",owner,Map.of("version",version(again)));assertEquals(200,approved.status);
   assertEquals(409,post("/clubs/"+cid+"/members/"+uid+"/reject",owner,Map.of("version",version(approved),"reason","확정자 제외 금지")).status);
   assertEquals(2,get("/clubs/"+cid,other).body.path("activeMemberCount").asInt());
+  var renamed=post("/clubs/"+cid+"/nickname",applicant,Map.of("version",version(get("/clubs/"+cid,applicant)),"nickname","현재 신청 닉네임"));assertEquals(200,renamed.status,renamed.body.toString());
+  assertEquals(200,post("/clubs/"+cid+"/leave",applicant,Map.of("version",version(renamed))).status);
+  var departed=get("/clubs/"+cid+"/join-history",applicant);assertEquals("현재 신청 닉네임",departed.body.get(1).path("nickname").asText());assertTrue(departed.body.get(1).path("departed").asBoolean());assertEquals("현재 신청 닉네임",departed.body.get(0).path("actorNickname").asText());assertTrue(departed.body.get(0).path("actorDeparted").asBoolean());
+  var unrelated=get("/clubs/"+cid+"/join-history",other);assertEquals(0,unrelated.body.size());assertFalse(unrelated.body.toString().contains("가입 메모"));
  }
  @Test void lateRequestRejectionDoesNotCreateFeeOrScoreAndCannotExcludeConfirmedParticipant()throws Exception {
   String owner=user("lateOwner"),applicant=user("lateApplicant"),other=user("lateOther");var c=club(owner,"IMMEDIATE");var e=event(owner,text(c,"id"),version(c),"LIGHTNING",true);String eid=text(e,"id");var r=round(owner,eid,version(e),2,true);String rid=text(r,"id");
@@ -138,7 +143,7 @@ class ClubRequestApiTest {
   assertEquals(403,post("/rounds/"+rid+"/participations/"+text(pending,"id")+"/reject",other,Map.of("version",version(pending),"reason","정산인수는 운영권 아님")).status);
   assertFalse(get("/events/"+eid+"/participations",other).body.toString().contains("일곱시 도착"));
   var rejected=post("/rounds/"+rid+"/participations/"+text(pending,"id")+"/reject",owner,Map.of("version",version(pending),"reason","장소 마감"));assertEquals(200,rejected.status,rejected.body.toString());assertEquals("REJECTED",text(rejected,"status"));
-  assertTrue(get("/rounds/"+rid+"/request-history",applicant).body.toString().contains("일곱시 도착"));assertEquals(0,get("/rounds/"+rid+"/request-history",other).body.size());
+  var lateHistory=get("/rounds/"+rid+"/request-history",applicant);assertTrue(lateHistory.body.toString().contains("일곱시 도착"));assertEquals("lateApplicant",lateHistory.body.get(1).path("nickname").asText());assertEquals("lateOwner",lateHistory.body.get(1).path("actorNickname").asText());assertTrue(lateHistory.body.get(1).has("departed"));assertFalse(lateHistory.body.get(1).path("departed").asBoolean());assertEquals(0,get("/rounds/"+rid+"/request-history",other).body.size());
   var sql=context.getBean(org.springframework.jdbc.core.JdbcTemplate.class);UUID pid=UUID.fromString(text(pending,"id"));assertEquals(false,sql.queryForObject("select ever_confirmed from participation where id=?",Boolean.class,pid));
   assertEquals(0,sql.queryForObject("select count(*) from payment_request where user_id=?",Integer.class,UUID.fromString(text(get("/me",applicant),"id"))));
   // Existing event join uniqueness remains: rejection is not a blacklist and does not silently reopen a participation.

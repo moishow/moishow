@@ -72,4 +72,4 @@ STOMP `/api/v1/chat/socket`: CONNECT native `Authorization: Bearer <session>`, `
 - `.superpowers/checks/audited-integration-01/`: Community17 중16 GREEN/신규SOCIAL1 RED; Finance17·Platform17·FK동시성1 모두 GREEN, File4 중3 GREEN/원본사진스냅샷1 RED. 클래스별 결과를 보존한다.
 - `.superpowers/checks/community-final-02/`: **Community17 모두 GREEN, 실패0·오류0·skip0**, 40초. 실제 PG17·HTTP·WebSocket/STOMP, 보호된 그룹 이력/차단/나가기·닉네임·피드/공지/편집/댓글/좋아요·알림 신뢰 경로·날짜/페이지·금융접근 분리 검증. 같은 폴더 XML은 이후 Gradle 실행으로 덮어쓰지 않도록 아카이브했다.
 
-추가 후속 범위: `/me/contacts`는 같은 활성 모임·공유 확정 이벤트·활성 대화·팔로우 관계의 이미 허용된 식별자만 검색/페이지/차단 필터하여 제공하기로 root가 확정했다. 전역 사용자 디렉터리는 만들지 않는다. 이 새 picker API는 다음 담당 작업이며 현재 구현 목록에 포함하지 않는다. 모바일은 기존 members API로 허용된 사람을 선택할 수 있다. 선지출/담당 인계의 새 자금 책임 모델이 확정되면 홈은 해당 모듈의 canonical 할 일을 연결하며 자체 지급 산식을 추가하지 않는다.
+현재 `/me/contacts`는 같은 활성 모임·공유 확정 이벤트(주최자 포함)·상호 팔로우 관계의 이미 허용된 현재 활성 사용자 식별자만 검색/페이지/차단 필터하여 제공한다. 전역 사용자 디렉터리나 단순 대화 이력만으로 디렉터리 접근을 만들지 않는다. 모바일의 이름 선택기는 이 API와 정확 이벤트/모임 후보를 사용한다. 홈의 선지출/담당 인계 업무는 해당 모듈의 canonical 할 일을 연결하며 자체 지급 산식을 추가하지 않는다.

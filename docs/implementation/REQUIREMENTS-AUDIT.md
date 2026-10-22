@@ -372,3 +372,30 @@ GitHub issue16을 현재57개화면/12개와이어플로우/JPEG 및 Java25·Gra
 
 
 최신 통합 결과(2026-10-22): full-mobile-contract-server-01 Java25 Gradle build/JAR 성공7분46초, 최신 V11/정확 names 수정과 모든 회귀168개 실패0·오류0·생략0. Finance37/Reserve23/ClubRequest5/Community19/Origin1을 포함한다. 서버 금융·identity 및 운영웹4변경/names1줄의 독립 closure 검토에서 남은 구체 P1/P2가 없었다. 최신 운영웹 strict TypeScript/Vite build 및 재인수 브라우저 GREEN도 별도 확인했다. 앱0원/푸시 fix·57흐름·최신APK/실단말/공급자 수락은 별도 진행이며 서버168GREEN을 앱 완료로 확대하지 않는다.
+
+
+앱 PR 검증 계획과 기존 CI를 대조하니 서버/Node참고/운영웹만 있어 Flutter를 검증하지 않았다. 최신 로컬과 같은 Flutter3.47.7 및 Android Java21로 analyze/test/web/debugAPK CI 작업을 추가한다. 서버 Java25는 별도 job에서 유지한다. Flutter 설치 action의 실제 action.yaml과 v2의 현재 commit1a449444c387b1966244ae4d4f8c696479add0b2를 공식 upstream GitHub API로 확인하고 commit에 고정했다. 이 작업은 CI설정이며 원격 실행 결과 확인 전 성공으로 주장하지 않는다. iOS/실공급자/서명배포 수락을 대체하지 않는다.
+
+
+후속 앱 표기 계약 대조: join/late 이력은 정확 본인/관리자/원주최자에게만 반환하지만 DTO에 userId/createdBy만 있어 PENDING/REJECTED/탈퇴 신청자의 이름을 ACTIVE 부원 목록으로 찾을 수 없었다. P10 닉네임 표시를 위해 같은 제한된 이력에 nickname/departed·actorNickname/actorDeparted를 추가한다. 신청자의 명시 모임 신청 닉네임과 기존 현재/마지막 닉네임 관계를 재사용하며 이력 본문·ID·접근필터는 보존한다. 예금주명·전역 디렉터리나 새 공개범위를 추가하지 않는다. HTTP 회귀 RED 후 최소 DTO 변경/선택 GREEN과 최종 CI 전체 검증으로 확인한다.
+
+RevisionComparison은 제공된 snapshot/afterSnapshot의 사용자 union과 정확 필드쌍만 읽어 비교한다. 원본/정정후 없는 사용자 기록은 기록없음, after자료없음은 명시하고 현재 원장으로 가짜 복원하지 않는다. 누락/잘못된 금액은 확인필요로 표시하며0원을 만들지 않는다. net은 선지출반영 순차액, refund는 일반환불로 구별하며 새 정산/델타를 계산하지 않는다. 별도 기간/필터·서버쓰기 없이 기존 원본 dialog에 통합한다.
+
+
+마지막 표시 DTO 검증: club-history-names-red-01에서 신청닉/late서비스닉 실제누락2개 RED 후 ClubService.decisionView만4표시필드 보강, club-history-names-green-02 실제PG ClubRequest5개 실패0·오류0·생략0/Gradle성공1분44초. 기존 전체168개는 그 직전 DTO이며 최신 표시 변경은 이 선택5개+최종 원격CI 전체로 구분 검증한다. DB/개인정보필터/원본결정 이력은 변경하지 않았다.
+
+현재 문서 감사에서 남아 있던 '앱미생성/금액원장없음/contacts다음작업/승계미구현/종료후합류무조건거부'는 실제 현재계약으로 정정했다. 과거 PR20의50개/초기51화면/Maven32개 기록은 날짜 있는 과거이력으로 보존한다. FILES-API에는 실제 PAYMENT scope와 명시 대표사진 정확연결 staged 예외를 반영했다. 미배포/실공급자·S3/실기기 한계는 계속 별도다.
+
+
+LEVEL 진입 대조: 서버는 같은 모임/확정 이벤트 관계(탈퇴·공개비부원 포함)의 레벨 조회를 허용하지만 앱은 ACTIVE 모임 목록의 본인 진입만 제공해 기존 관계자가 기능에 도달하지 못했다. 새로운 공개프로필/공유링크/전역검색 대신 기존 모임 멤버행의 해당 멤버 레벨 및 기존 이벤트/정산의 본인 활동레벨 진입으로 최소 보완한다. 이미 반환된 사용자/모임 ID만 사용하며 일반 미확정 구경꾼에게 접근권을 만들지 않는다. 서버 LEVEL_RELATION_REQUIRED는 그대로 적용하고 관계 회수/403을 안내한다. 자체 점수 계산/개인 상세 납부·분쟁 증빙 공개는 추가하지 않는다.
+
+
+최종 실제 GUI 인수에서 두 표시/접근성 누락을 추가 재현했다. NavigationBar 중앙+는 tooltip이 Semantics에서 제외되고 label이비어 스크린리더에 무명이었다. Semantics 이름0개 RED 후 아이콘의 명시 '정모·번개 만들기' label로 외형/동작을 유지하며 수정했다. 일반환불 SENT→수령CONFIRMED 실제 TEST API 전이는 성공했지만 참가상태 공통라벨 '참여 확정'을 잘못 재사용했다. 금융맥락 전용 '수령 확인 완료'/'송금 기록·수령 확인 대기'를 분리하며 참가 상태 전역라벨·금액·전이는 변경하지 않는다. 새 정책이 아닌 기존 완료 단계/접근성 의미 일치이며 회귀와 최종 빌드로 검증한다.
+
+운영웹 실제 POST QA의403은 test-only MobileScenarioHost HTTP CORS가8766만 허용한 설정 문제였다. 같은 /reports OPTIONS가 Origin8766→200,5173→403 Invalid CORS request로 원인을 확인했다. 실제 제품권한/생산CORS를 우회하지 않고 테스트 환경에 운영웹의 정확 loopback5173도 추가하여 실제 PG claim/progress 재검증한다.
+
+
+실제83 GUI에서 피드 탭이 /explore의 '모임탐색' 헤더·이름/지역/분류 폼을 먼저 표시하고 개인 Feed를 아래에 혼합한 것을 확인했다. catalog의 FEED(소셜 글/모집카드·POST/COMPOSE)와 EXPLORE(모임검색·소개)는 별도 원안이다. 새 기능을 만들지 않고 기존 Feed를 /feed의 주화면으로 재사용하고 모임찾기에서 기존 /explore로 이동하게 최소 라우트/위계를 정렬한다. 가입 전 내부 콘텐츠 필터와 서버 API는 그대로이며 피드 탭 실제 콘텐츠 회귀로 확인한다.
+
+
+커밋 인수: Flutter 최신86개/분석 GREEN 후 코드 동결했다. upstream Pretendard/PDF.js의 원문 라이선스에는 배포본 공백이 포함돼 있어 내용을 수정하지 않고 해당3개 라이선스/OFL만 whitespace 검증에서 제외한다. 소유 코드/일반 문서는 계속 diff --check로 검사하고 생성된 iOS project 끝의 중복 빈줄은 정리한다. 라이선스 문구·해시 검증된 vendor 원본을 숨기거나 실행 코드를 검사 제외하지 않는다.
