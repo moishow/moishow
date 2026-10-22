@@ -267,6 +267,11 @@ node scripts/check-handoff.mjs
 ## 브랜치
 haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 반영했다. 신규 dev 대신 기존 develop을 사용한다. dev/design·kyung·mypage의 기존 이력은 보존한다. 작업은 develop의 `issue/<번호>-<주제>`에서 시작하고 PR 대상도 develop이다. 과거 모델은 Git 이력에서 확인한다.
 ''')
+if (ROOT / 'examples/settlement.html').exists():
+    readme = (ROOT / 'README.md').read_text(encoding='utf-8')
+    write('README.md', readme + '\n## 정책 계산 참고 예제 — 이슈 #11\n\n`npm test` · `npm run check:handoff`\n\n[실행 가능한 정산 계산기](examples/settlement.html) · [설계](docs/superpowers/specs/2026-10-22-settlement-core-design.md) · [실행 계획](docs/superpowers/plans/2026-10-22-settlement-core.md).')
+    hub = (ROOT / 'index.html').read_text(encoding='utf-8')
+    write('index.html', hub.replace('<a href="docs/wireframe.html">전체 화면</a>', '<a href="docs/wireframe.html">전체 화면</a><a href="examples/settlement.html">실행 정산 계산기</a>'))
 if (ROOT / 'apps/api/build.gradle').exists():
     readme=(ROOT/'README.md').read_text(encoding='utf-8')
     write('README.md', readme+'\n## Spring 서버 기반\n\n서버는 [Spring Boot + Java25](docs/architecture/TECH-STACK.md)로 진행한다. [apps/api 실행/검증](apps/api/README.md). 순수 정산·dev 미리보기와 db 프로필의 PostgreSQL 계정·모임·참가 API를 구현했다. [권한 계약](docs/implementation/IDENTITY-API.md). 소셜/SMS 실제 자격·수신 검증과 채팅·금액 원장은 후속이다.')
