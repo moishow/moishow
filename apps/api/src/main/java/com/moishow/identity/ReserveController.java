@@ -1,0 +1,32 @@
+package com.moishow.identity;
+import org.springframework.context.annotation.Profile;import org.springframework.web.bind.annotation.*;import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import java.util.UUID;import java.time.Instant;
+@RestController @Profile("db") @RequestMapping("/api/v1")
+class ReserveController {
+ final Commands commands;final ReserveService service;ReserveController(Commands commands,ReserveService service){this.commands=commands;this.service=service;}
+ record Form(Long version,UUID eventId,Long amount,String purpose,String reference,Instant actualAt,String bankName,String accountNumber,String holderName,UUID candidateId,Long inventoryAmount,String inventoryNote,Long bookVersion,Long confirmedAmount,Boolean ownerReceiptConfirmed,String actualRecordReason){}
+ record ReturnForm(Long version,Long amount,String reason,String reference,Instant actualAt){}
+ @GetMapping("/events/{id}/reserve-transfer-context") Object transferContext(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.transferContext(a,id);}
+ @GetMapping("/clubs/{id}/reserve") Object get(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.get(a,id);}
+ @GetMapping("/clubs/{id}/reserve/transfer-instructions") Object instructions(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.instructions(a,id);}
+ @PostMapping("/clubs/{id}/reserve/{action}") Object reserve(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable String action,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"reserve:"+id+":"+action,key,f,()->switch(action){case "account"->service.setup(a,id,f);case "deposits"->service.deposit(a,id,f);case "spends"->service.spend(a,id,f);case "reversals"->service.reversal(a,id,f);case "custodian-handovers"->service.custodyPropose(a,id,f);default->throw new ApiProblem(404,"UNKNOWN_OPERATION");});}
+ @PostMapping("/clubs/{id}/reserve/entries/{entryId}/{action}") Object entry(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable UUID entryId,@PathVariable String action,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"reserve:"+id+":"+entryId+":"+action,key,f,()->service.changeEntry(a,id,entryId,action,f));}
+ @GetMapping("/events/{id}/handover-candidates") Object candidates(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.candidates(a,id);}
+ @GetMapping("/events/{id}/handovers") Object handovers(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.handovers(a,id);}
+ @GetMapping("/me/handovers") Object mine(@AuthenticationPrincipal Actor a){return service.mine(a);}
+ @PostMapping("/events/{id}/handovers") Object propose(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"handover:"+id+":propose",key,f,()->service.propose(a,id,f));}
+ @PostMapping({"/handovers/{id}/{action}","/custodian-handovers/{id}/{action}"}) Object handover(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable String action,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"handover:"+id+":"+action,key,f,()->service.handover(a,id,action,f));}
+ @GetMapping("/me/owner-transfers") Object mineOwners(@AuthenticationPrincipal Actor a){return service.ownerTransfers(a);}
+ @PostMapping("/clubs/{id}/owner-transfers") Object owner(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"ownertransfer:"+id,key,f,()->service.ownerPropose(a,id,f));}
+ @PostMapping("/owner-transfers/{id}/accept") Object acceptOwner(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"ownertransfer:"+id+":accept",key,f,()->service.ownerAccept(a,id,f));}
+ @PostMapping("/clubs/{id}/dissolution/payout") Object payout(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"dissolve:"+id+":payout",key,f,()->service.dissolutionPayout(a,id,f));}
+ @PostMapping("/clubs/{id}/dissolve") Object dissolve(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"dissolve:"+id,key,f,()->service.dissolve(a,id,f));}
+ @PostMapping("/me/delete") Object delete(@AuthenticationPrincipal Actor a,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody Form f){return commands.run(a,"account:delete",key,f,()->service.delete(a));}
+
+ @PostMapping("/handovers/{id}/returns") Object requestReturn(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody ReturnForm f){return commands.run(a,"handoverreturn:"+id,key,f,()->service.requestReturn(a,id,f));}
+ @PostMapping("/handovers/{id}/returns/{returnId}/{action}") Object changeReturn(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable UUID returnId,@PathVariable String action,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody ReturnForm f){return commands.run(a,"handoverreturn:"+id+":"+returnId+":"+action,key,f,()->service.changeReturn(a,id,returnId,action,f));}
+
+ @GetMapping("/events/{id}/custody-transfers") Object cashTransfers(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.cashTransfers(a,id);}
+ @PostMapping("/events/{id}/custody-transfers") Object requestCashTransfer(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody ReturnForm f){return commands.run(a,"cashtransfer:"+id,key,f,()->service.requestCashTransfer(a,id,f));}
+ @PostMapping("/events/{id}/custody-transfers/{transferId}/{action}") Object changeCashTransfer(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable UUID transferId,@PathVariable String action,@RequestHeader(value="Idempotency-Key",required=false)String key,@RequestBody ReturnForm f){return commands.run(a,"cashtransfer:"+id+":"+transferId+":"+action,key,f,()->service.changeCashRecord(a,id,null,transferId,action,f));}
+}
