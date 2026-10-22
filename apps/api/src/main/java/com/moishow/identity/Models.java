@@ -10,6 +10,7 @@ final class Models {
  }
  @Entity(name="Account") @Table(name="app_user") static class Account extends Row {
   String provider; String subject; String phone; String nickname; String status="PENDING";
+  @Column(columnDefinition="text") String interestsJson="[]"; @Column(length=300) String bio=""; UUID avatarFileId;
  }
  @Entity(name="ServiceSession") @Table(name="service_session") static class ServiceSession {
   @Id String tokenHash; UUID userId; String scope; Instant expiresAt; boolean revoked;
@@ -30,13 +31,13 @@ final class Models {
   UUID clubId; String tokenHash; Instant expiresAt;
  }
  @Entity(name="ClubEvent") @Table(name="club_event") static class ClubEvent extends Row {
-  UUID clubId; UUID hostId; UUID responsibleId; String title; String kind; boolean publicEvent; Instant startsAt; Instant endsAt;
+  UUID clubId; UUID hostId; UUID responsibleId; String settlementMode="POSTPAY"; long scheduleVersion=1; String title; String kind; boolean publicEvent; Instant startsAt; Instant endsAt;
  }
  @Entity(name="EventRound") @Table(name="event_round") static class EventRound extends Row {
-  UUID eventId; int capacity; Instant closesAt; long cancellationFee;
+  UUID eventId; int capacity; Instant closesAt; long cancellationFee; long feeVersion=1; String status="OPEN";
  }
  @Entity(name="Participation") @Table(name="participation") static class Participation extends Row {
-  UUID roundId; UUID userId; String status; boolean everConfirmed; long agreedFee;
+  UUID roundId; UUID userId; String status; boolean everConfirmed; long agreedFee; long agreedFeeVersion=1; Instant agreedAt; String feeConsent="ACCEPTED"; String scheduleConsent="ACCEPTED"; long scheduleVersion=1; String waivedReason;
  }
  @Entity(name="CommandReceipt") @Table(name="command_receipt") static class CommandReceipt extends Row {
   UUID userId; String requestKey; String operation; String bodyHash; @Column(columnDefinition="text") String responseJson;

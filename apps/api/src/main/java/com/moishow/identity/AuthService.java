@@ -36,6 +36,14 @@ public class AuthService {
   var session=new ServiceSession();String raw=Crypto.token();session.tokenHash=Crypto.hash(raw);session.userId=user.id;session.scope=scope;session.expiresAt=Instant.now().plusSeconds(scope.equals("ACTIVE")?28800:900);db.save(session);
   return Map.of("token",raw,"scope",scope,"expiresAt",session.expiresAt,"userId",user.id);
  }
+ /** Internal-only seam: caller has verified Apple's signed issuer/audience/nonce.
+  * It never accepts an HTTP-supplied subject or merges by phone/email. */
+ Map<String,Object> issueVerifiedApple(SocialVerifier.Identity identity){
+  require(identity!=null&&"APPLE".equals(identity.provider())&&identity.subject()!=null&&!identity.subject().isBlank()&&identity.subject().length()<=255,401,"INVALID_SOCIAL_IDENTITY");
+  var user=db.one(Account.class,"from Account where provider=?1 and subject=?2","APPLE",identity.subject());
+  if(user==null){user=new Account();user.provider="APPLE";user.subject=identity.subject();db.save(user);}
+  require(!user.status.equals("DELETED"),403,"ACCOUNT_UNAVAILABLE");return issue(user,user.status.equals("ACTIVE")?"ACTIVE":"ONBOARDING");
+ }
  @Transactional(readOnly=true) public Actor resolve(String token){
   if(token==null||token.length()>128)return null;
   var s=db.session(Crypto.hash(token));if(s==null||s.revoked||!s.expiresAt.isAfter(Instant.now()))return null;

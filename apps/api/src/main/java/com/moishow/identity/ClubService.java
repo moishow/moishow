@@ -46,5 +46,5 @@ class ClubService {
   return db.list(Membership.class,"from Membership where clubId=?1 and status='PENDING' and blacklisted=false order by id",clubId).stream()
    .map(m->Map.of("userId",m.userId,"nickname",m.nickname,"status",m.status,"version",club.version)).toList();
  }
- private Map<String,Object> clubView(Club c,Membership m){var v=new LinkedHashMap<String,Object>();v.put("id",c.id);v.put("name",c.name);v.put("joinMode",c.joinMode);v.put("version",c.version);v.put("membershipStatus",m==null?"NONE":m.status);v.put("role",m==null?"NONE":m.role);return v;}
+ private Map<String,Object> clubView(Club c,Membership m){var v=new LinkedHashMap<String,Object>();v.put("id",c.id);v.put("name",c.name);v.put("joinMode",c.joinMode);v.put("status",c.status);v.put("version",c.version);v.put("membershipStatus",m==null?"NONE":m.status);v.put("role",m==null?"NONE":m.role);return v;}
 }

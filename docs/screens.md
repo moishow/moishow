@@ -26,7 +26,7 @@
 | COLLECT | [입금 확인](../design/system/screen_v1/COLLECT.html) | 납부·확인 | 실입금액/시각 확인·부분입금·중복확인 방지. |
 | CANCEL | [참여 취소](../design/system/screen_v1/CANCEL.html) | 취소·환불 | 기납부 비용 차감/미납 비용만청구·주최자 취소 전액. |
 | CONSENT | [변경 동의](../design/system/screen_v1/CONSENT.html) | 취소·환불 | 미응답 참여 유지/동의 대기·새 비용 미적용·거부무료취소. |
-| EXPENSE | [지출 입력](../design/system/screen_v1/EXPENSE.html) | 정산·이의 | 항목명/금액/차수 필수·증빙 선택·미첨부 표시. |
+| EXPENSE | [지출 입력](../design/system/screen_v1/EXPENSE.html) | 정산·이의 | 항목명/금액/차수·실제지급자/개인자금/모인돈명시·증빙선택. |
 | SETTLE | [이벤트 최종 정산](../design/system/screen_v1/SETTLE.html) | 정산·이의 | 개인별 순차액 상계·지출/비용/분담 합계 보존. |
 | REFUND | [환불 확인](../design/system/screen_v1/REFUND.html) | 취소·환불 | 실송금→수령확인·마감 후 미수령 요청 유지. |
 | CLOSED | [계산 마감](../design/system/screen_v1/CLOSED.html) | 정산·이의 | 미납/환불/이의 계속·원본 잠금·후속 입금 기록. |
@@ -46,7 +46,7 @@
 | BANK | [계좌 등록·확인](../design/system/screen_v1/BANK.html) | 기록·설정 | 실제외부API미연동·형식검증·실패재시도·비밀값서버만. |
 | ACCOUNT | [계정 관리](../design/system/screen_v1/ACCOUNT.html) | 기록·설정 | 담당업무완료또는실제인계후삭제·계산마감만으론불가. |
 | NOTIFICATIONS | [알림함](../design/system/screen_v1/NOTIFICATIONS.html) | 알림·채팅 | 소셜묶음·정산개별·딥링크권한/만료폴백. |
-| CHAT | [채팅](../design/system/screen_v1/CHAT.html) | 알림·채팅 | 모임상시방누락없음·종류구분·권한있는방만. |
+| CHAT | [채팅](../design/system/screen_v1/CHAT.html) | 알림·채팅 | 4종통합·그룹초대수락전대화미공개·종류구분. |
 | CHAT_ROOM | [이벤트 채팅](../design/system/screen_v1/CHAT_ROOM.html) | 알림·채팅 | 닉네임표시·정산권한과개인차단분리·기록보존. |
 | FEED | [피드](../design/system/screen_v1/FEED.html) | 피드·안전 | 개인/모임글분리·공개번개허용정보·차단필터. |
 | POST | [게시글 상세](../design/system/screen_v1/POST.html) | 피드·안전 | 글권한·댓글·삭제/만료·신고대상유형분리. |
@@ -54,3 +54,9 @@
 | REPORT | [신고](../design/system/screen_v1/REPORT.html) | 피드·안전 | 모임글관리자→운영자·개인/사람/관리자대상운영자직접. |
 | MODERATION | [신고 처리](../design/system/screen_v1/MODERATION.html) | 운영 | 관리자자기신고처리금지·처리근거·필요최소증빙. |
 | OPS | [운영 대시보드](../design/system/screen_v1/OPS.html) | 운영 | 증빙/소명·정정/인계요청·강제송금/허위입금확인불가. |
+| GROUP_CREATE | [그룹 대화 만들기](../design/system/screen_v1/GROUP_CREATE.html) | 알림·채팅 | 알려진관계닉네임선택·초대수락후입장·금융권한부여없음. |
+| GROUP_INVITE | [그룹 초대](../design/system/screen_v1/GROUP_INVITE.html) | 알림·채팅 | 수락/거절명시·차단상대초대차단·수락전대화미공개. |
+| GROUP_MEMBERS | [그룹 멤버](../design/system/screen_v1/GROUP_MEMBERS.html) | 알림·채팅 | 생성자소유권없음·나가기즉시권한회수·기존금융권한분리. |
+| ADVANCE | [선지출 반환](../design/system/screen_v1/ADVANCE.html) | 정산·이의 | 개인자금/모인돈구분·기존주최자반환의무인계·실송금/수령별도. |
+| SELF_RECOVERY | [내 선지출 회수](../design/system/screen_v1/SELF_RECOVERY.html) | 정산·이의 | 명시적비현금상계·보관금/미회수선지출한도·일반환불의무보호. |
+| HANDOVER_REVIEW | [변경된 인계 확인](../design/system/screen_v1/HANDOVER_REVIEW.html) | 인계·적립금 | 실수령사실보존·기존금액재송금금지·재수락전권한유지·실반환가능. |

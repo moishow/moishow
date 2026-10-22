@@ -6,16 +6,16 @@
 |---|---|
 | 앱 | Flutter/Dart, Riverpod, go_router, Dio |
 | 서버 | Java 25 LTS, Spring Boot 4.1.1, Spring MVC, Gradle Wrapper 9.8.2 |
-| API | REST, OpenAPI 계약. 최종 정산 계산은 서버 담당 |
+| API | REST·DTO 계약 문서. 기계용 OpenAPI 명세는 후속 정비. 최종 정산 계산은 서버 담당 |
 | DB/마이그레이션 | PostgreSQL, Spring Data JPA/Hibernate, Flyway |
 | 인증 | Spring Security OAuth2 Client/Resource Server, 공급자 검증 및 서비스 세션, 신규 SMS 완료 전 제한 세션 |
 | SMS/예금주 | SOLAPI 어댑터, 계좌 확인은 별도 공급자 검증. 가입 실명/CI 전제 없음 |
 | 채팅 | Spring WebSocket/STOMP, Flutter stomp_dart_client. 메시지 DB 저장 후 전송/재연결 누락 조회 |
-| 작업 처리 | Quartz JDBC JobStore + PostgreSQL outbox. Redis는 캐시·요청 제한 등에 사용 |
-| 파일/푸시 | 비공개 S3·짧은 presigned URL, FCM/iOS APNs. 인앱 알림함은 DB 영속 |
+| 작업 처리 | Quartz JDBC JobStore + PostgreSQL outbox. 현재 요청 제한도 DB로 검증하며 Redis는 향후 캐시 후보 |
+| 파일/푸시 | 비공개 S3·현재 권한을 검사하는 bearer 파일 프록시, FCM/iOS APNs. 인앱 알림함은 DB 영속 |
 | 운영자 웹 | React/TypeScript/Vite |
 | 배포 | Docker·EC2·Caddy, RDS PostgreSQL, S3/CloudFront, GitHub Actions |
-| 테스트/관측 | JUnit Jupiter·Spring 테스트·Testcontainers(후속 DB)·Flutter 테스트, CloudWatch/Sentry |
+| 테스트/관측 | JUnit Jupiter·Spring 테스트·Testcontainers PostgreSQL17·Flutter 테스트, CloudWatch/Sentry |
 
 ## Java 전환의 경계
 
@@ -27,7 +27,7 @@
 
 ## 이슈 #18 첫 구현
 
-`apps/api/`: 공식 Spring Initializr 기반 Java25/Boot4.1.1, Gradle Wrapper, 순수 정산 코어·정책 테스트·개발용 미리보기 API·보안 기본값. 로컬 JDK25를 사용한다. 이슈12에서 PostgreSQL/JPA/Flyway, db 프로필의 계정·모임·참가 API와 외부 소셜/SMS 어댑터를 구현했다. 실제 공급자 자격·수신과 채팅·Quartz·S3는 후속 검증/구현이다. 스택에 기재된 모든 기능을 현재 구현했다고 주장하지 않는다.
+`apps/api/`: 공식 Spring Initializr 기반 Java25/Boot4.1.1, Gradle Wrapper, 순수 정산 코어·정책 테스트·개발용 미리보기 API·보안 기본값. 로컬 JDK25를 사용한다. 이슈12에서 PostgreSQL/JPA/Flyway, db 프로필의 계정·모임·참가 API와 외부 소셜/SMS 어댑터를 구현했다. 정산·인계·운영·채팅·파일 어댑터와 현재 권한 검사를 구현했다. 실제 공급자 자격·수신·배포는 별도 검증이며 계좌 소유 확인 어댑터는 계약 확인 전 미완료503이다. 스택에 기재된 모든 기능을 현재 구현했다고 주장하지 않는다.
 
 기본 프로필은 health 외 모든 요청 거부. `dev` 프로필에서만 loopback에 입력 숫자를 계산하는 미리보기 API를 제공하며 실제 이체/저장/사용자 데이터에 접근하지 않는다. 테스트는 이 경계와 정상/비정상 금액 응답을 검사한다.
 

@@ -71,7 +71,7 @@ class IdentityApiTest {
   return post("/clubs/"+clubId+"/join",token,b);
  }
  static Reply event(String host,String clubId,long v,String kind,boolean open)throws Exception {
-  return post("/clubs/"+clubId+"/events",host,Map.of("title","번개","kind",kind,"publicEvent",open,"startsAt",Instant.now().plusSeconds(3600).toString(),"endsAt",Instant.now().plusSeconds(7200).toString(),"version",v));
+  return post("/clubs/"+clubId+"/events",host,Map.of("title","번개","kind",kind,"publicEvent",open,"settlementMode","POSTPAY","startsAt",Instant.now().plusSeconds(3600).toString(),"endsAt",Instant.now().plusSeconds(7200).toString(),"version",v));
  }
  static Reply round(String host,String eventId,long v,int capacity,boolean closed)throws Exception {
   return post("/events/"+eventId+"/rounds",host,Map.of("capacity",capacity,"closesAt",Instant.now().plusSeconds(closed?-60:1800).toString(),"cancellationFee",1000,"version",v));
@@ -224,5 +224,14 @@ class IdentityApiTest {
   String pending=text(post("/auth/social",null,Map.of("provider","GOOGLE","token","test:smsQuota")),"token");
   assertEquals(200,post("/auth/sms",pending,Map.of("phone","+821099999991")).status);
   assertEquals(429,post("/auth/sms",pending,Map.of("phone","+821099999992")).status);
+ }
+
+ @Test void independentActorCommandsDoNotDeadlockOnCrossUserForeignKeys()throws Exception {
+  String ta=user("fkActorA"),tb=user("fkActorB");var ca=club(ta,"IMMEDIATE");var cb=club(tb,"IMMEDIATE");
+  var auth=context.getBean(AuthService.class);Actor a=auth.resolve(ta),b=auth.resolve(tb);var commands=context.getBean(Commands.class);var store=context.getBean(Store.class);var gate=new java.util.concurrent.CyclicBarrier(2);
+  java.util.function.BiFunction<Actor,Models.Membership,Object> action=(actor,membership)->commands.run(actor,"test:cross-user-fk",UUID.randomUUID().toString(),Map.of(),()->{try{gate.await(10,TimeUnit.SECONDS);}catch(Exception e){throw new RuntimeException(e);}store.save(membership);return Map.of("done",true);});
+  var ma=new Models.Membership();ma.clubId=UUID.fromString(text(ca,"id"));ma.userId=b.userId();ma.nickname="B";ma.status="ACTIVE";
+  var mb=new Models.Membership();mb.clubId=UUID.fromString(text(cb,"id"));mb.userId=a.userId();mb.nickname="A";mb.status="ACTIVE";
+  try(var pool=Executors.newVirtualThreadPerTaskExecutor()){var first=pool.submit(()->action.apply(a,ma));var second=pool.submit(()->action.apply(b,mb));assertNotNull(first.get(20,TimeUnit.SECONDS));assertNotNull(second.get(20,TimeUnit.SECONDS));}
  }
 }
