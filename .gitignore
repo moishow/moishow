@@ -58,3 +58,4 @@ out/
 *.temp
 .cache/
 .gstack/
+.superpowers/
