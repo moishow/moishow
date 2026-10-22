@@ -5,7 +5,7 @@
 | 영역 | 기준 |
 |---|---|
 | 앱 | Flutter/Dart, Riverpod, go_router, Dio |
-| 서버 | Java 21 LTS, Spring Boot 4.1.1, Spring MVC, Maven Wrapper |
+| 서버 | Java 25 LTS, Spring Boot 4.1.1, Spring MVC, Gradle Wrapper 9.8.2 |
 | API | REST, OpenAPI 계약. 최종 정산 계산은 서버 담당 |
 | DB/마이그레이션 | PostgreSQL, Spring Data JPA/Hibernate, Flyway |
 | 인증 | Spring Security OAuth2 Client/Resource Server, 공급자 검증 및 서비스 세션, 신규 SMS 완료 전 제한 세션 |
@@ -27,13 +27,15 @@
 
 ## 이슈 #18 첫 구현
 
-`apps/api/`: 공식 Spring Initializr 기반 Java21/Boot4.1.1, Maven Wrapper, 순수 정산 코어·정책 테스트·개발용 미리보기 API·보안 기본값. 로컬 JDK21을 사용한다. DB/JPA/Flyway/실제 OAuth·SMS·채팅·Quartz·S3는 이슈 #12~#16에서 단계적으로 연결한다. 스택에 기재된 모든 기능을 현재 구현했다고 주장하지 않는다.
+`apps/api/`: 공식 Spring Initializr 기반 Java25/Boot4.1.1, Gradle Wrapper, 순수 정산 코어·정책 테스트·개발용 미리보기 API·보안 기본값. 로컬 JDK25를 사용한다. DB/JPA/Flyway/실제 OAuth·SMS·채팅·Quartz·S3는 이슈 #12~#16에서 단계적으로 연결한다. 스택에 기재된 모든 기능을 현재 구현했다고 주장하지 않는다.
 
 기본 프로필은 health 외 모든 요청 거부. `dev` 프로필에서만 loopback에 입력 숫자를 계산하는 미리보기 API를 제공하며 실제 이체/저장/사용자 데이터에 접근하지 않는다. 테스트는 이 경계와 정상/비정상 금액 응답을 검사한다.
 
 ## 공식 확인
 
-- Spring Initializr 메타데이터 및 Maven Central에서 4.1.1 안정 버전 확인.
-- [Boot 요구 사항](https://docs.spring.io/spring-boot/system-requirements.html): Java21 및 Maven 지원 범위 확인.
+- Spring Initializr 메타데이터 및 공식 배포 저장소에서 4.1.1 안정 버전 확인.
+- [Boot 요구 사항](https://docs.spring.io/spring-boot/system-requirements.html): Java25 및 Gradle 지원 범위 확인.
 - [Spring WebSocket](https://docs.spring.io/spring/reference/web/websocket.html), [Spring Security OAuth2](https://docs.spring.io/spring-security/reference/servlet/oauth2/index.html).
 - [Quartz JDBC 지원](https://docs.spring.io/spring-boot/reference/io/quartz.html), [Flutter STOMP client](https://pub.dev/packages/stomp_dart_client).
+
+- [Gradle 호환성](https://docs.gradle.org/current/userguide/compatibility.html), [Boot Gradle 플러그인](https://docs.spring.io/spring-boot/gradle-plugin/index.html): Java25 실행/도구체인 지원 조합으로 Gradle9.8.2를 고정. 공식 Initializr wrapper 사용, 배포 SHA-256 검증.

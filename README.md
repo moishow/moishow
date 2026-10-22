@@ -21,5 +21,5 @@ node scripts/check-handoff.mjs
 
 ## 브랜치
 
-서버 스택은 [Spring Boot + Java21](docs/architecture/TECH-STACK.md)로 진행한다. [apps/api](apps/api/README.md)에서 Maven Wrapper로 테스트·실행할 수 있다. DB·실인증·채팅은 후속 이슈이며 현재는 순수 정산·dev 미리보기 API가 구현 범위다.
+서버 스택은 [Spring Boot + Java25](docs/architecture/TECH-STACK.md)로 진행한다. [apps/api](apps/api/README.md)에서 Gradle Wrapper로 테스트·실행할 수 있다. DB·실인증·채팅은 후속 이슈이며 현재는 순수 정산·dev 미리보기 API가 구현 범위다.
 haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 반영했다. 신규 dev 대신 기존 develop을 사용한다. dev/design·kyung·mypage의 기존 이력은 보존한다. 작업은 develop의 `issue/<번호>-<주제>`에서 시작하고 PR 대상도 develop이다. 과거 모델은 Git 이력에서 확인한다.

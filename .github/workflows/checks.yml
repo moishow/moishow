@@ -14,10 +14,12 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
-          cache: maven
-          cache-dependency-path: apps/api/pom.xml
-      - run: bash mvnw -B verify
+          java-version: '25'
+          cache: gradle
+          cache-dependency-path: |
+            apps/api/*.gradle
+            apps/api/gradle/wrapper/gradle-wrapper.properties
+      - run: bash gradlew --no-daemon build
         working-directory: apps/api
   handoff:
     runs-on: ubuntu-latest
