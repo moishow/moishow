@@ -36,3 +36,13 @@ haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 �
 - [Flutter 앱](docs/implementation/MOBILE-APP.md): 57화면 흐름·실제 서버 역할별 연동 검증 진행 중. 앱 배포/실기기 완료를 의미하지 않는다.
 
 실제 소셜/SMS/FCM/S3 성공·실기기 수신·배포는 별도 환경 검증이다. 예금주 확인 공급자 어댑터는 계약 확인 전 미완료503이며, 키만 넣으면 성공하는 상태로 설명하지 않는다. 현재 실제 은행 거래 reference는 문서화된 ACTOR_FALLBACK 범위를 사용한다.
+## 정책 계산 참고 예제 — 이슈 #11
+
+```sh
+npm test
+npm run check:handoff
+```
+
+[실행 가능한 정산 계산기](examples/settlement.html)에서 같은 계산 모듈을 확인한다. [설계](docs/superpowers/specs/2026-10-22-settlement-core-design.md) · [실행 계획](docs/superpowers/plans/2026-10-22-settlement-core.md).
+
+JavaScript 코어는 정책 산술과 정적 예제 검증용이다. 운영 서버는 Java25/Gradle의 Spring Boot이며, 실제 납부·환불·선지출·인계 상태 원장을 이 예제로 대신하지 않는다.
