@@ -399,3 +399,8 @@ LEVEL 진입 대조: 서버는 같은 모임/확정 이벤트 관계(탈퇴·공
 
 
 커밋 인수: Flutter 최신86개/분석 GREEN 후 코드 동결했다. upstream Pretendard/PDF.js의 원문 라이선스에는 배포본 공백이 포함돼 있어 내용을 수정하지 않고 해당3개 라이선스/OFL만 whitespace 검증에서 제외한다. 소유 코드/일반 문서는 계속 diff --check로 검사하고 생성된 iOS project 끝의 중복 빈줄은 정리한다. 라이선스 문구·해시 검증된 vendor 원본을 숨기거나 실행 코드를 검사 제외하지 않는다.
+
+
+최종 앱 통합 근거: f34fc26 PR22의 정확 HEAD에서 CI8개(Spring/정적·Node/운영웹/Flutter 각 push·PR)가 모두 성공하고 develop e84f1f1에 병합됐다. 로컬 최신 final05 Flutter86개/분석 GREEN, 마지막 표시 formatter 한 줄 포함 final04 TEST웹126.8초·production웹94.8초·debugAPK21.1초 성공과 실제 APK SHA256 FEFCFBDF18E04BDC52F7CA2A87ECA9A9EDD8EB6DBF412FEE5FF5CD3CEDB83817을 확인했다. 마지막5개 UI 수정 독립 closure도 남은 구체 P1/P2 없음이다.
+
+원격 CI와 별도 실제 최신PG GUI에서 운영웹 claim→PROGRESS 저장/버전2·목록/상세이력, 탈퇴자의 본인 미납·레벨50점, 블랙리스트 이력자의 금융 유지/일반모임 내부콘텐츠 비노출을 확인했다. GROUP 즉시목록·REST/STOMP 교차역할 수신 증거 PNG를 보존한다. 사진chooser 자동파일주입은 브라우저확장의로컬파일권한으로막혀 생산/앱권한을완화하지않고 GUI미검증으로남긴다. 실공급자/실은행어댑터503·실기기/iOS/서명배포/공개범위 미결은 성공으로 덮지 않는다.

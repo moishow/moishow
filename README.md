@@ -33,7 +33,7 @@ haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 �
 - [인계·적립·해산](docs/implementation/RESERVE-API.md): 실제 수령 뒤 책임 이전, 반환 의무 인계, 출처 부족·기존 실거래 보존.
 - [알림·레벨·운영](docs/implementation/PLATFORM-API.md): Quartz/outbox, FCM 어댑터, 정확한 사건 담당자 권한. 운영 웹은 React/TypeScript/Vite 검사·빌드 통과.
 - [채팅·피드·홈](docs/implementation/COMMUNITY-API.md), [보호 파일](docs/implementation/FILES-API.md), [개인 계좌](docs/implementation/BANK-ACCOUNT-API.md).
-- [Flutter 앱](docs/implementation/MOBILE-APP.md): 57화면 흐름·실제 서버 역할별 연동 검증 진행 중. 앱 배포/실기기 완료를 의미하지 않는다.
+- [Flutter 앱](docs/implementation/MOBILE-APP.md): 57화면 흐름을 연결하고 전체86개 테스트·분석·웹/debugAPK 빌드를 통과했다. 실제 TEST GUI의 환불·그룹채팅/STOMP·역할 경계와 실공급자/단말·배포 수락은 구분한다.
 
 실제 소셜/SMS/FCM/S3 성공·실기기 수신·배포는 별도 환경 검증이다. 예금주 확인 공급자 어댑터는 계약 확인 전 미완료503이며, 키만 넣으면 성공하는 상태로 설명하지 않는다. 현재 실제 은행 거래 reference는 문서화된 ACTOR_FALLBACK 범위를 사용한다.
 ## 정책 계산 참고 예제 — 이슈 #11

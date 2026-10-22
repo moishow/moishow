@@ -6,7 +6,7 @@
 
 SDK는 저장소 밖 `C:\Users\minjoun\Documents\Codex\tools\flutter`, 공식 stable3.47.7/Dart3.13.5다. 공식 archive SHA256 `c2c875da25a1a1448d18ee4e8f398b2f6fce888b4775d8f9130538e16d826cb4`를 확인했다. Java25 서버와 Android JDK21을 구분한다. Android SDK36/build-tools36.0.0, Gradle workers2/parallelfalse/heap2048m이다.
 
-현재 최종 코드 snapshot(표준 dart format/fix 적용): `flutter analyze` **No issues found**(10.7초), `flutter test` **86개 통과**(41초). 직전85개 snapshot의 TEST web74.7초·production web135.0초·Android debug APK50.7초 빌드 성공. 최종86개 snapshot은 그룹/개인 요청 수락 뒤 최근 대화 즉시 갱신 회귀를 포함하며 정확한 web/APK 재빌드를 이어간다. iOS는 Windows에서 빌드하지 않았다. 외부 공급자·실송금·실기기 검증은 이 테스트 결과와 구분한다.
+현재 최종 코드 snapshot(표준 dart format/fix 적용): `flutter analyze` **No issues found**(10.7초), `flutter test` **86개 통과**(41초). 마지막 날짜 한국어 공통 formatter 1줄까지 포함한 TEST web126.8초·production web94.8초·Android debug APK21.1초 빌드가 모두 성공했다(`mobile-*-final-04.log`). 그룹/개인 요청 수락 뒤 최근 대화 즉시 갱신 회귀도 포함한다. iOS는 Windows에서 빌드하지 않았다. 외부 공급자·실송금·실기기 검증은 이 테스트 결과와 구분한다.
 
 ```powershell
 $flutter = 'C:\Users\minjoun\Documents\Codex\tools\flutter\bin\flutter.bat'
@@ -104,12 +104,12 @@ Flutter `test_support/main.dart`만 서버가 발급한8역할을 선택하고 T
 
 ## 완료 판정
 
-원요구 대조에서 확인한 앱 코드 누락과 독립 P2는 수정하고 회귀로 검증했다. 최종 빌드·실제 역할 QA를 마치기 전 앱16 전체 수락을 완료라고 하지 않는다. 환경 수락은 공급자 실인증/SMS/FCM/APNs·실은행·iOS 빌드/실기기·서명배포·대규모 페이지/소켓 복구다. 서버158개 GREEN은 앱57개 실제 수락과 구분한다. 중앙 REQUIREMENTS-AUDIT/결정 원장과 vault는 parent가 동시 편집 충돌 없이 갱신한다.
+원요구 대조에서 확인한 앱 코드 누락과 독립 P2는 수정하고 회귀로 검증했다. 로컬 최종 빌드·대표 실제 역할 GUI 및 PR22의 정확 코드 HEAD CI8개를 통과했다. 외부 공급자·실기기·전체 화면 시각/접근성 수락까지 완료한 것으로 확대하지 않는다. 환경 수락은 공급자 실인증/SMS/FCM/APNs·실은행·iOS 빌드/실기기·서명배포·대규모 페이지/소켓 복구다. 서버168개 GREEN과 이후 이력 이름 선택5개 GREEN은 앱57개 실제 수락과 구분한다. 중앙 REQUIREMENTS-AUDIT/결정 원장과 vault는 parent가 동시 편집 충돌 없이 갱신한다.
 
 ## 최종 회귀와 실행 근거
 
-- `.superpowers/mobile-scenario/verification/mobile-analyze-final-02.log`: No issues found, 7.2초.
-- `mobile-test-final-02.log`: 83/83 GREEN, 15초. 도움 helper의 History7/Revision7을 포함한 전체 실행이다.
+- `.superpowers/mobile-scenario/verification/mobile-analyze-final-05.log`: No issues found, 10.7초.
+- `mobile-test-final-05.log`: 86/86 GREEN, 41초. 도움 helper의 History7/Revision7을 포함한 전체 실행이다.
 - 최초 APK `apps/mobile/build/app/outputs/flutter-apk/app-debug.apk`: 2029.8초 성공. SDK34/35/CMake3.22.1을 공식 도구로 자동 설치했다. KGP 이행/SDK XML/Java8 obsolete 경고는 빌드 오류와 구분하며 최신 소스 재빌드는 별도 로그로 남긴다.
 - 원화0 정정은 allocations/fundings=[]를 명시 선택해 보낼 수 있고 양수/부호 배분 합계·출처 검증은 유지한다. 실제 기존원본은 append 이력으로 남는다.
 - FCM 소유/미완등록 표식을 보안저장하고 계정 만료 때 auto-init을 끈 뒤 SDK deleteToken을 호출한다. 다음 계정은 새 토큰을 등록하고, epoch/등록순서/직렬화로 늦은 응답을 격리한다. 서버의 다른 계정 소유 토큰을 강제로 빼앗지 않는다. [Firebase Android deleteToken/API](https://firebase.google.com/docs/reference/android/com/google/firebase/messaging/FirebaseMessaging), [Flutter 수신 설정](https://firebase.google.com/docs/cloud-messaging/flutter/get-started). 실제 공급자의 단말 전달/삭제 전파는 외부 수락이다.
@@ -118,3 +118,10 @@ Flutter `test_support/main.dart`만 서버가 발급한8역할을 선택하고 T
 
 
 최종 GUI 보완: 중앙+의 실제 AX 이름 `정모·번개 만들기`를 확인했고, 실제 TEST PG/REST 환불 SENT→본인 CONFIRMED5000원 뒤 `수령 확인 완료` 카드와 확인 버튼 제거를 확인했다(`apps/mobile/docs/screenshots/test-refund-confirmed.png`, `test-refund-sent.png`). 외부 은행 송금은 하지 않았다. 피드/탐색 분리 회귀와 초대수락 뒤 최근 대화 즉시 갱신 회귀를 포함한 최신 전체86개 GREEN은 `mobile-analyze-final-05.log`, `mobile-test-final-05.log`에 보존했다. 실제 그룹초대 수락에서 발견한 stale 목록은 같은 화면의 관계 변경 성공 때 최근 대화도 재조회하도록 수정했으며 별도 권한/API를 만들지 않았다.
+
+최신86 TEST web에서 그룹초대 수락 후 같은 목록에 그룹방이 즉시 표시되고(`test-group-accepted.png`), 실제 그룹방 REST 작성 및 다른 테스트 역할이 쓴 메시지를 새로고침 없이 STOMP로 받았다(`test-group-message.png`, `test-group-live-received.png`). 피드 탭은 검색 폼 없이 별도 글 화면으로 확인했다(`test-feed-final.png`). 사진 선택은 브라우저 chooser까지 진입했으나 자동 파일 주입은 확장의 로컬 파일 접근 설정 때문에 차단되어 GUI 업로드/보호 뷰어 완료로 표시하지 않는다.
+
+최종 플랫폼 실행: `mobile-test-web-final-04.log` TEST web126.8초, `mobile-web-final-04.log` production web94.8초, `mobile-apk-final-04.log` debug APK21.1초 모두 성공. 마지막 변경은 기존 한국어 날짜 formatter 재사용 한 줄이며 금액/권한/전이 변경이 없다.
+
+
+PR22의 f34fc26은 Java/Node/문서/운영웹/모바일 CI8개가 모두 통과하고 develop e84f1f1에 병합됐다. 운영 웹도 최신 실제 PG에서 사건 맡기→원문/CLAIM→PROGRESS 사유 저장→버전2와 목록/상세 이력 갱신을 확인했다. Origin5173은 test-only host의 정확 허용 목록이며 생산 권한/CORS 변경이 아니다. root 추가 역할 검증에서는 탈퇴/블랙리스트 이력자의 본인 미납/레벨 접근과 내부 콘텐츠 비노출을 확인했다. 실인증·실은행·기기 수신/서명 배포·iOS 및 자동 사진 업로드 GUI 제약은 위의 미검증 범위를 유지한다.
