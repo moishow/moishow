@@ -20,9 +20,11 @@ node scripts/check-handoff.mjs
 현재 HTML은 개발 기준 목업이며 운영 앱이 아니다. 실제 인증·실계좌·DB·푸시·서버 권한 검증은 별도 이슈다. 디자인 tokens/components를 재사용하고, `scripts/build-handoff.py`는 문서·화면 래퍼·보드를 재생성한다. 화면 데이터는 `design/system/screen-catalog.json`, 렌더러는 `prototype.js`다.
 
 ## 브랜치
+
+서버 스택은 [Spring Boot + Java25](docs/architecture/TECH-STACK.md)로 진행한다. [apps/api](apps/api/README.md)에서 Gradle Wrapper로 테스트·실행할 수 있다. PostgreSQL/JPA/Flyway와 db 프로필의 계정·모임·참가 API를 추가했다. [인증·권한·재시도 계약](docs/implementation/IDENTITY-API.md)을 따른다. 소셜/SMS 실자격·실수신 검증과 채팅·금액 원장은 후속이다.
 haechan의 시나리오를 main에 병합하고 2026-10-22 사용자 정책을 반영했다. 신규 dev 대신 기존 develop을 사용한다. dev/design·kyung·mypage의 기존 이력은 보존한다. 작업은 develop의 `issue/<번호>-<주제>`에서 시작하고 PR 대상도 develop이다. 과거 모델은 Git 이력에서 확인한다.
 
-## 첫 구현 — 이슈 #11
+## 정책 계산 참고 예제 — 이슈 #11
 
 ```sh
 npm test
@@ -30,3 +32,5 @@ npm run check:handoff
 ```
 
 [실행 가능한 정산 계산기](examples/settlement.html)에서 같은 계산 모듈을 확인한다. [설계](docs/superpowers/specs/2026-10-22-settlement-core-design.md) · [실행 계획](docs/superpowers/plans/2026-10-22-settlement-core.md).
+
+JavaScript 코어는 정책 산술과 정적 예제 검증용이다. 운영 서버는 Java25/Gradle의 Spring Boot이며, 실제 납부·환불·선지출·인계 상태 원장을 이 예제로 대신하지 않는다.

@@ -59,6 +59,8 @@ export function settleEvent({ hostId, rounds, receipts = [], refunds = [] }) {
   const ledgerIds = new Set();
   verifyLedger(receipts, ledgerIds, 'receipts');
   verifyLedger(refunds, ledgerIds, 'refunds');
+  sumMoney(receipts.filter(item => item.confirmed).map(item => item.amount));
+  sumMoney(refunds.filter(item => item.confirmed).map(item => item.amount));
   const results = rounds.map(settleRound);
   const obligations = new Map();
   function addCharge(userId, amount) {

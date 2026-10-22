@@ -89,6 +89,13 @@ test('the same receipt cannot back cancellation fees in two rounds beyond its am
   const cancellation={userId:'x',fee:20000,received:20000};
   assert.throws(()=>settleEvent({hostId:'host',rounds:[baseRound({cancellations:[cancellation]}),baseRound({id:'r2',cancellations:[cancellation]})],receipts:[receipt('p','x',20000)],refunds:[]}));
 });
+test('confirmed event receipt and refund totals must stay within safe KRW range across users',()=>{
+  const maximum=Number.MAX_SAFE_INTEGER;
+  assert.throws(()=>settleEvent({hostId:'host',rounds:[],receipts:[receipt('a','one',maximum),receipt('b','two',1)]}),RangeError);
+  assert.throws(()=>settleEvent({hostId:'host',rounds:[],refunds:[receipt('a','one',maximum),receipt('b','two',1)]}),RangeError);
+  const ignored=settleEvent({hostId:'host',rounds:[],receipts:[receipt('a','one',maximum,false),receipt('b','two',1,false)]});
+  assert.deepEqual(ignored.positions,[]);
+});
 test('functions do not mutate caller objects',()=>{
   const input={hostId:'host',rounds:[baseRound({attendeeIds:['b','a']})],receipts:[receipt('p','a',1)],refunds:[]};
   const before=structuredClone(input);settleEvent(input);assert.deepEqual(input,before);

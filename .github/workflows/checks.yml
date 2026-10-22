@@ -1,4 +1,4 @@
-name: Policy and settlement checks
+name: Spring, handoff and reference checks
 on:
   push:
     branches: [main, develop, 'issue/**']
@@ -7,7 +7,21 @@ on:
 permissions:
   contents: read
 jobs:
-  verify:
+  spring:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: gradle
+          cache-dependency-path: |
+            apps/api/*.gradle
+            apps/api/gradle/wrapper/gradle-wrapper.properties
+      - run: bash gradlew --no-daemon build
+        working-directory: apps/api
+  handoff:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
