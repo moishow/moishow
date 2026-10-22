@@ -19,6 +19,12 @@ V8은 검증된 계좌 이력을 보존하며 사용자당 current 한 건만 �
 
 - GET /events/{eventId}/finance/requests/{requestId}/transfer-instructions: 해당 미완료 ACTIVE 요청의 납부자 본인만 현재 정산 담당자의 검증 계좌를 읽는다. 금액은 Finance.requestView.remaining이고 pendingVerification=true이면 확인 전 입금이 남았다는 뜻이다. 추가 미납으로 단정하거나 중복 송금을 유도하지 않는다.
 - GET /events/{eventId}/finance/refunds/{refundId}/transfer-instructions: 현재 정산 담당자만 정확 REQUESTED 환불 수령자의 검증 계좌를 읽는다. 현재 환불 의무보다 큰 요청은 안내하지 않는다.
+- GET /handovers/{id}/transfer-instructions: ACCEPTED·양수·최신 book 명세의 현재 제안자만 후보의 검증 개인 계좌를 읽는다. 현재 책임·후보 적격·실제 보관금도 다시 확인한다.
+- GET /custodian-handovers/{id}/transfer-instructions: ACCEPTED·양수·최신 reserve 명세의 현 보관 담당자만 후보의 검증 개인 계좌를 읽는다. 모임 보관 계좌 등록을 개인 계좌로 추정하지 않는다.
+- GET /events/{eventId}/advances/repayments/{repaymentId}/transfer-instructions: 현 담당자만 정확 REQUESTED 반환 채권자의 검증 계좌를 읽는다. canonical advanceDue·cashHeld와 다른 예약액을 다시 확인하며 해당 건의 자기 예약액은 중복 차감하지 않는다.
+- GET /events/{eventId}/custody-transfers/{transferId}/transfer-instructions 및 /handovers/{handoverId}/returns/{returnId}/transfer-instructions: 정확 REQUESTED 송금자만 불변 recipientId의 검증 계좌를 읽는다. 현 보관금·다른 반환 예약액을 다시 확인하며 담당 변경으로 수령자를 바꾸지 않는다.
+
+위 인계/선지출/반환 안내는 purpose/sourceId/amount/bookVersion과 정확 수령 계좌를 반환한다. 보관 담당 인계는 eventId/bookVersion 대신 clubId/reserveVersion이다. 0원 인계는409 EXTERNAL_TRANSFER_NOT_REQUIRED로 안내하고 별도 명세·0원 확인 절차를 따른다. SENT/FUNDS_PENDING/완료 건은 새 송금 안내를 거부한다. 모든 안내는 Cache-Control:no-store이며 GET은 상태·이동·실수령 기록을 만들지 않는다.
 
 응답은 recipientId/accountId/accountVersion/bankName/accountNumber/holderName/verifiedAt/purpose/eventId/해당 업무ID/amount/bookVersion이며 Cache-Control:no-store다. 현재 검증 계좌 미등록은409 RECIPIENT_BANK_ACCOUNT_REQUIRED, 완료/대체/실송금된 업무는409다. 이 조회는 실제 송금·수령 기록을 만들지 않는다. 탈퇴 후에도 정확한 기존 납부 당사자는 읽고, 인계 후 이전 담당자는 신규 환불 송금 안내를 읽지 못한다.
 

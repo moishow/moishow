@@ -99,3 +99,5 @@ P12는 필요한 은행 납부와 실효 PERSONAL 기여를 합쳐 실제 시각
 기존 private report DTO는 `allowedAllocationKindsByRound:{roundUUID:["ATTENDANCE","CANCELLATION","HOST_CONTRIBUTION"]}` 중 실제 허용되는 차수/종류만 포함한다. 배열은 예시이며 납부자의 원주최/참가/취소 관계 및 현재·불변 부담 근거로 줄어든다. 검증과 동일 helper를 사용하고 증빙/보고서 읽기 권한은 확대하지 않는다. 과거 VERIFIED 자료의 processedBy가 없으면 보관자를 추정하지 않고 funding.ready=false를 반환한다.
 
 추가 리뷰 검증: `backend-review-green-profile-red`에서 개인시각 정정 양방향·다른 참가자/HOST 점수/감사 보존·허용 배분 DTO의 음성 사례를 포함한 Finance36개와 Platform18개가 통과했다. 나머지 원주최자 사례는 모임장이 볼 수 있는 전체 요청 중 첫 행을 선택한 fixture 오류(OWN_REQUEST_ONLY403)를 납부자 ID 선택으로 수정한 뒤 `finance-host-selection-green` 단일 회귀 GREEN으로 확인했다. 이 사례는 HOST hint·초과입금150/의무100/환불50·비용0 정정 뒤 원배분 시각정정/환불150·PARTICIPANT 점수 없음까지 확인한다. 원래 요청 검증/금액/읽기 권한은 완화하지 않았다. 최종 전체37개 및 전체 서버 build는 root 통합 실행을 따른다.
+
+앱16 가입/합류 거절 경계: `REJECTED && everConfirmed=false`는 generic `participations/{pid}/correct`로 CONFIRMED/CANCELLED/NO_SHOW로 재분류할 수 없다(409). 거절된 미확정 요청을 금융정정으로 재승인하거나 취소·노쇼 비용/점수 대상으로 만들지 않는다. 다른 기존 실제 참석 정정 경계는 유지한다. 거절 후 실제 참석 사실이 뒤늦게 확인된 경우의 별도 절차는 미결이다.

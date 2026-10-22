@@ -33,7 +33,7 @@ class CommunityApiTest {
  @BeforeAll static void start(){
   postgres.start();
   context=new SpringApplicationBuilder(MoishowServerApplication.class,Providers.class).profiles("db","community-test")
-   .properties("server.port=0","logging.level.root=ERROR","spring.main.banner-mode=off",
+   .properties("server.port=0","CHAT_ALLOWED_ORIGINS=http://127.0.0.1:8766","logging.level.root=ERROR","spring.main.banner-mode=off",
     "spring.datasource.url="+postgres.getJdbcUrl(),"spring.datasource.username="+postgres.getUsername(),"spring.datasource.password="+postgres.getPassword()).run("--spring.datasource.url="+postgres.getJdbcUrl(),"--spring.datasource.username="+postgres.getUsername(),"--spring.datasource.password="+postgres.getPassword());
   base="http://127.0.0.1:"+((WebServerApplicationContext)context).getWebServer().getPort()+"/api/v1";
  }
@@ -125,6 +125,14 @@ class CommunityApiTest {
   String await(String prefix)throws Exception {long until=System.nanoTime()+TimeUnit.SECONDS.toNanos(5);while(System.nanoTime()<until){String f=frames.poll(200,TimeUnit.MILLISECONDS);if(f!=null&&f.startsWith(prefix))return f;}return null;}
  }
  static WebSocket socket(SocketFrames f)throws Exception{return http.newWebSocketBuilder().subprotocols("v12.stomp").buildAsync(URI.create(base.replace("http:","ws:")+"/chat/socket"),f).get(10,TimeUnit.SECONDS);}
+ @Test void browserOriginsRequireExplicitAllowlistAndStillRequireStompAuthentication()throws Exception {
+  var frames=new SocketFrames();var allowed=http.newWebSocketBuilder().header("Origin","http://127.0.0.1:8766").subprotocols("v12.stomp").buildAsync(URI.create(base.replace("http:","ws:")+"/chat/socket"),frames).get(10,TimeUnit.SECONDS);
+  allowed.sendText("CONNECT\naccept-version:1.2\nhost:localhost\n\n\u0000",true).join();assertNotNull(frames.await("ERROR"));allowed.abort();
+  var failure=assertThrows(ExecutionException.class,()->http.newWebSocketBuilder().header("Origin","https://untrusted.example").buildAsync(URI.create(base.replace("http:","ws:")+"/chat/socket"),new SocketFrames()).get(10,TimeUnit.SECONDS));
+  assertInstanceOf(WebSocketHandshakeException.class,failure.getCause());assertEquals(403,((WebSocketHandshakeException)failure.getCause()).getResponse().statusCode());
+  String token=user("originAllowed");frames=new SocketFrames();var authenticated=http.newWebSocketBuilder().header("Origin","http://127.0.0.1:8766").subprotocols("v12.stomp").buildAsync(URI.create(base.replace("http:","ws:")+"/chat/socket"),frames).get(10,TimeUnit.SECONDS);
+  authenticated.sendText("CONNECT\naccept-version:1.2\nhost:localhost\nAuthorization:Bearer "+token+"\n\n\u0000",true).join();assertNotNull(frames.await("CONNECTED"));authenticated.abort();
+ }
  @Test void stompAuthenticatesConnectAndRechecksRevokedMembershipOnDelivery()throws Exception {
   var badFrames=new SocketFrames();var bad=socket(badFrames);bad.sendText("CONNECT\naccept-version:1.2\nhost:localhost\n\n\u0000",true).join();assertNotNull(badFrames.await("ERROR"));bad.abort();
   String owner=user("socketOwner"),member=user("socketMember");var c=club(owner,"IMMEDIATE");String cid=text(c,"id");assertEquals(200,join(member,cid,version(c),null).status);String rid="";for(var room:get("/chat/rooms",member).body)if(room.path("kind").asText().equals("CLUB"))rid=room.path("id").asText();assertFalse(rid.isBlank());

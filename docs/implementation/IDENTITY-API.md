@@ -55,3 +55,17 @@ SMS 검증은 전화번호 문자열 제출과 별개다. 다른 소셜의 동�
 ## 근거
 
 [Spring SQL/JPA](https://docs.spring.io/spring-boot/reference/data/sql.html), [Spring JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html), [Kakao token-info](https://developers.kakao.com/docs/ko/kakaologin/rest-api#req-access-token-info), [SOLAPI HMAC](https://solapi.com/developers/api/authentication-api-key), [PostgreSQL Testcontainers](https://java.testcontainers.org/modules/databases/postgres/).
+
+## 앱16 소개·신청 결정 보완 계약
+
+CLUB_CREATE의 name/joinMode는 필수이며 description(1000자), region/category(각100자), imageFileId는 선택이다. 선택 텍스트는 strip 후 검사한다. GET /clubs·/clubs/{id}는 이 필드와 activeMemberCount(실제 ACTIVE 가입자 수)를 반환한다. 소개는 기존과 같이 가입 전 활성 사용자도 열람하며 지역/분류는 자유 텍스트다. 공개/비공개 flag·GPS·지도 권한은 추가하지 않는다.
+
+POST /clubs/{id}/metadata는 모임 version과 선택 description/region/category/imageFileId/clearImage를 받고 현재 OWNER/ADMIN만 갱신한다. null은 보존, 빈문자는 선택 텍스트 초기화, clearImage=true는 사진 연결 해제다. 새 대표사진은 요청자 소유 personal POST 이미지만 허용하며 정확한 club.imageFileId 연결만 소개 독자에게 재공개한다. 내부 게시물·증빙 파일 및 선택하지 않은 개인사진은 비공개 경계를 유지한다.
+
+POST /clubs/{id}/join에 선택 memo(1000자)를 받는다. GET /clubs/{id}/join-requests는 현재 관리자가 읽는 신청 memo/강퇴이력/버전을 포함한다. 기존 POST /clubs/{id}/members/{userId}/reject는 version·필수 reason(1000자)을 받으며 PENDING만 REJECTED로 처리한다. ACTIVE 부원을 거절할 수 없다. GET /clubs/{id}/join-history는 현재 OWNER/ADMIN에게 해당 모임 전체, 나머지 사용자에게 본인 이력만 반환한다. 신청/승인/거절을 SUBMITTED/APPROVED/REJECTED로 각각 기록한다. 가입 재신청은 기존 join 규칙을 따르며 거절을 블랙리스트로 취급하지 않는다.
+
+POST /rounds/{id}/participations에 선택 memo(1000자)를 받는다. POST /rounds/{id}/participations/{id}/reject는 version·reason을 받아 현재 활성 원주최자만 LATE_REQUESTED && everConfirmed=false를 REJECTED로 처리한다. 현재 정산 인수자 자격만으로 거절할 수 없으며 확정자/대기자를 선별 제외하지 않는다. 거절은 취소·노쇼·비용·금융/점수 이력을 만들지 않는다. 기존 차수+사용자 중복 신청409 규칙을 유지한다. GET /rounds/{id}/request-history는 현재 활성 원주최자에게 해당 차수 전체, 나머지 사용자에게 본인 이력만 반환한다.
+
+두 history 응답은 id·userId·status·memo·reason·createdAt·createdBy를 가진다. 사유/메모는 이 제한된 history 및 정확 가입관리자 pending 큐에서만 노출하고 일반 모임 소개·부원목록·정산 담당자 참여목록에는 포함하지 않는다. 모든 새 POST에 기존 Idempotency-Key·리소스 version 규칙을 적용한다. 실제 검증 결과는 REQUIREMENTS-AUDIT를 따른다.
+
+탐색 GET /clubs/discover?q=&region=&category=&offset=0&limit=50은 현재 ACTIVE 모임 소개와 같은 필드/실제 activeMemberCount를 반환한다. q는 이름 부분 일치, region/category는 trim한 자유 텍스트의 대소문자 무시 정확 일치이며 각각 선택이다. 검색과 각 필터는 최대100자, 페이지 검증·정렬(name,id)은 기존 규칙이다. 공개/비공개 정책 결정을 대신하는 새 flag나 위치 권한을 만들지 않는다.

@@ -6,10 +6,10 @@ import java.time.Instant;import java.util.UUID;
 class IdentityController {
  private final Commands commands;private final ClubService clubs;private final EventService events;
  IdentityController(Commands commands,ClubService clubs,EventService events){this.commands=commands;this.clubs=clubs;this.events=events;}
- record ClubForm(String name,String joinMode){}
- record JoinForm(String nickname,Long version,String inviteToken){}
- record ChangeForm(Long version,Boolean enabled,String role){}
- record VersionForm(Long version,String reason){}
+ record ClubForm(String name,String joinMode,String description,String region,String category,UUID imageFileId){}
+ record JoinForm(String nickname,Long version,String inviteToken,String memo){}
+ record ChangeForm(Long version,Boolean enabled,String role,String reason){}
+ record VersionForm(Long version,String reason,String memo){}
  record EventPolicyForm(Long version,Long cancellationFee,Boolean accepted,String reason,Instant startsAt,Instant endsAt){}
  record EventForm(String title,String kind,boolean publicEvent,Instant startsAt,Instant endsAt,Long version,String settlementMode){}
  record RoundForm(Integer capacity,Instant closesAt,Long cancellationFee,Long version){}
@@ -28,7 +28,7 @@ class IdentityController {
  @GetMapping("/events/{id}/participations") Object participants(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return events.participants(a,id);}
  @GetMapping("/rounds/{id}/participation") Object ownParticipation(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return events.ownParticipation(a,id);}
  @PostMapping("/events/{id}/rounds") Object round(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String k,@RequestBody RoundForm b){return commands.run(a,"events:"+id+":round",k,b,()->events.round(a,id,b));}
- @PostMapping("/rounds/{id}/participations") Object participate(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String k,@RequestBody VersionForm b){return commands.run(a,"rounds:"+id+":join",k,b,()->events.participate(a,id,b.version()));}
+ @PostMapping("/rounds/{id}/participations") Object participate(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String k,@RequestBody VersionForm b){return commands.run(a,"rounds:"+id+":join",k,b,()->events.participate(a,id,b.version(),b.memo()));}
  @PostMapping("/rounds/{id}/participations/{participantId}/{action}") Object participation(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable UUID participantId,@PathVariable String action,@RequestHeader(value="Idempotency-Key",required=false)String k,@RequestBody VersionForm b){return commands.run(a,"rounds:"+id+":"+participantId+":"+action,k,b,()->events.changeParticipation(a,id,participantId,action,b.version(),b.reason()));}
  @PostMapping("/rounds/{id}/fee") Object fee(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@RequestHeader(value="Idempotency-Key",required=false)String k,@RequestBody EventPolicyForm b){return commands.run(a,"rounds:"+id+":fee",k,b,()->events.changeFee(a,id,b));}
  @PostMapping("/rounds/{id}/consents/{kind}") Object consent(@AuthenticationPrincipal Actor a,@PathVariable UUID id,@PathVariable String kind,@RequestHeader(value="Idempotency-Key",required=false)String k,@RequestBody EventPolicyForm b){return commands.run(a,"rounds:"+id+":consent:"+kind,k,b,()->events.consent(a,id,kind,b));}

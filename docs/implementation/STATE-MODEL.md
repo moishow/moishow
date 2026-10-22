@@ -8,7 +8,7 @@
 
 | 엔티티 | 상태 | 핵심 전이·금지 |
 |---|---|---|
-| 차수 참여 | confirmed / waitlisted / late_requested / cancelled / no_show | 정원 내 즉시 확정, 미납 자동 취소 금지, late 요청 승인 전 회비 생성 금지 |
+| 차수 참여 | confirmed / waitlisted / late_requested / rejected / cancelled / no_show | 정원 내 즉시 확정, 미납 자동 취소 금지, late 요청 승인 전 회비 생성 금지, 거절은 미확정 late 요청만·비용/점수 없음 |
 | 납부 요청 | unpaid / pending_verification / partial / paid | 신고와 실확인 분리, 확인 입금 중복 금지, 잔여액은 실제 확인액 기준 |
 | 환불 | requested / sent / received | 실제 외부 송금·수령 확인, 계산 마감으로 미수령 소멸 금지 |
 | 정산 계산 | draft / registered / closed | 72시간 최초 등록, closed 원본 수정 금지, revision 추가 |
@@ -43,3 +43,7 @@
 - 적립금: designate account/custodian / propose deposit / verify deposit / request spend / confirm spend / finalize dissolution transfer.
 
 이 문서는 API 작업 경계이며 실제 엔드포인트·DB·인증 서버가 배포된 것은 아니다. 모든 공급자 호출·권한은 후속 이슈에서 서버 계약으로 검증한다.
+
+## 앱16 신청 결정 개인정보 경계
+
+가입 PENDING → ACTIVE(승인) 또는 REJECTED(거절). 기존 가입 재신청·초대·강퇴 이력·블랙리스트 우선순위는 유지한다. 합류 LATE_REQUESTED && everConfirmed=false → REJECTED는 현재 활성 원주최자만 가능하며 정산 인계로 운영권을 넘기지 않는다. 거절 사유·신청 메모는 본인/해당 현재 처리 담당자만, 일반 소개·다른 부원·정산담당자 일반 참가목록에서는 비공개다. 신청·승인·거절은 별도 이력이며 기존 확정 참가를 거절·비용·노쇼로 변환하지 않는다.

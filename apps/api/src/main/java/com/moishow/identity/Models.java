@@ -22,10 +22,10 @@ final class Models {
   UUID userId; String phone; String codeHash; Instant createdAt; Instant expiresAt; Instant verifiedAt; int attempts; boolean consumed;
  }
  @Entity(name="Club") @Table(name="club") static class Club extends Row {
-  String name; String joinMode; String status="ACTIVE"; UUID ownerId;
+  String name; String joinMode; String status="ACTIVE"; UUID ownerId; @Column(length=1000) String description=""; @Column(length=100) String region=""; @Column(length=100) String category=""; UUID imageFileId;
  }
  @Entity(name="Membership") @Table(name="membership") static class Membership extends Row {
-  UUID clubId; UUID userId; String nickname; String role="MEMBER"; String status="NONE"; boolean expelledHistory; boolean blacklisted;
+  UUID clubId; UUID userId; String nickname; @Column(length=1000) String requestMemo=""; String role="MEMBER"; String status="NONE"; boolean expelledHistory; boolean blacklisted;
  }
  @Entity(name="Invitation") @Table(name="club_invitation") static class Invitation extends Row {
   UUID clubId; String tokenHash; Instant expiresAt;
@@ -37,7 +37,7 @@ final class Models {
   UUID eventId; int capacity; Instant closesAt; long cancellationFee; long feeVersion=1; String status="OPEN";
  }
  @Entity(name="Participation") @Table(name="participation") static class Participation extends Row {
-  UUID roundId; UUID userId; String status; boolean everConfirmed; long agreedFee; long agreedFeeVersion=1; Instant agreedAt; String feeConsent="ACCEPTED"; String scheduleConsent="ACCEPTED"; long scheduleVersion=1; String waivedReason;
+  UUID roundId; UUID userId; @Column(length=1000) String requestMemo=""; String status; boolean everConfirmed; long agreedFee; long agreedFeeVersion=1; Instant agreedAt; String feeConsent="ACCEPTED"; String scheduleConsent="ACCEPTED"; long scheduleVersion=1; String waivedReason;
  }
  @Entity(name="CommandReceipt") @Table(name="command_receipt") static class CommandReceipt extends Row {
   UUID userId; String requestKey; String operation; String bodyHash; @Column(columnDefinition="text") String responseJson;

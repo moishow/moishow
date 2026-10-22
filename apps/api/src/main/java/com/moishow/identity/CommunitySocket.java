@@ -13,8 +13,14 @@ import java.util.*;import java.util.concurrent.*;
 @Configuration @Profile("db") @EnableWebSocketMessageBroker
 class CommunitySocket implements WebSocketMessageBrokerConfigurer {
  final AuthService auth;final CommunityService community;final tools.jackson.databind.ObjectMapper json;final Map<String,Actor> sessions=new ConcurrentHashMap<>();
- CommunitySocket(AuthService auth,CommunityService community,tools.jackson.databind.ObjectMapper json){this.auth=auth;this.community=community;this.json=json;}
- @Override public void registerStompEndpoints(StompEndpointRegistry registry){registry.addEndpoint("/api/v1/chat/socket");}
+ final String[] allowedOrigins;
+ CommunitySocket(AuthService auth,CommunityService community,tools.jackson.databind.ObjectMapper json,@org.springframework.beans.factory.annotation.Value("${CHAT_ALLOWED_ORIGINS:}") String origins){this.auth=auth;this.community=community;this.json=json;this.allowedOrigins=origins(origins);}
+ static String[] origins(String configured){
+  if(configured==null||configured.isBlank())return new String[0];var exact=new LinkedHashSet<String>();
+  for(String value:configured.split(",",-1)){String origin=value.trim();try{var uri=new java.net.URI(origin);if(!Set.of("http","https").contains(uri.getScheme())||uri.getHost()==null||uri.getRawUserInfo()!=null||uri.getRawQuery()!=null||uri.getRawFragment()!=null||!uri.getRawPath().isEmpty()||uri.getPort()==0||uri.getPort()>65535||origin.contains("*"))throw new IllegalArgumentException();exact.add(origin);}catch(Exception ex){throw new IllegalArgumentException("CHAT_ALLOWED_ORIGINS requires exact http(s) origins",ex);}}
+  return exact.toArray(String[]::new);
+ }
+ @Override public void registerStompEndpoints(StompEndpointRegistry registry){var endpoint=registry.addEndpoint("/api/v1/chat/socket");if(allowedOrigins.length>0)endpoint.setAllowedOrigins(allowedOrigins);}
  @Override public void configureMessageBroker(MessageBrokerRegistry registry){registry.enableSimpleBroker("/topic/chat/");registry.setApplicationDestinationPrefixes("/app");}
  @Override public void configureWebSocketTransport(WebSocketTransportRegistration registry){registry.setMessageSizeLimit(32768).setSendBufferSizeLimit(131072).setSendTimeLimit(10000);}
  static UUID roomId(String destination){if(destination==null||!destination.startsWith("/topic/chat/"))throw new MessageDeliveryException("INVALID_DESTINATION");String tail=destination.substring("/topic/chat/".length());try{UUID id=UUID.fromString(tail);if(!id.toString().equals(tail))throw new IllegalArgumentException();return id;}catch(IllegalArgumentException ex){throw new MessageDeliveryException("INVALID_DESTINATION");}}
