@@ -17,7 +17,7 @@ JDK 경로는 각 환경의 Java25 설치 위치로 바꾼다. PATH의 java와 J
 
 ## API 경계
 
-- 기본 프로필: `GET /actuator/health` 외 모두403, 실제 서비스 인증/권한이 구현된 상태가 아니다.
+- 기본 프로필: `GET /actuator/health` 외 모두403. 실제 DB 서비스는 `db` 프로필에서만 활성화한다.
 - dev 프로필: loopback에서만 `POST /api/v1/settlements/preview` 숫자 계산 제공. DB·실계좌·사용자 상태를 읽거나 쓰지 않는다.
 - 0 이상 정수 원화, 안전 범위·합계 검증. 소수·문자열 강제 변환을 거부한다. 잘못된 JSON/도메인 입력400.
 
@@ -32,7 +32,7 @@ JDK 경로는 각 환경의 Java25 설치 위치로 바꾼다. PATH의 java와 J
 
 위 예제의 a 환불은5,000원이다. `cancellations[].received`는 실제 확인한 취소 비용 충당액이며 원래 선납액 전체가 아니다. 해당 사용자의 확인 입금 합계를 넘어 여러 차수에 중복 충당할 수 없다.
 
-후속: 금액 원장·정산 상태(이슈13), WebSocket/STOMP·Quartz·S3/FCM. 현재 패키지에 없는 기능을 연결 완료로 취급하지 않는다.
+db 프로필은 납부·지출 출처·선지출·정정·이의, 실제 인계·적립금·해산, WebSocket/STOMP, Quartz/outbox, 비공개 파일 프록시와 FCM 어댑터를 포함한다. 공급자 실접속·실단말 검증은 별도로 관리한다.
 
 Gradle Wrapper 9.8.2와 SHA-256 배포 검증값을 저장소에 고정한다. `build`는 테스트와 실행 JAR(`build/libs/server-0.0.1-SNAPSHOT.jar`) 생성을 수행한다. Java toolchain도25로 지정한다.
 
@@ -56,3 +56,12 @@ $env:DB_USER = 'moishow'
 SMS: `SOLAPI_API_KEY`, `SOLAPI_API_SECRET`, `SOLAPI_FROM` 설정. 초기 발송은 한국 휴대전화 `+8210XXXXXXXX`만 지원한다. 제한 세션만 요청 가능, OTP는응답/로그에 반환하지 않는다. 자격 미설정은503. 어댑터를 구현하고 테스트 대역의 가입 흐름·미설정 시 거부를 확인했으며 **실제 공급자 계정·키·문자 수신을 연결 검증하지 않았다.**
 
 [엔드포인트·권한·버전·재시도 계약](../../docs/implementation/IDENTITY-API.md)을 따른다. 세션·OTP·초대·Idempotency 원장 보관/정리와 전면적인 서비스·IP 단위 rate limit은 공개 배포 전에 운영 정책을 추가해야 한다.
+
+
+## 통합 계약과 외부 연결
+
+최신 [요구 대조](../../docs/implementation/REQUIREMENTS-AUDIT.md), [금융](../../docs/implementation/FINANCE-API.md), [인계·적립](../../docs/implementation/RESERVE-API.md), [운영](../../docs/implementation/PLATFORM-API.md), [채팅·홈](../../docs/implementation/COMMUNITY-API.md), [파일](../../docs/implementation/FILES-API.md), [계좌](../../docs/implementation/BANK-ACCOUNT-API.md)를 따른다. 최신 전체 build는 실제 PostgreSQL17 테스트158개 통과·skip0이다. Flyway V1~V10 이후 Hibernate validate를 사용한다.
+
+`db`의 서비스 세션은 소셜 토큰 검증 및 신규 SMS 가입 후 발급한다. 각 요청의 현재 DB 권한을 확인한다. 테스트 대역·역할 seed·MobileScenarioHost는 test 소스에만 있고 실행 JAR에 포함하지 않는다. 입력 UUID나 클라이언트 역할로 인증하지 않는다.
+
+S3 파일 읽기는 bearer 인증 프록시를 거치고 현재 관계/정확 사건 권한을 검사한다. 클라이언트에 장기 공개 URL을 만들지 않는다. FCM HTTP v1 성공은 공급자 접수이며 실제 단말 도착을 가장하지 않는다. 계좌는 BANK_DATA_KEY_BASE64의 별도32바이트 키로 보호하고, 기본 예금주 verifier는 아직503이다. 공급자 계약·공식 API 확인과 실제 환경 시험이 필요하다.

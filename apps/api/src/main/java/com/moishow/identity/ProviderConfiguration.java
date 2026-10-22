@@ -17,7 +17,9 @@ class ProviderConfiguration {
  private final Map<String,JwtDecoder> decoders=new ConcurrentHashMap<>();
  @Bean SocialVerifier providerVerifier(Environment env){return (provider,token,nonce)->{
   String config=provider.equals("KAKAO")?"AUTH_KAKAO_APP_ID":provider.equals("GOOGLE")?"AUTH_GOOGLE_CLIENT_ID":"AUTH_APPLE_CLIENT_ID";
-  String client=env.getProperty(config,"");require(!client.isBlank(),503,"SOCIAL_PROVIDER_NOT_CONFIGURED");
+  String client=env.getProperty(config,"");
+  Set<String> audiences=new HashSet<>();for(String audience:env.getProperty("AUTH_APPLE_CLIENT_IDS",provider.equals("APPLE")?client:"").split(",")){if(!audience.isBlank())audiences.add(audience.trim());}
+  require(provider.equals("APPLE")?!audiences.isEmpty():!client.isBlank(),503,"SOCIAL_PROVIDER_NOT_CONFIGURED");
   if(provider.equals("KAKAO")){
    var info=request("GET","https://kapi.kakao.com/v1/user/access_token_info","Bearer "+token,null);
    require(client.equals(info.path("app_id").asText())&&info.path("expires_in").asLong()>0&&info.path("id").asLong()>0,401,"INVALID_SOCIAL_TOKEN");
@@ -31,7 +33,7 @@ class ProviderConfiguration {
     d.setJwtValidator(JwtValidators.createDefaultWithIssuer(key.equals("GOOGLE")?"https://accounts.google.com":"https://appleid.apple.com"));return d;
    });jwt=decoder.decode(token);
   }catch(JwtException e){throw new ApiProblem(401,"INVALID_SOCIAL_TOKEN");}
-  require(jwt.getAudience().contains(client)&&jwt.getExpiresAt()!=null&&jwt.getExpiresAt().isAfter(Instant.now())&&nonce!=null&&nonce.equals(jwt.getClaimAsString("nonce")),401,"INVALID_SOCIAL_TOKEN");
+  require((provider.equals("APPLE")?jwt.getAudience().stream().anyMatch(audiences::contains):jwt.getAudience().contains(client))&&jwt.getExpiresAt()!=null&&jwt.getExpiresAt().isAfter(Instant.now())&&nonce!=null&&nonce.equals(jwt.getClaimAsString("nonce")),401,"INVALID_SOCIAL_TOKEN");
   return new SocialVerifier.Identity(provider,jwt.getSubject());
  };}
  @Bean SmsGateway smsGateway(Environment env){return (phone,code)->{

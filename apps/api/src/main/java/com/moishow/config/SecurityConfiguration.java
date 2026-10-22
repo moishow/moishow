@@ -25,7 +25,9 @@ public class SecurityConfiguration {
             auth.requestMatchers("/actuator/health").permitAll();
             if(dev)auth.requestMatchers(HttpMethod.POST,"/api/v1/settlements/preview").permitAll();
             if(db){
+                auth.requestMatchers(HttpMethod.GET,"/api/v1/chat/socket").permitAll();
                 auth.requestMatchers(HttpMethod.POST,"/api/v1/auth/challenges","/api/v1/auth/social").permitAll();
+                auth.requestMatchers(HttpMethod.POST,"/api/v1/auth/apple/mobile/start","/api/v1/auth/apple/mobile/callback","/api/v1/auth/apple/mobile/exchange").permitAll();
                 auth.requestMatchers("/api/v1/auth/sms","/api/v1/auth/sms/*/verify","/api/v1/auth/register").hasAuthority("ONBOARDING");
                 auth.requestMatchers("/api/v1/auth/logout").authenticated();
                 auth.requestMatchers("/api/v1/**").hasAuthority("ACTIVE");

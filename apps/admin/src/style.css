@@ -1,0 +1,9 @@
+@import '../../../design/system/tokens.css';
+@import '../../../design/system/components.css';
+body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-sans);}
+main{margin:auto;padding:var(--space-5);}
+.card,.list{margin-bottom:var(--space-5);}
+textarea{min-height:var(--space-12);}
+button:disabled{opacity:.5;}
+
+
