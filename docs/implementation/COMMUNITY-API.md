@@ -48,10 +48,14 @@
 
 STOMP `/api/v1/chat/socket`: CONNECT native `Authorization: Bearer <session>`, `/topic/chat/<UUID>`만 구독. SEND는 금지하며 REST로 쓰고 PostgreSQL commit 후 방송한다. 단일 인스턴스 simple broker는 메시지 저장소가 아니다. 재연결은 DB sequence로 복구한다. 다중 인스턴스 fan-out·하트비트·운영 Origin 설정·실제 공급자와 실기기 검증은 별도 운영 검증이며 완료로 표시하지 않는다.
 
+브라우저 WebSocket은 기본 same-origin이다. 운영 웹앱은 API와 같은 Origin의 `/api/v1/chat/socket` 프록시를 사용하며 Upgrade/Connection 전달이 필요하다. 별도 개발 프리뷰 Origin은 서버 `CHAT_ALLOWED_ORIGINS=http://127.0.0.1:8766`처럼 명시한다. 쉼표 구분의 정확한 http/https Origin만 허용하며 wildcard·경로·query·fragment·userinfo·잘못된 port는 서버 시작 때 거부한다. 빈 설정은 기본 same-origin을 유지한다. 이는 HTTP CORS 설정과 별개이며 REST 인가/모임 권한을 넓히지 않는다. Native처럼 Origin 없는 연결은 기존대로 허용하고, 브라우저 허용 Origin도 STOMP bearer 인증이 필수다. 미허용 Origin은 handshake403이다. bearer를 URL query에 넣지 않는다.
+
 추가 구현 선택: 본문 10000자, 검색 100자, 그룹 제목 100자. 직접 DM 쌍은 하나의 방을 재사용한다. 빈 일반 방은 조회 때 지연 생성한다. 메시지는 불변이며 운영자 REMOVED와 버전 필드를 지원한다. 별도 보관 기간·read receipt·typing·메시지 검색·운영자 임의 그룹 강퇴를 승인된 기능으로 간주하지 않는다.
 
 
 ## 검증 이력
+
+- `movement-context-origin-green-01`: Community19/19 및 CommunityOrigin1/1 GREEN. 실제 브라우저 Origin 허용 handshake·허용 Origin의 STOMP 무인증 ERROR/인증 CONNECTED·미허용 Origin403과 기존 Native Origin 없음의 실제 STOMP 회귀를 함께 검증했다. exact origin 설정 검증은 wildcard/path/query/fragment/userinfo/잘못된 port를 거부한다. 같은 실행의 금융/은행 선택회귀까지 총44/44이며 실기기·운영 프록시 수락은 별도다.
 
 - `.superpowers/community-baseline.log`: 기반 Community4 + Reserve5 모두 GREEN (실제 PostgreSQL/HTTP/STOMP).
 - `.superpowers/community-audit-red.log`: 보완 전 11개 중 8개 실패, 목록/요청함/그룹/이력/편집/페이지 요구 이탈 확인.
@@ -68,4 +72,4 @@ STOMP `/api/v1/chat/socket`: CONNECT native `Authorization: Bearer <session>`, `
 - `.superpowers/checks/audited-integration-01/`: Community17 중16 GREEN/신규SOCIAL1 RED; Finance17·Platform17·FK동시성1 모두 GREEN, File4 중3 GREEN/원본사진스냅샷1 RED. 클래스별 결과를 보존한다.
 - `.superpowers/checks/community-final-02/`: **Community17 모두 GREEN, 실패0·오류0·skip0**, 40초. 실제 PG17·HTTP·WebSocket/STOMP, 보호된 그룹 이력/차단/나가기·닉네임·피드/공지/편집/댓글/좋아요·알림 신뢰 경로·날짜/페이지·금융접근 분리 검증. 같은 폴더 XML은 이후 Gradle 실행으로 덮어쓰지 않도록 아카이브했다.
 
-추가 후속 범위: `/me/contacts`는 같은 활성 모임·공유 확정 이벤트·활성 대화·팔로우 관계의 이미 허용된 식별자만 검색/페이지/차단 필터하여 제공하기로 root가 확정했다. 전역 사용자 디렉터리는 만들지 않는다. 이 새 picker API는 다음 담당 작업이며 현재 구현 목록에 포함하지 않는다. 모바일은 기존 members API로 허용된 사람을 선택할 수 있다. 선지출/담당 인계의 새 자금 책임 모델이 확정되면 홈은 해당 모듈의 canonical 할 일을 연결하며 자체 지급 산식을 추가하지 않는다.
+현재 `/me/contacts`는 같은 활성 모임·공유 확정 이벤트(주최자 포함)·상호 팔로우 관계의 이미 허용된 현재 활성 사용자 식별자만 검색/페이지/차단 필터하여 제공한다. 전역 사용자 디렉터리나 단순 대화 이력만으로 디렉터리 접근을 만들지 않는다. 모바일의 이름 선택기는 이 API와 정확 이벤트/모임 후보를 사용한다. 홈의 선지출/담당 인계 업무는 해당 모듈의 canonical 할 일을 연결하며 자체 지급 산식을 추가하지 않는다.

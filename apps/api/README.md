@@ -60,7 +60,7 @@ SMS: `SOLAPI_API_KEY`, `SOLAPI_API_SECRET`, `SOLAPI_FROM` 설정. 초기 발송�
 
 ## 통합 계약과 외부 연결
 
-최신 [요구 대조](../../docs/implementation/REQUIREMENTS-AUDIT.md), [금융](../../docs/implementation/FINANCE-API.md), [인계·적립](../../docs/implementation/RESERVE-API.md), [운영](../../docs/implementation/PLATFORM-API.md), [채팅·홈](../../docs/implementation/COMMUNITY-API.md), [파일](../../docs/implementation/FILES-API.md), [계좌](../../docs/implementation/BANK-ACCOUNT-API.md)를 따른다. 최신 전체 build는 실제 PostgreSQL17 테스트158개 통과·skip0이다. Flyway V1~V10 이후 Hibernate validate를 사용한다.
+최신 [요구 대조](../../docs/implementation/REQUIREMENTS-AUDIT.md), [금융](../../docs/implementation/FINANCE-API.md), [인계·적립](../../docs/implementation/RESERVE-API.md), [운영](../../docs/implementation/PLATFORM-API.md), [채팅·홈](../../docs/implementation/COMMUNITY-API.md), [파일](../../docs/implementation/FILES-API.md), [계좌](../../docs/implementation/BANK-ACCOUNT-API.md)를 따른다. 최신 전체 build는 실제 PostgreSQL17 테스트168개 통과·skip0이다. Flyway V1~V11 이후 Hibernate validate를 사용한다.
 
 `db`의 서비스 세션은 소셜 토큰 검증 및 신규 SMS 가입 후 발급한다. 각 요청의 현재 DB 권한을 확인한다. 테스트 대역·역할 seed·MobileScenarioHost는 test 소스에만 있고 실행 JAR에 포함하지 않는다. 입력 UUID나 클라이언트 역할로 인증하지 않는다.
 

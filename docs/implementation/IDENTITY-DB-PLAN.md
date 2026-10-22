@@ -1,5 +1,7 @@
 # 계정·모임·참가와 DB 구현 계획 — 이슈12
 
+이 문서는 PR20 당시 계획·실행 이력이다. 이후 모임장 승계·종료 후 실제 참석 정정/본인 합류 요청·정산 인계와 V11 거절/소개 계약이 추가됐다. 현재 요구/권한은 POLICY·IDENTITY-API·STATE-MODEL·REQUIREMENTS-AUDIT를 우선하며 아래 당시 미구현/거부 범위를 현재 기능으로 오해하지 않는다.
+
 정본: POLICY P02/P07/P09/P10, STATE-MODEL. 사용자 PR19 머지 및 다음 이슈 구현 지시. PR19를 develop71251b3에 머지했고 issue/12-identity에서 기존 폴더를 유지해 직접 실행한다. Java25/Boot4.1.1/Gradle9.8.2 유지.
 
 ## 설계

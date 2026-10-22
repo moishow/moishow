@@ -27,6 +27,7 @@ class FileService implements AttachmentAccess {
  @Transactional(readOnly=true) public Download read(Actor a,UUID id){var f=db.find(FileModels.Blob.class,id);require(!f.status.equals("DELETED"),404,"FILE_NOT_FOUND");require(f.ownerId.equals(a.userId())||linkedAccess(a,f),403,"FILE_ACCESS_DENIED");return new Download(storage.get(f.objectKey),f.contentType);}
  boolean linkedAccess(Actor a,FileModels.Blob f){
   if(f.scope.equals("POST")){
+   if(f.clubId==null&&f.eventId==null&&f.contentType.startsWith("image/")&&!db.list(Models.Club.class,"from Club where imageFileId=?1",f.id).isEmpty())return true;
    var reader=content.getIfAvailable();var moderation=platform.getIfAvailable();if(moderation!=null&&moderation.assignedFileEvidence(a,f.id))return true;if(reader==null)return false;
    for(UUID post:sql.queryForList("select post_id from community_post_photo where file_id=?",UUID.class,f.id))if(reader.canReadPost(a,post))return true;return false;
   }

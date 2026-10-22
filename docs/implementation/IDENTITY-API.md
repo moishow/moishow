@@ -41,17 +41,33 @@ SMS 검증은 전화번호 문자열 제출과 별개다. 다른 소셜의 동�
 | GET /rounds/{id}/participation | 없음 | 본인 참가 상태·id·차수version 재조회, 다른 사용자는404 |
 | POST /events/{id}/rounds | capacity1~10000·closesAt·cancellationFee(생략0)·version(이벤트) | 활성 부원인 해당 주최자 |
 | POST /rounds/{id}/participations | version(차수) | 마감 전 정원 내CONFIRMED/초과WAITLISTED, 마감 후LATE_REQUESTED |
-| POST /rounds/{id}/participations/{participationId}/approve | version(차수) | 해당 주최자, LATE_REQUESTED만·정원/블랙/소속 재검사 |
-| POST /rounds/{id}/participations/{participationId}/cancel | version(차수) | 본인만, 확정 이력/고지비 보존, 실제 금액 청구는13에서 연결 |
+| POST /rounds/{id}/participations/{participationId}/approve | version(차수) | 종료 전 활성 원주최자, LATE_REQUESTED만·정원/블랙/소속 재검사. 종료 후 현 정산담당자 또는 현재 활성 원주최자+필수 사유, 취소차수/블랙/소속 재검사·과거 사실 정원이유 거부 안 함 |
+| POST /rounds/{id}/participations/{participationId}/cancel | version(차수) | 본인만, 확정 이력/고지비 보존, 실제 금액은 금융 원장의 고지비/실확인 기준으로 연결 |
 
 모임 쓰기는 모임version을 반환한다. 차수 추가는 새 차수version과 갱신된 부모eventVersion을 각각 반환한다. 다음 차수 생성에는eventVersion, 참가 요청에는version을 사용한다. 참가 쓰기는 차수version을 반환한다. 참가 응답의version은 참가 레코드 내부 버전이 아니라 잠근 차수version이다. 이벤트 생성 응답version은 새 이벤트version이므로 모임 후속 쓰기는 모임을 다시 조회한다.
 
-정산 담당은 주최자와 별도로 저장한다. 일반 모임 관리자가 이벤트 정산 쓰기를 자동 얻지 않는다. 모임 탈퇴 후 담당 권한/과거 확정 참가의 자기 정산 접근을 유지하고 일반 모임 목록 접근은 제거한다. 아직 금액 원장/실제 정산 데이터가 없으며 이 판정은13의 접근 경계로 사용한다. 미확정 대기/합류 요청만으로 금융 접근을 부여하지 않는다.
+정산 담당은 주최자와 별도로 저장한다. 일반 모임 관리자가 이벤트 정산 쓰기를 자동 얻지 않는다. 모임 탈퇴 후 담당 권한/과거 확정 참가의 자기 정산 접근을 유지하고 일반 모임 목록 접근은 제거한다. 영속 금융 원장과 연결되어 자기 요청·실확인·환불·계산 근거를 같은 관계로 제한한다. 미확정 대기/합류 요청만으로 금융 접근을 부여하지 않는다.
 
-## 명시적 후속 범위
+## 현재 구현과 외부 수락
 
-운영 소셜/SMS 키 및 실제 사용자 수신 검증, 프로필 수정·계정 삭제/복구·모임 소유권 승계·해산/정산 인계 UI/API, 비용 변경 재동의·대기 자동 승격·취소 후 재신청 정책은 별도다. OWNER 탈퇴는 승계 미구현 동안 거부한다. 차수 종료 후 새 합류 거부, 기존 참가 중복 요청은409; 재시도는같은key로 수행한다. 서버가 임의로 대기자를 확정시키거나 납부 미완료를 참여 취소하지 않는다.
+프로필 수정·계정 삭제 업무가드·모임장 승계·해산/정산 인계·비용 재동의는 현재 API로 연결했다. OWNER 탈퇴는 실제 소유권 승계 완료 후 가능하다. 종료 후에도 본인 LATE_REQUESTED를 받아 현 정산담당자 또는 현재 활성 원주최자가 명시 사유와 실제 참석 사실을 확인해 승인할 수 있다. 신규 무관 사용자를 임의 추가하는 경로는 아니다. 기존 참가 중복 요청은409, 재시도는 같은key로 수행한다. 새 REJECTED 미확정 요청은 일반 금융 참석 정정으로 재승인/취소비 대상으로 바꿀 수 없다.
+
+대기 자동 승격·취소 후 임의 재신청은 수행하지 않고 서버가 납부 미완료를 참여 취소하지 않는다. 운영 소셜/SMS 실제 자격·수신·실계좌 어댑터와 공급자/실기기 수락, 소셜 계정 자체 복구는 구현된 앱의 안내/오류 처리와 구분한다.
 
 ## 근거
 
 [Spring SQL/JPA](https://docs.spring.io/spring-boot/reference/data/sql.html), [Spring JWT](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/jwt.html), [Kakao token-info](https://developers.kakao.com/docs/ko/kakaologin/rest-api#req-access-token-info), [SOLAPI HMAC](https://solapi.com/developers/api/authentication-api-key), [PostgreSQL Testcontainers](https://java.testcontainers.org/modules/databases/postgres/).
+
+## 앱16 소개·신청 결정 보완 계약
+
+CLUB_CREATE의 name/joinMode는 필수이며 description(1000자), region/category(각100자), imageFileId는 선택이다. 선택 텍스트는 strip 후 검사한다. GET /clubs·/clubs/{id}는 이 필드와 activeMemberCount(실제 ACTIVE 가입자 수)를 반환한다. 소개는 기존과 같이 가입 전 활성 사용자도 열람하며 지역/분류는 자유 텍스트다. 공개/비공개 flag·GPS·지도 권한은 추가하지 않는다.
+
+POST /clubs/{id}/metadata는 모임 version과 선택 description/region/category/imageFileId/clearImage를 받고 현재 OWNER/ADMIN만 갱신한다. null은 보존, 빈문자는 선택 텍스트 초기화, clearImage=true는 사진 연결 해제다. 새 대표사진은 요청자 소유 personal POST 이미지만 허용하며 정확한 club.imageFileId 연결만 소개 독자에게 재공개한다. 내부 게시물·증빙 파일 및 선택하지 않은 개인사진은 비공개 경계를 유지한다.
+
+POST /clubs/{id}/join에 선택 memo(1000자)를 받는다. GET /clubs/{id}/join-requests는 현재 관리자가 읽는 신청 memo/강퇴이력/버전을 포함한다. 기존 POST /clubs/{id}/members/{userId}/reject는 version·필수 reason(1000자)을 받으며 PENDING만 REJECTED로 처리한다. ACTIVE 부원을 거절할 수 없다. GET /clubs/{id}/join-history는 현재 OWNER/ADMIN에게 해당 모임 전체, 나머지 사용자에게 본인 이력만 반환한다. 신청/승인/거절을 SUBMITTED/APPROVED/REJECTED로 각각 기록한다. 가입 재신청은 기존 join 규칙을 따르며 거절을 블랙리스트로 취급하지 않는다.
+
+POST /rounds/{id}/participations에 선택 memo(1000자)를 받는다. POST /rounds/{id}/participations/{id}/reject는 version·reason을 받아 현재 활성 원주최자만 LATE_REQUESTED && everConfirmed=false를 REJECTED로 처리한다. 현재 정산 인수자 자격만으로 거절할 수 없으며 확정자/대기자를 선별 제외하지 않는다. 거절은 취소·노쇼·비용·금융/점수 이력을 만들지 않는다. 기존 차수+사용자 중복 신청409 규칙을 유지한다. GET /rounds/{id}/request-history는 현재 활성 원주최자에게 해당 차수 전체, 나머지 사용자에게 본인 이력만 반환한다.
+
+두 history 응답은 id·userId·status·memo·reason·createdAt·createdBy와 nickname/departed(신청자), actorNickname/actorDeparted(이력 작성자)를 가진다. 현재/마지막 모임 닉네임과 서비스 닉네임 fallback을 재사용하며 PENDING/REJECTED 신청자가 명시한 모임 신청 닉네임도 우선한다. 과거 로그의 본문은 보존하고 조회 때 현재 관계로 이름을 표시한다. 사유/메모는 이 제한된 history 및 정확 가입관리자 pending 큐에서만 노출하고 일반 모임 소개·부원목록·정산 담당자 참여목록에는 포함하지 않는다. 모든 새 POST에 기존 Idempotency-Key·리소스 version 규칙을 적용한다. 실제 검증 결과는 REQUIREMENTS-AUDIT를 따른다.
+
+탐색 GET /clubs/discover?q=&region=&category=&offset=0&limit=50은 현재 ACTIVE 모임 소개와 같은 필드/실제 activeMemberCount를 반환한다. q는 이름 부분 일치, region/category는 trim한 자유 텍스트의 대소문자 무시 정확 일치이며 각각 선택이다. 검색과 각 필터는 최대100자, 페이지 검증·정렬(name,id)은 기존 규칙이다. 공개/비공개 정책 결정을 대신하는 새 flag나 위치 권한을 만들지 않는다.

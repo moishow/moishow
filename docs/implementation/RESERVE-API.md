@@ -17,13 +17,15 @@
 |---|---|
 | GET /clubs/{id}/reserve | 활성 부원 또는 기존 보관 담당자. balance, available, unbackedAmount, fundsInTransit, 마스킹 계좌, 출처·목적·금액·처리자·일시·names·행동 허용 여부. 전체 예금주명·계좌번호는 제외 |
 | GET /clubs/{id}/reserve/transfer-instructions | 관리자 또는 해당 이벤트의 현 담당자가 처리 중인 DEPOSIT 맥락. 송금에 필요한 은행·예금주·계좌번호만 제공 |
-| GET /events/{id}/reserve-transfer-context | 현 이벤트 담당자만. clubId, reserveVersion, bankName, maskedAccount, sourceAvailable, maxTransferable, canDeposit. 모임 탈퇴자도 자기 의무를 처리하며 전체 적립금 잔액·내역은 읽지 못함 |
+| GET /events/{id}/reserve-transfer-context | 현 이벤트 담당자만. clubId, reserveVersion, bankName, maskedAccount, sourceAvailable, maxTransferable, canDeposit, custodianId/custodianNickname 및 해당 이벤트 DEPOSIT만의 deposits. 모임 탈퇴자도 자기 의무를 처리하며 전체 적립금 잔액·다른 출처·내역은 읽지 못함 |
 | POST /clubs/{id}/reserve/account | 모임장/관리자의 본인 계좌 검증·AES-GCM 암호화. 기존 보관 업무가 남으면 직접 교체 금지 |
 | POST /clubs/{id}/reserve/deposits | 현 이벤트 담당자가 해당 source earmark와 실제 보관금 한도에서 제안. 일반 환불을 적립으로 바꾸지 못함 |
 | POST /clubs/{id}/reserve/spends | 관리자 요청. REQUESTED는 가용액만 예약하고 잔액을 바꾸지 않음 |
 | POST /clubs/{id}/reserve/reversals | 관리자가 원 이벤트의 확정 적립액에서 미완 반환을 뺀 한도로 실제 반환을 요청 |
 
 entries/{entryId}/sent는 현 이벤트 담당자의 적립 실제 송금, /confirm은 보관 담당자의 실제 입금이다. CONFIRMED 때 적립 잔액을 증가시킨다. 인계받은 미송금 제안은 새 담당자가 이어 처리하고 createdBy와 실제 sentBy를 분리한다.
+
+좁은 context의 deposits는 id/version/amount/purpose/status/createdAt/sentBy/sentAt/confirmedBy/actualAt/canMarkSent/canConfirm만 제공한다. 재시작 후 PROPOSED·TRANSFER_PENDING과 완료 확인을 이어 읽으며, 원 거래 reference/예금주명/전체 잔액은 포함하지 않는다. 담당자 변경 시 이전 담당자는 이 context를 읽지 못하고 새 현담당자가 기존 제안을 이어 처리한다. canMarkSent는 실제 송금 사실 기록 허용이며 canDeposit(신규 제안 가능 여부)와 구분한다.
 
 SPEND/DISSOLUTION의 /execute는 보관 담당자의 실제 출금 확인이며 그때 잔액을 차감한다. 본인 요청도 실제 거래가 필요하다. REVERSAL의 /execute는 TRANSFER_PENDING으로 잔액만 차감하고, 당시 실제 수령 대상인 이벤트 담당자가 /confirm해야 COMPLETED와 source earmark 해제를 기록한다. 실제 수령 전 이벤트 현금을 늘리지 않는다. /cancel은 PROPOSED/REQUESTED만 허용한다.
 
@@ -85,6 +87,8 @@ GET/POST /events/{id}/custody-transfers는 기존 실제 이동 원장의 CUSTOD
 현재 거래 중복은 공통 finance_bank_transaction의 ACTOR_FALLBACK scope+reference로 막는다. 동일 담당자의 서로 다른 실제 계좌가 같은 reference를 쓰는 경우를 분리하지 못한다. 공급자의 공식 은행코드/안정된 계좌 identity 계약이 없으므로 reserve 행 ID나 임의 문자열을 verified-bank namespace로 만들지 않는다. 기본 BankOwnershipVerifier는503이며 실제 공급자 어댑터·실계좌 검증은 남은 구현/환경 항목이다. 테스트의 검증 공급자는 명시적 테스트 대역이다.
 
 ## 검증 이력
+
+- `movement-context-origin-green-01`: Reserve22/22·Community19/19·CommunityOrigin1/1·Bank2/2 실제 PG/HTTP/WebSocket 선택 회귀44/44 GREEN(실패0·오류0·스킵0). 탈퇴 현담당자의 재시작 적립 행/완료 확인, 정확 인계 안내의 역할·미수락·최신명세·은행미등록·송금후거부, 타참가자 입금→실제 현금 인계→선지출 일부 반환 안내, stale 인계 반환과 정정 후 보관금 추가 전달 안내를 포함한다. 이후 추가한 custodian/양쪽0원 안내/no-store·일반 계좌 비노출, 다른 이벤트의 deposit 미노출 및 공통 반환 SENT 안내 거부는 root 최종 통합 재실행 대상이며 이44개 성공에 포함하지 않는다.
 
 - funding-reserve-red-02: 없는 현금 명세를 받아들이는 실제 HTTP RED. advance fixture는 이전 지급자 필수 조건에서 먼저 실패하여 다음 실행에서 명시 지급자로 수정했다.
 - reserve-audit-red-03: 9개 중4개 RED. 신규 advance route 부재, 없는 현금 명세, 실제 보관 인계 중 available 재사용을 재현했다.

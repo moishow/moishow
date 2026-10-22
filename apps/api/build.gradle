@@ -50,3 +50,12 @@ tasks.register('mobileScenarioHost', JavaExec) {
 	mainClass = 'com.moishow.identity.MobileScenarioHost'
 	maxHeapSize = '768m'
 }
+
+tasks.register('exportMobileScenarioClasspath') {
+	dependsOn testClasses
+	doLast {
+		def target = file('../../.superpowers/mobile-scenario/runtime-classpath.txt')
+		target.parentFile.mkdirs()
+		target.text = sourceSets.test.runtimeClasspath.asPath
+	}
+}

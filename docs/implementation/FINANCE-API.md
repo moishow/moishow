@@ -21,7 +21,7 @@
 | POST /rounds/{id}/cancel | round version, reason. 해당 금융 담당/주최 권한, 전원 취소·0원·HOST_CANCELLED. 기존 실제 납부는 환불 의무로 남는다. |
 | POST /rounds/{id}/participations/{pid}/no-show | round version, reason. 시작 후 실제 노쇼 기록, 동의한 취소 비용과 같은 비용. |
 
-기존 참가 요청·승인·본인 취소는 identity 경로를 유지한다. 마감 후 승인 시 저장된 차수 조건으로 신규 인원에게만 요청한다. 종료된 과거 참가 누락은 본인 요청+현재 조건 동의→주최자의 사유 있는 실제 이력 승인으로 처리한다. 임의의 관계없는 사람을 주최자가 강제로 추가하지 않는다.
+기존 참가 요청·승인·본인 취소는 identity 경로를 유지한다. 마감 후 승인 시 저장된 차수 조건으로 신규 인원에게만 요청한다. 종료된 과거 참가 누락은 본인 요청+현재 조건 동의→현 정산담당자 또는 현재 활성 원주최자의 명시 사유 있는 실제 이력 승인으로 처리한다. 임의의 관계없는 사람을 주최자가 강제로 추가하지 않는다.
 
 최초 등록 뒤 본인 취소는 원래 참석/비용을 즉시 바꾸지 않고 비공개 정정 요청을 만든다. 참가 응답에 correctionRequestId/correctionRequestStatus/financeVersion이 추가된다. 실제 담당자가 원본 보존 정정을 하고 해당 사건의 revision과 결과를 연결한다. 미응답 동의는 자동 취소·새 비용 적용 사유가 아니다.
 
@@ -99,3 +99,5 @@ P12는 필요한 은행 납부와 실효 PERSONAL 기여를 합쳐 실제 시각
 기존 private report DTO는 `allowedAllocationKindsByRound:{roundUUID:["ATTENDANCE","CANCELLATION","HOST_CONTRIBUTION"]}` 중 실제 허용되는 차수/종류만 포함한다. 배열은 예시이며 납부자의 원주최/참가/취소 관계 및 현재·불변 부담 근거로 줄어든다. 검증과 동일 helper를 사용하고 증빙/보고서 읽기 권한은 확대하지 않는다. 과거 VERIFIED 자료의 processedBy가 없으면 보관자를 추정하지 않고 funding.ready=false를 반환한다.
 
 추가 리뷰 검증: `backend-review-green-profile-red`에서 개인시각 정정 양방향·다른 참가자/HOST 점수/감사 보존·허용 배분 DTO의 음성 사례를 포함한 Finance36개와 Platform18개가 통과했다. 나머지 원주최자 사례는 모임장이 볼 수 있는 전체 요청 중 첫 행을 선택한 fixture 오류(OWN_REQUEST_ONLY403)를 납부자 ID 선택으로 수정한 뒤 `finance-host-selection-green` 단일 회귀 GREEN으로 확인했다. 이 사례는 HOST hint·초과입금150/의무100/환불50·비용0 정정 뒤 원배분 시각정정/환불150·PARTICIPANT 점수 없음까지 확인한다. 원래 요청 검증/금액/읽기 권한은 완화하지 않았다. 최종 전체37개 및 전체 서버 build는 root 통합 실행을 따른다.
+
+앱16 가입/합류 거절 경계: `REJECTED && everConfirmed=false`는 generic `participations/{pid}/correct`로 CONFIRMED/CANCELLED/NO_SHOW로 재분류할 수 없다(409). 거절된 미확정 요청을 금융정정으로 재승인하거나 취소·노쇼 비용/점수 대상으로 만들지 않는다. 다른 기존 실제 참석 정정 경계는 유지한다. 거절 후 실제 참석 사실이 뒤늦게 확인된 경우의 별도 절차는 미결이다.

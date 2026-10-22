@@ -310,3 +310,92 @@ P09의 은행 identity 미확정 원장에 맞춰 reserve_entry 중복 범위도
 최종서버근거: full-server-final-01에서최신V1~V10·Profile3·Finance37·Reserve20·Platform18·Community18·File6·Bank2·Apple3과기존정산/기본경계전부를함께실행해158/158통과(실패0·오류0·skip0), Gradle build/JAR생성성공. 독립P2 fix-closure에서도남은구체P1/P2없음확인. 실제공급자/단말/배포와앱57흐름QA는별도이며코드완료와혼동하지않는다. 운영자웹의JSX는원기술명세React/TypeScript/Vite와달라strict TSX로정리하고동일동작의타입검사+Vite빌드통과했다. 실제버전은공식npm registry조회TypeScript7.0.2/@typesReact19.3.0으로확인·lockfile고정,별도앱QA전이다.
 
 기술명세의 presigned URL/Redis/기계OpenAPI 표현은실제현재구현과구분한다. 현재파일은철회가능한실시간권한검사bearer프록시이며Redis캐시는없고금액/요청제한을DB로검증한다. 기계OpenAPI는아직없고구현계약Markdown/DTO가현재정본임을명시한다. 공개스펙/인프라후속을현재완료로표시하지않으며관련외부/운영준비이슈정리에서추적한다.
+
+## 앱16 모임 소개·가입/합류 요청 계약 대조 — 구현 전 2026-10-22
+
+POLICY P02/P03·모임 시나리오·STATE-MODEL·issue16(ISSUES.md)·MOBILE-APP.md와 실제 screen-catalog의 CLUB_CREATE/CLUB_PREVIEW/JOIN_REVIEW/JOIN_LATE를 대조했다. 현재 서버는 이름/가입방식만 저장하고, 가입 승인/합류 승인만 제공하여 소개·인원 및 거절/이력/메모가 빠져 있다. 이름·가입방식 필수는 유지하며 소개/지역/분류/대표이미지는 선택으로 보강한다. 지역·분류는 자유 텍스트 메타이며 GPS/지도·새 개인정보 권한을 추가하지 않는다. activeMemberCount는 현재 ACTIVE membership 실제 수이며 신청/탈퇴/강퇴 인원을 세지 않는다. 공개/비공개 검색 정책은 사용자 미응답 상태를 유지하고 flag를 만들지 않는다.
+
+기술 결정: 선택 소개1000자, 지역/분류100자, 신청메모/거절사유1000자. 앞뒤 공백 제거 후 길이를 검사하고 선택 null/빈값은 비어 있음으로 처리한다. metadata 갱신은 null 보존/빈문자 지움, 대표사진은 clearImage=true 명시 해제로 한다. 개설·변경 시 요청자가 소유한 personal POST 이미지만 명시 선택하여 가입 전 소개 범위에 재공개한다. 해당 club.imageFileId의 정확 연결만 파일ACL에 추가하고, 내부 게시물/금융/분쟁 증빙 또는 선택하지 않은 개인사진 접근을 넓히지 않는다. 모임장·현재 ADMIN만 수정하며 이미지 교체는 새 요청자 소유 사진이어야 한다.
+
+가입 거절은 PENDING만, 합류 거절은 현재 active 원주최자만 LATE_REQUESTED && everConfirmed=false에 허용한다. 정산 인수자에게 이벤트 운영 거절권을 부여하지 않는다. 거절은 REJECTED 상태로 보존하며 취소/노쇼/비용/점수로 연결하지 않는다. 신청·승인·거절 이력은 별도 행으로 남기고 신청메모/사유는 본인 또는 정확 현재 가입관리자/이벤트주최자에게만 반환한다. 일반 소개/부원목록/정산담당자 참가목록에는 메모/사유를 노출하지 않는다. 가입 재신청은 기존 join 규칙대로 가능하며 초대·강퇴이력·블랙 우선순위가 유지된다. 합류 재신청은 기존 participation의 차수+user unique/409 규칙을 유지하여 임의 재오픈 정책을 발명하지 않는다. 거절과 영구 차단은 구별한다.
+
+ClubRequestApiTest 실제 PostgreSQL/HTTP 회귀3개를 먼저 작성했고 Gradle host lease 조율 후 RED를 확인한다. 이 절은 구현계획이며 검증 완료 주장이 아니다. 공급자503/실공급자·배포 한계는 변경하지 않는다.
+
+
+## 앱16 금융 조회·브라우저 채팅 계약 보완 — 2026-10-22
+
+PR21/develop743478a의 전체158개 검증과 별도로 앱 계약을 재대조했다. 탈퇴한 현 이벤트 정산 담당자의 reserve-transfer-context에는 해당 이벤트 DEPOSIT의 최소 이력만 추가한다. 다른 이벤트·전체 적립금 원장·잔액·원문 은행참조를 공개하지 않으며, 재시작 후 처리에 필요한 정확 custodianId/닉네임과 reserveVersion을 반환한다.
+
+인계·적립금 담당자 인계·선지출 반환·보관금 이전·인계 반환의 송금 안내 GET은 각 정확 송금자와 불변 수령자, 현재 상태/금액/실제 보관금/최신 명세/후보 자격을 검사한다. 예금주 검증된 계좌만 내부 PersonalBankService로 조회하며 no-store를 적용한다. GET으로 송금 사실을 만들지 않는다. 0원·이미 송금/완료·오래된 명세는 안내를 거부하고 미등록 계좌는409로 표시한다. 선지출 요청의 가용금액 계산에서는 자기 요청의 예약금만 한 번 제외해 이중 차감하지 않는다. client 계좌 ID로 거래 중복 범위를 바꾸지 않는다.
+
+브라우저 채팅은 기본 same-origin을 보존하고 명시 CHAT_ALLOWED_ORIGINS의 정확 http(s) origin만 추가한다. wildcard/path/query/userinfo는 거부하며 별도의 STOMP bearer 인증은 계속 필수다. Native Origin 없음은 기존 동작을 유지한다. 광범위 CORS/무인증 채팅으로 우회하지 않는다.
+
+mobile-contract-followups-red-01의 신규6개는 실패6/오류0이다. 좁은 context 필드 누락, 신규 송금 안내 route 없음, 허용 origin handshake 실패를 확인했다. 가입 메모/합류 route도 미구현 차이를 확인했고 소개 이미지503은 파일 fixture 원인을 먼저 분리한다. 이번 보완은 별도 GREEN/전체 회귀 검증 전이다.
+
+앱16 탐색 기술 결정: 기존 가입 전 소개와 동일한 ACTIVE 모임 집합에서 q는 이름 부분 일치, region/category는 trim 후 대소문자 무시 정확 일치로 필터한다(각100자). 지역·분류별 별도 GPS/지도 taxonomy는 만들지 않는다. 검색 결과는 소개 메타와 ACTIVE 인원 요약만 반환하며 내부 글/명단/신청 메모를 포함하지 않는다. 기존 offset/limit/이름+id 정렬을 유지한다.
+
+실제 RED1: mobile-contract-followups-red-01 ClubRequest3개 실패/오류0. 가입 메모 기대값 누락과 late reject 미구현404를 확인했다. 소개 이미지 사례의503은 테스트 프로필을 file-test에서 club-request-test로 분리하면서 LOCAL 저장 허용 dev 프로필을 빼먹은 fixture 문제였다. 해당503을 metadata 구현 누락 증거로 세지 않는다. 테스트 dev 프로필만 보강하고 소개 필드/실제 서로 다른 지역·분류 검색 반례 회귀를 추가하여 다시 RED를 확인한다. 운영 파일스토리지/개인사진 권한을 완화하지 않았다.
+
+
+후속 선택 검증 `movement-context-origin-green-01`: Bank2/Community19/Origin1/Reserve22 총44개 실패0·오류0·생략0, Gradle 성공5분36초. 신규 custodian0원/은행정보 비공개/no-store 및 다른 이벤트 이력 격리·반환 SENT 추가 반례는 이 실행의 bytecode 뒤 추가되어 최종 전체 회귀에 남는다. 실행하지 않은 테스트를 GREEN으로 합산하지 않는다.
+
+교차 검토에서 새 REJECTED && !everConfirmed도 Finance.correctParticipation의 일반 참석 정정을 통해 everConfirmed=true 및 취소/노쇼 비용 대상으로 변환할 수 있음을 확인했다. P02 합류 거절과 P07 금융 승계는 일반 참가 승인 권한을 주지 않는다. 새 거절 상태에 한해 generic 금융 참석 정정을 거부하는 최소 회귀를 먼저 추가한다. 기존 WAITLISTED/LATE_REQUESTED의 실제 사실 정정 경로는 이번 수정으로 임의 제한하지 않는다. 거절 뒤 실제 참석이 뒤늦게 확인된 경우 별도 재승인/사실 확인 정책은 미확정으로 남기고 금융 정정으로 우회하지 않는다. 실제 RED 이후 조건을 수정하고 기존 Finance 전체를 재검증한다.
+
+
+앱 독립 검토 P2: 인계 후 과거 입금150원으로 정정되어 원담당자에게50원이 새로 남고, 추가 보관금 이전 이력이 아직0건이면 cashTransfers.names가 비어 있었다. 앱은 이미 응답에 있는 responsibleId의 닉네임을 필수로 읽으므로 최초 이전 요청에 접근할 수 없다. UUID/가짜이름 fallback 대신 서버가 현재 담당자의 기존 공개 닉네임을 names에 항상 포함하는 계약을 최소 보완한다. 기존 실제 인계→실수령→실입금 정정 회귀에서 빈 이력의 현재담당자 이름을 먼저 검증하여 실제 RED를 확인한다. 조회 관계·잔고·송금 권한은 넓히지 않는다.
+
+REJECTED 교차 경계 결정: 기존 Finance.correctParticipation의 generic 실제 참석 정정은 새 REJECTED && everConfirmed=false 요청을 CONFIRMED/CANCELLED/NO_SHOW로 바꿔 거절 재승인·취소비 부과를 할 수 있는 경로였다. root 재대조 승인에 따라 이 정확한 새 상태만409로 제한하고 기존 확정 이력·WAITLISTED/LATE_REQUESTED의 기존 사실 정정 규칙은 바꾸지 않는다. 현재 원주최자 또는 정산 인수자가 거절된 요청을 generic 금융정정으로 재승인하지 않는다. 거절 후 실제 참석 사실이 뒤늦게 확인된 경우의 별도 사실 추가 절차는 미결로 남긴다. 요청자·사유·권한을 생략한 임의 운영권 확대를 만들지 않는다. ClubRequestApiTest에 현재 host/financialsuccessor × 세 상태의 HTTP 회귀를 먼저 추가했다.
+
+
+앱 독립 검토 P2 추가: (1) finance_editor의 마지막 배분 행 강제가 실입금0원 정정의 allocations=[]와0원 지출 fundings=[]를 막는다. 0원일 때 명시적 빈 배분을 허용하고 양수·부호 정정의 합계/출처 검증은 유지한다. (2) 세션 만료/401의 push.dispose만으로는 A계정 서버 device/FCM 소유가 해제되지 않아 B계정 등록409 및 A의 오래된 푸시 전달 위험이 생긴다. 계정 소유와 늦은 응답을 구분하고, 만료된 bearer로 강제 다른 계정 토큰을 빼앗지 않으며 기기 FCM 토큰 폐기/재발급 등으로 분리한다. 둘 다 실공급자 없이 앱 회귀로 재현·수정하고 이후 실제 단말 수락은 별도로 남긴다.
+
+새 optional record 필드는 Commands의 직렬화 bodyHash에 null 키를 더할 수 있어 이전 앱/서버 버전의 같은 멱등키 재시도가409가 될 수 있다. 현재 실배포 완료를 주장하지 않는 개발 단계이며 운영 장애로 단정하지 않는다. 이전 fingerprint와 새 null 필드의 호환 회귀 또는 정확 새 component만의 null 제외 방식을 후속 검토하며 Commands 전체 canonical fingerprint를 임의 변경하지 않는다.
+
+### 앱16 소개·신청 결정 최종 선택 회귀 근거
+
+`club-metadata-meaningful-red-02`는 테스트 dev LOCAL fixture 복구 후 ClubRequest4개 중1개 GREEN·3개 정확RED였다: activeMemberCount 기대2/실제0, 소개 기대 ‘강변 산책’/‘함께 걸어요’ 실제빈값. `club-filter-finance-rejection-red-03`에서는 소개/정확 대표이미지 ACL/가입/합류3개 GREEN, 실제 region/category 검색 기대1/실제3 및 거절된 미확정 요청의 generic 금융정정 기대409/실제200 두 개가 정확RED였다(오류0).
+
+최소수정 후 `.superpowers/checks/club-contract-green-reserve-names-red-04/TEST-com.moishow.identity.ClubRequestApiTest.xml`은 실제 PostgreSQL17/HTTP5개 모두 GREEN(실패0·오류0·skip0)이다. 선택 소개 trim/길이·실제 ACTIVE 인원·정확 personal POST 대표이미지의 소개 재공개/미선택·내부사진·타인사진 거부/연결 해제 접근 회수, 가입거절 admin권한·이력 privacy·동일key 무중복·재신청·확정부원거절불가, late 요청 메모·current financial successor 거절권 없음·일반 참가목록 비노출·확정참가자 제외 금지, 실제 서로 다른 지역/분류 모임 필터, host/현재 financial successor 각각이 세 상태(CANCELLED/NO_SHOW/CONFIRMED)로 generic 금융정정하는 우회409와 everConfirmed=false/요청·참가자 점수 없음 보존을 확인했다.
+
+동일 실행의 별도 Reserve1개는 root가 추가한 ‘최초 보관금 인계 목록에도 현재 담당자 이름 필요’ 회귀로 names.empty 기대false/실제true의 정확RED였다. 따라서 이 실행 전체 build를 GREEN으로 표시하지 않는다. API Gradle lease를 root에 반환했으며 기존 Finance 전체·최종 서버 통합 build·실제 앱57흐름 QA는 root의 후속 근거를 따른다. 실공급자·실은행·배포·공개/비공개 검색정책 미응답 한계는 그대로다. Vault는 root가 중앙 갱신한다.
+
+
+HISTORY 화면 대조: 원안의 핵심은 개인합산·차수근거·실입금·차액과 탈퇴 후 원본/후속 처리 유지다. 별도 기간/상태 필터는 명시 요구가 없어 임의 기능으로 늘리지 않는다. 목록은 실제20개씩 더 보기, 각 행 확장 때만 금융 원본을 조회해 대량 N+1을 피한다. funding.ready의 정확 session.userId position만 요약하고, 미확정 분류는 안내/원본 진입으로 유지한다. 본인이 금액대상이 아닌 주최/담당 이력은 그 사실을 표시하며 다른 사람 첫 position이나 누락값0원을 사용하지 않는다. TODO도 종류별 업무/확인대기 분리·정확 자원 진입을 검증하며 원안에 없는 필터를 필수로 만들지 않는다.
+
+GitHub issue16을 현재57개화면/12개와이어플로우/JPEG 및 Java25·Gradle실제계약·서버PR21완료/앱미완·실공급자/단말수락분리로 갱신했다. 앱 인수기준을 없애거나 실공급자검증을 성공으로 표시하지 않는다.
+
+
+운영 웹 대조 P2: Platform P11의 정확 담당자 인수/회수 계약은 handlerId 유무가 아니라 canClaim/canReadDetails/canDecide로 응답한다. 앱은 flags를 따르지만 admin main.tsx는 handlerId가 있으면 무조건 상세 GET을 호출해, 기존 담당자 권한 회수 후 canClaim=true인 다른 운영자가 인수할 수 없었다. 로컬 명시 계약 대역18081(실제공급자/권한없는실사용자자료아님)으로 handlerId=revoked-handler, canClaim=true/canReadDetails=false를 반환하여 실제브라우저 클릭의 CASE_ACCESS_DENIED/GET1·claim0 RED를 확인했다. canClaim에 따라 명시 담당하고 열기/POSTclaim을 선택하고 최신 capabilities를 반영한다. 처리 폼도 canDecide만 허용하며 서버 검사를 대체하지 않는다. 기존실제PG TEST서버의 운영자 목록/상세 조회는 별도로 성공 확인했다.
+
+
+운영 웹 재인수 fix 검증: 동일 계약 대역의 canClaim=true/기존handler 존재 응답을 수정 후 명시 담당하고열기로 POSTclaim(version0)하여 상세version1/새handler를 열었다. 상태 claimed=true/gets1/claims1(수정전 GET1은 보존)이며 캡처 operator-web-reclaim-green.jpg에 보존했다. 최신 strict TypeScript/Vite production build 통과. 실제PG서버의 기존담당사건 목록/상세·snapshot·진행이력 열람도 별도확인했으나 이 대역을 실제운영자 회수DB검증으로 주장하지 않는다.
+
+
+최신 통합 결과(2026-10-22): full-mobile-contract-server-01 Java25 Gradle build/JAR 성공7분46초, 최신 V11/정확 names 수정과 모든 회귀168개 실패0·오류0·생략0. Finance37/Reserve23/ClubRequest5/Community19/Origin1을 포함한다. 서버 금융·identity 및 운영웹4변경/names1줄의 독립 closure 검토에서 남은 구체 P1/P2가 없었다. 최신 운영웹 strict TypeScript/Vite build 및 재인수 브라우저 GREEN도 별도 확인했다. 앱0원/푸시 fix·57흐름·최신APK/실단말/공급자 수락은 별도 진행이며 서버168GREEN을 앱 완료로 확대하지 않는다.
+
+
+앱 PR 검증 계획과 기존 CI를 대조하니 서버/Node참고/운영웹만 있어 Flutter를 검증하지 않았다. 최신 로컬과 같은 Flutter3.47.7 및 Android Java21로 analyze/test/web/debugAPK CI 작업을 추가한다. 서버 Java25는 별도 job에서 유지한다. Flutter 설치 action의 실제 action.yaml과 v2의 현재 commit1a449444c387b1966244ae4d4f8c696479add0b2를 공식 upstream GitHub API로 확인하고 commit에 고정했다. 이 작업은 CI설정이며 원격 실행 결과 확인 전 성공으로 주장하지 않는다. iOS/실공급자/서명배포 수락을 대체하지 않는다.
+
+
+후속 앱 표기 계약 대조: join/late 이력은 정확 본인/관리자/원주최자에게만 반환하지만 DTO에 userId/createdBy만 있어 PENDING/REJECTED/탈퇴 신청자의 이름을 ACTIVE 부원 목록으로 찾을 수 없었다. P10 닉네임 표시를 위해 같은 제한된 이력에 nickname/departed·actorNickname/actorDeparted를 추가한다. 신청자의 명시 모임 신청 닉네임과 기존 현재/마지막 닉네임 관계를 재사용하며 이력 본문·ID·접근필터는 보존한다. 예금주명·전역 디렉터리나 새 공개범위를 추가하지 않는다. HTTP 회귀 RED 후 최소 DTO 변경/선택 GREEN과 최종 CI 전체 검증으로 확인한다.
+
+RevisionComparison은 제공된 snapshot/afterSnapshot의 사용자 union과 정확 필드쌍만 읽어 비교한다. 원본/정정후 없는 사용자 기록은 기록없음, after자료없음은 명시하고 현재 원장으로 가짜 복원하지 않는다. 누락/잘못된 금액은 확인필요로 표시하며0원을 만들지 않는다. net은 선지출반영 순차액, refund는 일반환불로 구별하며 새 정산/델타를 계산하지 않는다. 별도 기간/필터·서버쓰기 없이 기존 원본 dialog에 통합한다.
+
+
+마지막 표시 DTO 검증: club-history-names-red-01에서 신청닉/late서비스닉 실제누락2개 RED 후 ClubService.decisionView만4표시필드 보강, club-history-names-green-02 실제PG ClubRequest5개 실패0·오류0·생략0/Gradle성공1분44초. 기존 전체168개는 그 직전 DTO이며 최신 표시 변경은 이 선택5개+최종 원격CI 전체로 구분 검증한다. DB/개인정보필터/원본결정 이력은 변경하지 않았다.
+
+현재 문서 감사에서 남아 있던 '앱미생성/금액원장없음/contacts다음작업/승계미구현/종료후합류무조건거부'는 실제 현재계약으로 정정했다. 과거 PR20의50개/초기51화면/Maven32개 기록은 날짜 있는 과거이력으로 보존한다. FILES-API에는 실제 PAYMENT scope와 명시 대표사진 정확연결 staged 예외를 반영했다. 미배포/실공급자·S3/실기기 한계는 계속 별도다.
+
+
+LEVEL 진입 대조: 서버는 같은 모임/확정 이벤트 관계(탈퇴·공개비부원 포함)의 레벨 조회를 허용하지만 앱은 ACTIVE 모임 목록의 본인 진입만 제공해 기존 관계자가 기능에 도달하지 못했다. 새로운 공개프로필/공유링크/전역검색 대신 기존 모임 멤버행의 해당 멤버 레벨 및 기존 이벤트/정산의 본인 활동레벨 진입으로 최소 보완한다. 이미 반환된 사용자/모임 ID만 사용하며 일반 미확정 구경꾼에게 접근권을 만들지 않는다. 서버 LEVEL_RELATION_REQUIRED는 그대로 적용하고 관계 회수/403을 안내한다. 자체 점수 계산/개인 상세 납부·분쟁 증빙 공개는 추가하지 않는다.
+
+
+최종 실제 GUI 인수에서 두 표시/접근성 누락을 추가 재현했다. NavigationBar 중앙+는 tooltip이 Semantics에서 제외되고 label이비어 스크린리더에 무명이었다. Semantics 이름0개 RED 후 아이콘의 명시 '정모·번개 만들기' label로 외형/동작을 유지하며 수정했다. 일반환불 SENT→수령CONFIRMED 실제 TEST API 전이는 성공했지만 참가상태 공통라벨 '참여 확정'을 잘못 재사용했다. 금융맥락 전용 '수령 확인 완료'/'송금 기록·수령 확인 대기'를 분리하며 참가 상태 전역라벨·금액·전이는 변경하지 않는다. 새 정책이 아닌 기존 완료 단계/접근성 의미 일치이며 회귀와 최종 빌드로 검증한다.
+
+운영웹 실제 POST QA의403은 test-only MobileScenarioHost HTTP CORS가8766만 허용한 설정 문제였다. 같은 /reports OPTIONS가 Origin8766→200,5173→403 Invalid CORS request로 원인을 확인했다. 실제 제품권한/생산CORS를 우회하지 않고 테스트 환경에 운영웹의 정확 loopback5173도 추가하여 실제 PG claim/progress 재검증한다.
+
+
+실제83 GUI에서 피드 탭이 /explore의 '모임탐색' 헤더·이름/지역/분류 폼을 먼저 표시하고 개인 Feed를 아래에 혼합한 것을 확인했다. catalog의 FEED(소셜 글/모집카드·POST/COMPOSE)와 EXPLORE(모임검색·소개)는 별도 원안이다. 새 기능을 만들지 않고 기존 Feed를 /feed의 주화면으로 재사용하고 모임찾기에서 기존 /explore로 이동하게 최소 라우트/위계를 정렬한다. 가입 전 내부 콘텐츠 필터와 서버 API는 그대로이며 피드 탭 실제 콘텐츠 회귀로 확인한다.
+
+
+커밋 인수: Flutter 최신86개/분석 GREEN 후 코드 동결했다. upstream Pretendard/PDF.js의 원문 라이선스에는 배포본 공백이 포함돼 있어 내용을 수정하지 않고 해당3개 라이선스/OFL만 whitespace 검증에서 제외한다. 소유 코드/일반 문서는 계속 diff --check로 검사하고 생성된 iOS project 끝의 중복 빈줄은 정리한다. 라이선스 문구·해시 검증된 vendor 원본을 숨기거나 실행 코드를 검사 제외하지 않는다.
