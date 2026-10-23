@@ -460,3 +460,23 @@ Flutter신규12회귀actualRED이후전체98/analyzeGREEN은중간snapshot이다
 CODEF 최종 로컬인수: codef-full-build-01 Java25 Wrapper build/JAR성공10분58초,18개JUnit report의196개실패/오류/skip0을root가직접합산했다. 앱은ownerbound최종101개63초/분석Noissues13.4초, exact최종TESTweb184.8초/prodweb243.3초/debugAPK129.9초성공이다. SHA256 411C880F9B5825C83AFD1B7F738448B1CEC2EC14D7926D27F951E018010558ED. 오답GET실패P2와최종창계정전환P2의실제RED뒤수정/전체GREEN을보존하며독립closure추가P1/P2없음을확인했다.
 
 실제최신101 TEST GUI에서새로고침후동일인증요청복구/남은4회→정답→원계좌정보재입력→최종등록을확인했다. 별도실API로등록전false/요청1건/AWAITING_CODE, 등록후true/version1/CONSUMED/미소비목록0을대조했다. 공급자만가상transport이며기존무조건성공verifier를제거하여운영서비스의proof소비를실행했다. TEST fixture seed도실REST계좌3단계/금융시나리오실행성공. 실제CODEF/실1원·실은행·실기기·운영승인은별도이며신뢰할수있는은행입출금namespace와레거시평문이행은미완으로유지한다.
+
+
+### 2026-10-23 첨부 선택 중 계정 전환 — 실제 후속 P2
+
+CODEF와분리한issue16재검토에서EvidencePicker.pick이photo.readAsBytes를기다린뒤현재Api로send해이전계정사진을새계정으로보내는경계를발견했다. stale_actor_forms_test는실제MoishowApp/router와실제Api.saveSession/clearSession/send/request/journal을사용했다(GET/wire·사진만대역). A프로필에서사진읽기보류→A로그아웃/실제login화면으로ProfileFieldsdispose확인→B로그인/실제AppShell→읽기완료시 /files가Bbearer로전송되고BuserId저널에Afixturebytes가남아야막힌다는assertion이실패했다. 실제RED1개이며생산코드는아직변경하지않았다. 일반ProfileFields/CommandForm은라우터가폐기해같은단순제출이재현되지않았으므로추측으로광범위수정하지않는다.
+
+요구P09/P10·FILES staged-owner·issue16세션/개인증빙인수기준과대조해위반으로판정했다. 계획은 ../superpowers/plans/2026-10-23-file-picker-session.md. 시작API/token을고정하고picker/bytes/API각await뒤mounted+동일token을확인하여다른계정저널/업로드및늦은controller/callback변경을막는다. 일반Api.send의첫await전owner캡처/저널후검사는그대로재사용한다. 새권한·scope·기한·환불규칙은추가하지않는다. CODEF PR24/25는동결하고별도issue/16-file-picker-session에서수정한다.
+
+
+첨부P2최소수정근거: earlypicker복귀후dispose의setState, 업로드응답뒤dispose된controller갱신, 실제router A→B파일전송3개가실제RED였고정상owner1개는GREEN이었다. 시작api/session을첫await전에고정한뒤각await직후mounted/API동일성/token/userId를검사했다. 전송직전부터Api.send의소유자캡처까지await가없다. 파일scope/크기/MIME/서버ACL·일반Api.send·일반폼은변경하지않았다. 개발의존성은기존잠금image_picker_platform_interface2.11.2를directdev로만명시해version/hash변경이없다. focused4/4·전체105/105·분석Noissues7.4초,독립closure추가P1/P2없음. 서버소스는CODEF196전체검증과동일하다.
+
+실GUI의Chrome파일주입제한은권한을변경하지않고인앱브라우저로대체했다. 기존101TEST번들에서프로젝트가상이미지를실제POST업로드/보호뷰어렌더/프로필저장하고실API상본인200·타부원403·image/png/no-store·219455bytes를확인했다. 이는기존정상owner경로근거이며최신105GUI는별도재확인한다. 첫후속APK가UserJAVA_HOME25를상속했음을발견해그결과는최종인수에서제외하고프로세스에만JDK21환경을명시하여재검증중이다. 사용자전역환경/Flutter설정은변경하지않았다. TEST컴파일기본build/web와운영출력을혼합하지않고최종TEST는별도build/test_web로보관한다.
+
+
+첨부후속최종로컬검증: 소스f12eda3에전체105회귀/분석Noissues, 생산웹142.8초, 실제JDK21 GradleDaemon경로확인한debugAPK224.3초, 별도build/test_web최종193.5초가통과했다. APK639744DACDDA94B17A46B0B4B080CACED0167CDE47E5702D75DCB6799E44FB43. 처음JDK25 APK626.9초와기본출력TEST86초는진단/중간근거로만보존하고정확최종인수와구분한다. 서버소스는동일하므로이미확인한Java196전체build근거를유지하며원격CI도전체검증한다. 보호뷰어와업로드정상경로의최신105실GUI를확인뒤해당근거를별도기록한다.
+
+
+최신105GUI도확인완료: 별도build/test_web재로드뒤같은TESTowner가새프로젝트PNG를선택/업로드하고프로필에저장했다. 기존101파일과다른fileId/profileversion3을확인했으며보호뷰어가정상렌더링했다. 실API본인200·타부원403·image/png/no-store·219455bytes를대조했다. 최신증거 apps/mobile/docs/screenshots/test-private-photo-viewer.jpg를보존한다. Chrome권한을바꾸지않고인앱브라우저를사용했으며가상사진·LOCAL저장소만사용했다. 이수정은서버파일권한/개인공개범위/새정책을변경하지않는다.
+
+통합선택: 별도issue16PR의exact-head CI를확인한뒤develop에병합한다. main이검증된develop의조상이고tree가검증source와같은경우비강제fast-forward로main을동일mergecommit에맞춘다(보호규칙이PR을요구하면일반main통합PR사용). 커밋재작성/branch삭제없음. 병합결과는GitHub PR·vault에기록하고동일코드의불필요한새promotion PR/중복검증을만들지않는다.
