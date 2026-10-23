@@ -43,7 +43,7 @@
 | LEVEL | [모임 레벨](../design/system/screen_v1/LEVEL.html) | 기록·설정 | 50점시작·0~100·역할별1회·실입금기준·보류/회복. |
 | PROFILE | [프로필](../design/system/screen_v1/PROFILE.html) | 기록·설정 | 사용자ID유지·예금주명별도·탈퇴후마지막닉네임표시. |
 | SETTINGS | [설정](../design/system/screen_v1/SETTINGS.html) | 기록·설정 | 필수정산강제푸시없음·알림함과업무기록유지. |
-| BANK | [계좌 등록·확인](../design/system/screen_v1/BANK.html) | 기록·설정 | 실제외부API미연동·형식검증·실패재시도·비밀값서버만. |
+| BANK | [계좌 등록·확인](../design/system/screen_v1/BANK.html) | 기록·설정 | CODEF 두 단계 인증·가입SMS와분리·미확인시자동재송금없음·목업은실제인증안함. |
 | ACCOUNT | [계정 관리](../design/system/screen_v1/ACCOUNT.html) | 기록·설정 | 담당업무완료또는실제인계후삭제·계산마감만으론불가. |
 | NOTIFICATIONS | [알림함](../design/system/screen_v1/NOTIFICATIONS.html) | 알림·채팅 | 소셜묶음·정산개별·딥링크권한/만료폴백. |
 | CHAT | [채팅](../design/system/screen_v1/CHAT.html) | 알림·채팅 | 4종통합·그룹초대수락전대화미공개·종류구분. |
