@@ -2,7 +2,7 @@
 
 정본은 POLICY P07/P08/P09와 issue14다. 선지출 반환 의무는 2026-10-22 사용자 후속 확정을 따른다. 중앙 결정 원장은 [REQUIREMENTS-AUDIT.md](REQUIREMENTS-AUDIT.md), 금액 계산 정본은 Finance.reconcile이다.
 
-실제 PostgreSQL Testcontainers 회귀 20개가 모두 통과했다(실패0·오류0·스킵0). 최신 증거는 .superpowers/checks/backend-review-green-profile-red/TEST-com.moishow.identity.ReserveApiTest.xml이다. 기본 적립·사용·해산, 선지출·자기 회수, 명세 변경 후 실제 수령·재수락·반환, 인계 후 정정 보관금, 정확 수령자 삭제 가드, 예금주명 비공개, 탈퇴 담당자 전용 적립 맥락을 포함한다. 같은 Gradle 실행의 다른 도메인 review RED는 별도로 남아 있어 전체 서버 통과를 뜻하지 않는다. 실은행 공급자 어댑터와 안정적인 은행 계좌 identity는 미구현이며 코드 테스트 통과와 구분한다.
+현재 전체Java25 Gradle build196개 실패/오류/skip0이며 Reserve23개·새BankVerification15개가 포함된다. 근거는 .superpowers/checks/codef-full-build-01의XML이다. 새CODEF증명의정확RESERVE/club·RESERVE_HANDOVER/handover바인딩과실제0원인계/역할회수후증명미소비/새예금주암호화·기존평문호환도검증했다. 공급자는대역이며실CODEF/실은행1원송금은미검증이다. 실제입출금계좌namespace는여전히문서화된ACTOR_FALLBACK이며계좌점유확인으로임의대체하지않는다.
 
 ## 금액과 원장 경계
 
@@ -18,7 +18,7 @@
 | GET /clubs/{id}/reserve | 활성 부원 또는 기존 보관 담당자. balance, available, unbackedAmount, fundsInTransit, 마스킹 계좌, 출처·목적·금액·처리자·일시·names·행동 허용 여부. 전체 예금주명·계좌번호는 제외 |
 | GET /clubs/{id}/reserve/transfer-instructions | 관리자 또는 해당 이벤트의 현 담당자가 처리 중인 DEPOSIT 맥락. 송금에 필요한 은행·예금주·계좌번호만 제공 |
 | GET /events/{id}/reserve-transfer-context | 현 이벤트 담당자만. clubId, reserveVersion, bankName, maskedAccount, sourceAvailable, maxTransferable, canDeposit, custodianId/custodianNickname 및 해당 이벤트 DEPOSIT만의 deposits. 모임 탈퇴자도 자기 의무를 처리하며 전체 적립금 잔액·다른 출처·내역은 읽지 못함 |
-| POST /clubs/{id}/reserve/account | 모임장/관리자의 본인 계좌 검증·AES-GCM 암호화. 기존 보관 업무가 남으면 직접 교체 금지 |
+| POST /clubs/{id}/reserve/account | 모임장/관리자의 본인 계좌. 새verificationId의 RESERVE/clubId 증명을 일회 소비하고 AES-GCM 암호화. 기존 보관 업무가 남으면 직접 교체 금지 |
 | POST /clubs/{id}/reserve/deposits | 현 이벤트 담당자가 해당 source earmark와 실제 보관금 한도에서 제안. 일반 환불을 적립으로 바꾸지 못함 |
 | POST /clubs/{id}/reserve/spends | 관리자 요청. REQUESTED는 가용액만 예약하고 잔액을 바꾸지 않음 |
 | POST /clubs/{id}/reserve/reversals | 관리자가 원 이벤트의 확정 적립액에서 미완 반환을 뺀 한도로 실제 반환을 요청 |
@@ -109,3 +109,10 @@ GET/POST /events/{id}/custody-transfers는 기존 실제 이동 원장의 CUSTOD
 - 정상 SPEND/DISSOLUTION /execute는 출처 부족 중 거부한다. 이미 발생한 실제 출금은 같은 보관 담당자만 /entries/{id}/record-actual로 기록할 수 있다. {version:reserve,reference,actualAt,actualRecordReason}을 요구하며, amount를 보내면 원 요청액과 정확히 같아야 한다. 실제 금액과 기존 purpose를 바꾸지 않고 동일 은행 식별 중복 가드를 적용한다. actualRecordReason, actualRecordedBy, actualRecordedAt, 기록 당시 unbackedAtActualRecord를 공개 원장에 남긴다. 이는 부족 상태에서 새 사용을 허용하거나 잘못된 사용을 정당화하는 절차가 아니다. REVERSAL은 부족 해소용으로 계속 처리한다.
 - entries의 canExecute는 위 부족 검사를 반영하고 canRecordActual은 별도이다. 앱은 '이미 발생한 거래 기록'으로 표시하고 정상 실행 실패를 자동 우회하지 않는다.
 - 입금 확인 reference는 교체 가능한 accountId가 아니라 불변 실제 confirmedBy(actor fallback)와 함께 고유해야 한다. 서로 다른 확인자의 같은 reference는 허용하고 같은 확인자의 재사용(앞뒤 공백 포함)은 거부한다. 공개 actualActor fallback의 여러 은행 계좌 구분 한계는 유지하며 client가 namespace를 정하지 못한다.
+
+
+## CODEF 계좌 인증 연결
+
+계좌 확인은 해찬의 CODEF 설계를 [인증 계약](BANK-VERIFICATION.md)으로 정렬한다. 처음/직접 교체의 최종 account POST에는 기존 version/bankName/accountNumber/holderName과 verificationId를 보낸다. 적립금 인계 confirm도 새 보관 담당자가 RESERVE_HANDOVER/정확handoverId로 확인한 같은4필드증명을 추가한다. 기존 version·명세·confirmedAmount·실제 거래 근거/시각·candidate·실수령 조건을 생략하지 않으며 증명 소비와 계좌/담당 변경은 한 트랜잭션이다. 이벤트 정산 인계에 이 목적의 증명을 붙여 모임 보관 권한을 만들지 않는다.
+
+V12 신규 저장은 holder_cipher로 예금주를 암호화하고 holder_name은 빈값으로 쓴다. 기존 cipher없는 평문자료는 정확송금 instructions에서만 호환조회하며 기존평문 일괄암호화 이행을 완료로주장하지않는다. 짧은계좌suffix도최소앞2자리를숨기며 전체번호를last4 metadata에 남기지않는다. 인증완료는 실제적립·인계금수령완료가 아니며 실은행계좌namespace/실입출금 자동판정은 별도다.

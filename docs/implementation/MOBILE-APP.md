@@ -1,12 +1,12 @@
 # Flutter 앱 — issue 16 현재 대조표
 
-정본 POLICY P01~P15, issue16, REMAINING-EXECUTION, 화면 catalog 57개/12흐름, IDENTITY/COMMUNITY/FINANCE/RESERVE/PLATFORM/FILES API를 비교한다. 초기 감사의 누락을 키 미설정으로 축소하지 않는다. 아래 ‘코드’는 원요구/실제 계약의 실행 경로가 있고 회귀가 있다는 뜻이다. 브라우저/실기기 수락은 별도 관찰 근거로 구분한다. `review/`는 열람하지 않는다.
+정본 POLICY P01~P15, issue16, REMAINING-EXECUTION, 화면 catalog 57개/13흐름, IDENTITY/COMMUNITY/FINANCE/RESERVE/PLATFORM/FILES API를 비교한다. 초기 감사의 누락을 키 미설정으로 축소하지 않는다. 아래 ‘코드’는 원요구/실제 계약의 실행 경로가 있고 회귀가 있다는 뜻이다. 브라우저/실기기 수락은 별도 관찰 근거로 구분한다. `review/`는 열람하지 않는다.
 
 ## 실행과 검증
 
 SDK는 저장소 밖 `C:\Users\minjoun\Documents\Codex\tools\flutter`, 공식 stable3.47.7/Dart3.13.5다. 공식 archive SHA256 `c2c875da25a1a1448d18ee4e8f398b2f6fce888b4775d8f9130538e16d826cb4`를 확인했다. Java25 서버와 Android JDK21을 구분한다. Android SDK36/build-tools36.0.0, Gradle workers2/parallelfalse/heap2048m이다.
 
-현재 최종 코드 snapshot(표준 dart format/fix 적용): `flutter analyze` **No issues found**(10.7초), `flutter test` **86개 통과**(41초). 마지막 날짜 한국어 공통 formatter 1줄까지 포함한 TEST web126.8초·production web94.8초·Android debug APK21.1초 빌드가 모두 성공했다(`mobile-*-final-04.log`). 그룹/개인 요청 수락 뒤 최근 대화 즉시 갱신 회귀도 포함한다. iOS는 Windows에서 빌드하지 않았다. 외부 공급자·실송금·실기기 검증은 이 테스트 결과와 구분한다.
+2026-10-23 CODEF 후속 최종소스: `flutter analyze` **No issues found**(13.4초), `flutter test` **101개 통과**(63초). TEST web184.8초·production web243.3초·Android debug APK129.9초 빌드가 모두 성공했다. 근거는 `.superpowers/bank-flutter-owner-{analyze,full-test,test-web,web}.log`, `bank-flutter-final-apk.log`다. APK SHA256은 `411C880F9B5825C83AFD1B7F738448B1CEC2EC14D7926D27F951E018010558ED`. 기존86개에CODEF15회귀가추가됐으며소유계정전환/저널대기중전환과오답후상태조회실패경계도포함한다. iOS는Windows에서빌드하지않았고실공급자/실송금/실기기/운영배포는미검증이다.
 
 ```powershell
 $flutter = 'C:\Users\minjoun\Documents\Codex\tools\flutter\bin\flutter.bat'
@@ -18,7 +18,7 @@ cd apps/mobile
 & $flutter build apk --debug
 ```
 
-API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전달한다. 공급자 비밀키는 앱에 넣지 않는다. iOS Apple entitlement/APNs Debug development·Release/Profile production 설정은 macOS 서명 환경에서 재검증해야 한다. 실제 은행 어댑터는 서버 기본503이며 키만 없는 상태로 축소하지 않는다.
+API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전달한다. 공급자 비밀키는 앱에 넣지 않는다. iOS Apple entitlement/APNs Debug development·Release/Profile production 설정은 macOS 서명 환경에서 재검증해야 한다. CODEF 어댑터/단계별 인증은 구현했다. 기본DISABLED이며 실제상품승인·키·은행기관코드·실계좌수락은별도다.
 
 ## 57개 화면 추적
 
@@ -42,7 +42,7 @@ API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전
 | WAITLIST · 참여 대기 | 대기 상태·미납 자동취소 아님 안내 | 서버 참가 상태 사용 | 순서 표시는 서버 계약 없음; 실제 승격 검증 대기 |
 | JOIN_LATE · 마감 후 합류 | 마감 뒤 본인 합류 메모·활성 주최자 승인/거절·본인/담당자 이력 | 서버 late reject/이미확정·등록금융 우회409 및 앱 role/private이력 회귀 | 실제 합류 요청/거절 QA 진행 |
 | ATTENDANCE · 참석 확인 | 실제 노쇼·등록 후 원본 보존 참석 정정·정산 인수자와 주최자 권한 분리 | 정확 참석 재분배·인수자 host변경 불허 회귀 | 실제 참석/노쇼·영향금액 QA 진행 |
-| PAY · 회비 보내기 | 본인 요청별 정확 송금안내·신고·부분/초과 납부 | 동일 명령 네트워크 재시도·비낙관 완료 회귀 | 실은행 검증 어댑터 코드 미구현; 실송금 미검증 |
+| PAY · 회비 보내기 | 본인 요청별 정확 송금안내·신고·부분/초과 납부 | 동일 명령 네트워크 재시도·비낙관 완료 회귀 | CODEF 계좌확인 코드 구현; 실송금/실입금 환경 미검증 |
 | PAY_PENDING · 확인 대기 | 신고액/실확인액 분리·확인대기·추가 이체 경고 | pendingVerification 계약 | 실제 신고/반려 타임라인 QA 대기 |
 | COLLECT · 입금 확인 | 실금액·시각/null·거래근거·허용 차수별 귀속·보호 증빙 | 개별 allowedAllocationKindsByRound/HOST_CONTRIBUTION·실금액 정정 회귀 | 실입금 공급자 자동 검증 없음(사람의 실제 사실 기록) |
 | CANCEL · 참여 취소 | 본인 취소·주최자 차수 취소·일정변경 | P04 비용 동의/거부 무료취소 회귀 | 등록 후 변경 금액과 거부 상태 전체 E2E 대기 |
@@ -55,8 +55,8 @@ API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전
 | DISPUTE · 이의 제기 | 사유·multipart 보호 사진·본인 이의·정확 사건 상세 | 실제 private GET/flags | 실제 민감 사진 역할별 접근 브라우저 검증 대기 |
 | DISPUTE_REVIEW · 이의 처리 | 검토·인정/반려/철회·공개결과·관련 정정 원본 선택·대리/상향 | 연결할 정정 기록 위젯 회귀 | 실제 담당자 배정·금액영향 E2E 대기 |
 | HANDOVER · 정산 인계 | 정확 적격후보·원/최신 명세·수락/실송금/0원포함수령·건별 수령계좌 | stale 수령/명세변경 보존·수령계좌경로 회귀·서버 Reserve23 GREEN | 실제 재수락/반환 UI QA 진행·실송금 미검증 |
-| RESERVE · 모임 적립금 | 잔액/가용/부족·목적/담당/시각·정확 flag 액션 | 역할/부족 중 별도 실제거래 회귀 | 실은행 어댑터 코드 미구현 |
-| RESERVE_ADD · 적립 입금 확인 | 현 담당 narrow context·보관자명·자기 event deposit 목록/flag·제안→실송금→실수령·정확 계좌 | 실제 서버 Reserve23 GREEN·탈퇴 담당자가 전체원장 없이 첫/후속업무 처리 회귀 | 실제 적립 업무 QA 진행·실은행 공급자 어댑터 미구현 |
+| RESERVE · 모임 적립금 | 잔액/가용/부족·목적/담당/시각·정확 flag 액션 | 역할/부족 중 별도 실제거래 회귀 | CODEF 계좌확인 구현; 실은행 환경 수락 별도 |
+| RESERVE_ADD · 적립 입금 확인 | 현 담당 narrow context·보관자명·자기 event deposit 목록/flag·제안→실송금→실수령·정확 계좌 | 실제 서버 Reserve23 GREEN·탈퇴 담당자가 전체원장 없이 첫/후속업무 처리 회귀 | 실적립 송금/수령 환경 수락 별도; CODEF 계좌확인은 구현 |
 | RESERVE_USE · 적립금 사용 | 사용/반환 요청·entry flag별 송금/수령/취소·이미 발생한 거래 기록 | canRecordActual·공개 사유·자동 우회 없음 회귀 | 실제 custodian 전체 브라우저 검증 대기 |
 | DISSOLVE · 모임 해산 | 모임장 귀속/실출금·잔액0/업무 유지·무계좌 경로 | 역할/서버 버전 사용 | 실제 0원/미납 잔존 해산 브라우저 검증 대기 |
 | MY · 마이 | 프로필·지난 정산·모임별 레벨·운영자 역할 진입 | 200/403 operator endpoint 구분 | 실제 화면 QA 대기 |
@@ -64,7 +64,7 @@ API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전
 | LEVEL · 모임 레벨 | My 소속 모임·Club 기존 멤버행·허용 Event/Finance 본인 활동 레벨 | 같은모임 타인/공개 비부원 본인/탈퇴 본인 DTO위젯3 GREEN·ACL 그대로 | 실제 관계별 열람/403 QA 진행·전역directory/새공유프로필 없음 |
 | PROFILE · 프로필 | 닉네임/선택 관심사·소개/SELF 사진·부분보존/명시해제 | 서버 실PG3 GREEN·앱 정규화/사진해제 회귀 | 본인 전용 사진의 native 선택/열람 미검증 |
 | SETTINGS · 설정 | 기기 소유 영속·만료/401시FCM토큰삭제·다음로그인재발급·refresh/늦은응답 격리·설정/인수함 | A만료→B등록·늦은A응답·구refresh/새rotation·Main만료 cleanup 회귀 GREEN | 실FCM/APNs 자격/실기기 수신·iOS 빌드 미검증 |
-| BANK · 계좌 등록·확인 | 본인 masked 계좌 조회·실제 확인 요청·실패 안내 | 개인계좌 UI 회귀·서버 실PG2 GREEN | 실제 공급자 어댑터 미구현(키만의 문제가 아님) |
+| BANK · 계좌 등록·확인 | CODEF 예금주→1원 코드→일회증명·최종등록, 본인 masked조회·재진입·계정고정 | 앱15회귀/전체101, 서버BankVerification15+Gateway13/전체196, 최신101 GUI복구→등록·실API CONSUMED확인 | 실제상품승인/키/기관별지원·실CODEF/실1원/실기기 별도 |
 | ACCOUNT · 계정 관리 | 남은 담당 업무 삭제가드·로그아웃·세션 기한 | 저장 실패/세션전환/401 회귀 | 공식 소셜 계정 복구 도움 연결; 전화번호만으로 병합하는 기능은 만들지 않음 |
 | NOTIFICATIONS · 알림함 | 영속 inbox·읽음·기기 열기 인앱목록 | 푸시 중복방지 회귀 | social 댓글/좋아요→정확 글·DM/GROUP 요청→수신함 연결 회귀; 폐기 자원/권한회수 실제 QA 대기 |
 | CHAT · 채팅 | 종류/최근 대화·별도DM 요청 수락/거절·그룹 초대 | DM/GROUP inbox 회귀 | 실제 STOMP 수신/차단/재연결 브라우저 QA 대기 |
@@ -100,7 +100,7 @@ API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전
 
 `MobileScenarioHost.java`는 test source 전용 PG Testcontainer + 명시 db/dev/mobile-scenario profile이며 127.0.0.1:18080만 바인딩한다. Social/SMS/Bank 대역도 test source에만 있고 production login 우회가 없다. 세션 manifest는 gitignored `.superpowers/mobile-scenario/manifest.json`에만 쓰며 명령줄/query/로그에 토큰을 출력하지 않는다.
 
-Flutter `test_support/main.dart`만 서버가 발급한8역할을 선택하고 TEST 배너를 표시한다. 정상 main 로그인과 분리한다. test_support/seed_finance.py는 실제 REST로 은행 TEST대역 등록·이벤트/참여/지출/정산/신고/실제사실확인/환불요청 fixture를 만든다. 앱 상태를 가짜 완료로 직접 채우지 않고 실제 은행 이체라고 주장하지 않는다. 8766 loopback preview와57개 역할 흐름 관찰 결과는 확인 후 갱신한다.
+Flutter `test_support/main.dart`만 서버가 발급한8역할을 선택하고 TEST 배너를 표시한다. 정상 main 로그인과 분리한다. test_support/seed_finance.py는 실제 REST로 계좌인증시작→코드→증명소비등록·이벤트/참여/지출/정산/신고/실제사실확인/환불요청 fixture를 만든다. 기존무조건성공BankOwnershipVerifier대신test-source CodefGateway transport만대역이며실제서비스증명소비를우회하지않는다. 최신fixture스크립트실행도성공했다. 앱 상태를 가짜 완료로 직접 채우지 않고 실제 은행 이체라고 주장하지 않는다. 8766 loopback preview와57개 역할 흐름 관찰 결과는 확인 후 갱신한다.
 
 ## 완료 판정
 
@@ -125,3 +125,10 @@ Flutter `test_support/main.dart`만 서버가 발급한8역할을 선택하고 T
 
 
 PR22의 f34fc26은 Java/Node/문서/운영웹/모바일 CI8개가 모두 통과하고 develop e84f1f1에 병합됐다. 운영 웹도 최신 실제 PG에서 사건 맡기→원문/CLAIM→PROGRESS 사유 저장→버전2와 목록/상세 이력 갱신을 확인했다. Origin5173은 test-only host의 정확 허용 목록이며 생산 권한/CORS 변경이 아니다. root 추가 역할 검증에서는 탈퇴/블랙리스트 이력자의 본인 미납/레벨 접근과 내부 콘텐츠 비노출을 확인했다. 실인증·실은행·기기 수신/서명 배포·iOS 및 자동 사진 업로드 GUI 제약은 위의 미검증 범위를 유지한다.
+
+
+## CODEF 최신 GUI와 회귀 범위
+
+요청/오답 화면은중간동일API웹에서확인했고, 최신101소스TEST웹을다시로드해같은AWAITING_CODE요청(4회남음)을복구했다. 복구전본인계좌미등록/인증요청1건을실API로조회했다. TEST코드확인뒤원번호/예금주를재입력해최종등록했고서버는CONSUMED/registered=true/version1/미소비0을반환했다. [최신등록화면](../../apps/mobile/docs/screenshots/bank-code-registered.jpg)에TEST배너/가상은행·마스킹계좌/예금주/실제등록시각이보인다. 실제외부1원은없다. 과거86개/PR22기록은이전snapshot근거로보존하며최신101과혼합하지않는다.
+
+추가P2회귀: 오답400뒤상태GET실패는정확남은횟수로표시하지않고조회전확인/최종제출을막는다. 최종등록창을연후다른계정으로바뀌면원계정bound전송만허용하며다른계정저널/POST에원계좌본문을넣지않는다. genericApi.send동작은변경하지않고첫await전owner캡처와저널후token재확인을재사용한다. 독립closure에서추가구체P1/P2가없었다. 실단말/실CODEF/키/지원기관·실제수신코드는별도다.

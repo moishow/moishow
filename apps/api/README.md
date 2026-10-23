@@ -60,16 +60,16 @@ SMS: `SOLAPI_API_KEY`, `SOLAPI_API_SECRET`, `SOLAPI_FROM` 설정. 초기 발송�
 
 ## 통합 계약과 외부 연결
 
-최신 [요구 대조](../../docs/implementation/REQUIREMENTS-AUDIT.md), [금융](../../docs/implementation/FINANCE-API.md), [인계·적립](../../docs/implementation/RESERVE-API.md), [운영](../../docs/implementation/PLATFORM-API.md), [채팅·홈](../../docs/implementation/COMMUNITY-API.md), [파일](../../docs/implementation/FILES-API.md), [계좌](../../docs/implementation/BANK-ACCOUNT-API.md)를 따른다. 최신 전체 build는 실제 PostgreSQL17 테스트168개 통과·skip0이다. Flyway V1~V11 이후 Hibernate validate를 사용한다.
+최신 [요구 대조](../../docs/implementation/REQUIREMENTS-AUDIT.md), [금융](../../docs/implementation/FINANCE-API.md), [인계·적립](../../docs/implementation/RESERVE-API.md), [운영](../../docs/implementation/PLATFORM-API.md), [채팅·홈](../../docs/implementation/COMMUNITY-API.md), [파일](../../docs/implementation/FILES-API.md), [계좌](../../docs/implementation/BANK-ACCOUNT-API.md)를 따른다. 최신 전체 build는 실제 PostgreSQL17 회귀를 포함한196개 통과·실패/오류/skip0이다(codef-full-build-01). Flyway V1~V12 이후 Hibernate validate를 사용한다.
 
 `db`의 서비스 세션은 소셜 토큰 검증 및 신규 SMS 가입 후 발급한다. 각 요청의 현재 DB 권한을 확인한다. 테스트 대역·역할 seed·MobileScenarioHost는 test 소스에만 있고 실행 JAR에 포함하지 않는다. 입력 UUID나 클라이언트 역할로 인증하지 않는다.
 
-S3 파일 읽기는 bearer 인증 프록시를 거치고 현재 관계/정확 사건 권한을 검사한다. 클라이언트에 장기 공개 URL을 만들지 않는다. FCM HTTP v1 성공은 공급자 접수이며 실제 단말 도착을 가장하지 않는다. 계좌는 BANK_DATA_KEY_BASE64의 별도32바이트 키로 보호하고, 기본 예금주 verifier는 아직503이다. 공급자 계약·공식 API 확인과 실제 환경 시험이 필요하다.
+S3 파일 읽기는 bearer 인증 프록시를 거치고 현재 관계/정확 사건 권한을 검사한다. 클라이언트에 장기 공개 URL을 만들지 않는다. FCM HTTP v1 성공은 공급자 접수이며 실제 단말 도착을 가장하지 않는다. 계좌는 BANK_DATA_KEY_BASE64의 별도32바이트 키로 보호한다. CODEF 예금주+1원 코드 인증 어댑터와 일회 증명을 구현했으며 기본 CODEF_MODE=DISABLED다. 미설정은 인증을 거부한다. 실제 상품 계약·운영 키·은행별 기관코드·실계좌 수락은 별도다.
 
 
-## CODEF 계좌 인증 후속 구현
+## CODEF 계좌 인증
 
-해찬 문서의 CODEF 예금주명+1원 인증을 [별도 계약](../../docs/implementation/BANK-VERIFICATION.md)으로 대조해 issue/3-codef-bank-verification에서 구현 중이다. 가입은 소셜+SMS 그대로다. 실제 계약/상품승인·실계좌1원 인증은 아래 설정만으로 검증됐다고 표시하지 않는다.
+해찬 문서의 CODEF 예금주명+1원 인증을 [별도 계약](../../docs/implementation/BANK-VERIFICATION.md)으로 대조해 issue/3-codef-bank-verification에서 구현했다. 가입은 소셜+SMS 그대로다. 실제 계약/상품승인·실계좌1원 인증은 아래 설정만으로 검증됐다고 표시하지 않는다.
 
 | 환경 변수 | 역할 |
 |---|---|

@@ -42,3 +42,6 @@ OAuth Basic/form, `expires_in` 범위 내 토큰 재사용, 제품 POST는 공�
 
 
 앱 begin/confirm은 identity/code가 포함되므로 기존 영속 commandjournal에 보관하지 않는다. dialog 메모리의 불변 body/key로만 동일요청을 재시도하며 닫힘·세션변경 시 폐기한다. 서버 Commands에도 원문DTO 대신 분리된 domain의 BANK_DATA_KEY 기반 HMAC fingerprint를 전달하여 저엔트로피 코드/DOB raw SHA 저장을 피한다. 시작 receipt의 action이 실제 신규 실행됐을 때만 dispatch하며 기존 receipt 재조회로 외부호출을 재개하지 않는다. VERIFIED 미소비 증명을 앱 재진입해 사용할 때는 은행·원계좌번호·예금주를 다시 입력하고 서버가 exactbinding을 검사한다. 마스킹 조회에서 원문을 복원하거나 자동 새1원 인증을 보내지 않는다.
+
+
+후속 검토로 확정한 저장 경계: 공급자 성공 trace는 내부 challenge의 provider_reference(최대500)에 보관하며 일반 DTO에는 포함하지 않는다. 계좌 verificationReference는 CODEF:내부challengeUUID로 연결하고 은행입출금 거래근거와 구분한다. 신규 적립금 예금주는 holder_cipher에암호화/기존holder_name빈값으로쓰며, 기존평문자료는키없는자동변환없이별도이행대상이다. legacy조회는정확송금맥락의기존범위에서만호환한다. 짧은4~5자리계좌의metadata/마스킹도최소앞2자리를감추고suffix최대4자리만저장한다. 기관코드/은행실유효성을추정하는새규칙은아니다.
