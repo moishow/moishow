@@ -35,17 +35,26 @@ class _EvidencePickerState extends State<EvidencePicker> {
   bool busy = false;
   String? error;
   Future<void> pick() async {
-    final photo = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 90,
-    );
-    if (photo == null) return;
-    setState(() {
-      busy = true;
-      error = null;
-    });
+    final api = widget.api;
+    final owner = api.session;
+    if (owner == null) return;
+    bool current() =>
+        mounted &&
+        identical(widget.api, api) &&
+        api.session?.token == owner.token &&
+        api.session?.userId == owner.userId;
     try {
+      final photo = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 90,
+      );
+      if (!current() || photo == null) return;
+      setState(() {
+        busy = true;
+        error = null;
+      });
       final bytes = await photo.readAsBytes();
+      if (!current()) return;
       if (bytes.length > 10 * 1024 * 1024) {
         throw const FormatException('사진은 10MiB 이하로 선택해주세요.');
       }
@@ -59,7 +68,7 @@ class _EvidencePickerState extends State<EvidencePicker> {
           widget.eventId ??
           RegExp(r'/events/([^/]+)').firstMatch(widget.path)?.group(1);
       final result = objectValue(
-        await widget.api.send(
+        await api.send(
           Command('/files', {
             'scope': widget.scope,
             if (widget.clubId != null) 'clubId': widget.clubId,
@@ -69,15 +78,16 @@ class _EvidencePickerState extends State<EvidencePicker> {
           }),
         ),
       );
+      if (!current()) return;
       widget.controller.text = stringValue(
         result['reference'],
         'file.reference',
       );
       widget.onUploaded?.call(widget.controller.text);
     } catch (e) {
-      if (mounted) setState(() => error = e.toString());
+      if (current()) setState(() => error = e.toString());
     } finally {
-      if (mounted) setState(() => busy = false);
+      if (current()) setState(() => busy = false);
     }
   }
 
