@@ -26,7 +26,7 @@ class PersonalBankService {
   String number=ClubService.text(form.accountNumber(),40).replace("-","").replace(" ","");
   require(number.matches("[0-9]{6,30}"),400,"INVALID_ACCOUNT_NUMBER");
   secrets.key();
-  String proof=verifier.verify(actor.userId(),bank,number,holder);
+  String proof=verifier.verify(actor.userId(),bank,number,holder,form.verificationId(),"PERSONAL",null);
   require(proof!=null&&!proof.isBlank()&&proof.length()<=500,503,"BANK_VERIFICATION_FAILED");
   var next=new PersonalBankModels.Account();next.userId=actor.userId();next.version=expected+1;
   next.bankName=bank;next.accountCipher=secrets.encrypt(number);next.holderCipher=secrets.encrypt(holder);
