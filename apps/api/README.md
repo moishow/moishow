@@ -65,3 +65,19 @@ SMS: `SOLAPI_API_KEY`, `SOLAPI_API_SECRET`, `SOLAPI_FROM` 설정. 초기 발송�
 `db`의 서비스 세션은 소셜 토큰 검증 및 신규 SMS 가입 후 발급한다. 각 요청의 현재 DB 권한을 확인한다. 테스트 대역·역할 seed·MobileScenarioHost는 test 소스에만 있고 실행 JAR에 포함하지 않는다. 입력 UUID나 클라이언트 역할로 인증하지 않는다.
 
 S3 파일 읽기는 bearer 인증 프록시를 거치고 현재 관계/정확 사건 권한을 검사한다. 클라이언트에 장기 공개 URL을 만들지 않는다. FCM HTTP v1 성공은 공급자 접수이며 실제 단말 도착을 가장하지 않는다. 계좌는 BANK_DATA_KEY_BASE64의 별도32바이트 키로 보호하고, 기본 예금주 verifier는 아직503이다. 공급자 계약·공식 API 확인과 실제 환경 시험이 필요하다.
+
+
+## CODEF 계좌 인증 후속 구현
+
+해찬 문서의 CODEF 예금주명+1원 인증을 [별도 계약](../../docs/implementation/BANK-VERIFICATION.md)으로 대조해 issue/3-codef-bank-verification에서 구현 중이다. 가입은 소셜+SMS 그대로다. 실제 계약/상품승인·실계좌1원 인증은 아래 설정만으로 검증됐다고 표시하지 않는다.
+
+| 환경 변수 | 역할 |
+|---|---|
+| CODEF_MODE | 기본 DISABLED. DEMO/PRODUCTION 분리; DEMO 랜덤 데이터는 실계좌 인증에 사용 금지 |
+| CODEF_CLIENT_ID / CODEF_CLIENT_SECRET | 서버 전용 OAuth 자격, 앱/저장소/로그에 게시 금지 |
+| CODEF_BANKS_JSON | 기본빈배열. 두 상품의 실제 지원 기관코드를 각각 확인한 은행만 설정 |
+| BANK_DATA_KEY_BASE64 | 별도32바이트 키. 기존 계좌 AES-GCM과 인증코드/요청 지문 HMAC. 키 분실/교체는 별도 마이그레이션 필요 |
+
+은행 설정 형식은 `[{"id":"server-stable-bank-id","name":"은행 표시명","holderOrganization":"확인된 예금주 기관코드","transferOrganization":"확인된 1원 기관코드"}]`다. 이 예시는 유효한 코드가 아니므로 그대로 사용하지 않는다. 임의 숫자 패딩이나 클라이언트가 보낸 기관코드로 호출하지 않는다. 공식 문서의 기관표가 과거 시점일 수 있어 현재 콘솔/계약을 다시 확인한다.
+
+1원 전송 요청이 결과불명/timeout이면 같은 키로 상태를 확인하고 자동 재전송하지 않는다. 운영자는 CODEF 추적 결과를 확인하되 provider trace를 회비 입출금 거래근거로 바꾸지 않는다. 계좌 인증 완료는 실제 회비/환불 송금과 구분한다. 운영 사실을 직접 확인하지 않은 상태에서 DB 인증상태를 수동 VERIFIED로 바꾸는 복구 절차는 제공하지 않는다.

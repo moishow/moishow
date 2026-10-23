@@ -404,3 +404,17 @@ LEVEL 진입 대조: 서버는 같은 모임/확정 이벤트 관계(탈퇴·공
 최종 앱 통합 근거: f34fc26 PR22의 정확 HEAD에서 CI8개(Spring/정적·Node/운영웹/Flutter 각 push·PR)가 모두 성공하고 develop e84f1f1에 병합됐다. 로컬 최신 final05 Flutter86개/분석 GREEN, 마지막 표시 formatter 한 줄 포함 final04 TEST웹126.8초·production웹94.8초·debugAPK21.1초 성공과 실제 APK SHA256 FEFCFBDF18E04BDC52F7CA2A87ECA9A9EDD8EB6DBF412FEE5FF5CD3CEDB83817을 확인했다. 마지막5개 UI 수정 독립 closure도 남은 구체 P1/P2 없음이다.
 
 원격 CI와 별도 실제 최신PG GUI에서 운영웹 claim→PROGRESS 저장/버전2·목록/상세이력, 탈퇴자의 본인 미납·레벨50점, 블랙리스트 이력자의 금융 유지/일반모임 내부콘텐츠 비노출을 확인했다. GROUP 즉시목록·REST/STOMP 교차역할 수신 증거 PNG를 보존한다. 사진chooser 자동파일주입은 브라우저확장의로컬파일권한으로막혀 생산/앱권한을완화하지않고 GUI미검증으로남긴다. 실공급자/실은행어댑터503·실기기/iOS/서명배포/공개범위 미결은 성공으로 덮지 않는다.
+
+
+### 2026-10-23 CODEF 기존 설계 복원과 계좌 인증 대조
+
+사용자가 해찬 문서의 공급자 선정을 지적해 `origin/haechan:docs/external/codef.md`와 회원 시나리오를 재검토했다. CODEF 예금주명 인증+1원 이체+서비스 코드 대사 설계가 이미 존재한다. 이전의 '공급자 미정/문서 주소를 기다림/단순 후보' 설명은 부정확하며 CODEF 기준으로 정정한다. 실제 어댑터 미구현/계약·키·실계좌 검증 미확인은 별도 사실이다. 구 PASS CI는 현재 사용자 확정 소셜+SMS 정책으로 대체됐으므로 되살리지 않는다.
+
+요구사항/이슈3/현 구현을 대조하니 BankOwnershipVerifier 4인자 동기 호출과 단일 등록 POST만 있어 1원 코드 입력/수명/일회 증명/실패 후 재시도 경계가 빠졌다. `BANK-VERIFICATION.md`와 `../superpowers/plans/2026-10-23-codef-bank-verification.md`를 먼저 작성했다. 개인 계좌·적립금 계좌·새 보관 담당자 계좌에 공통 인증을 적용하되 기존 권한/실제 수령/금액/version은 유지한다.
+
+결정 원장: (1) 코드 유효10분/5시도, 사용자 간격120초/같은은행계좌 일5회는 남용·재시도 제어 기술 기본값이며 사용자 확정 정책으로 표시하지 않는다. (2) 예금주 exact trim 일치, 임의 자르기/유사이름 승인 없음. (3) DEMO는 인증 계좌를 만들지 않음, 기본DISABLED·catalog빈값. (4) provider HTTP 전에 durable dispatch선점, 외부IO중 DBtx없음, 결과불명 자동재송금 없음. (5) 코드 오답도 attempts/idempotency를 커밋한 뒤 오류반환. (6) actor/bank/account/holder/purpose/context 일회 증명, 최종쓰기 실패시 소비rollback. (7) identity는 transient, 원문코드 DB/응답없음; 코드/계좌fingerprint HMAC, 계좌/holder암호화. (8) 기존 테스트lambda호환은 test-only이며 운영oldverify는failclosed. (9) CODEF 추적ID는 은행거래reference나 자금출처namespace가 아니다. ACTOR_FALLBACK 한계를 receivingbank인증으로 임의 해결하지 않는다. (10) 새 optionalverificationId=null을 fingerprint에서 제외해 기존 멱등재시도 호환 보존. (11) 앱 인증 begin/confirm의 민감 입력은 영속 commandjournal에 저장하지 않고 같은 키의 인메모리 재시도로 제한하며, 결과 확인/재진입은 본인 challenge상태로 지원한다.
+
+원문 프로토콜 수정: inPrintType필수, 공식SDK whole-JSON URLencode/응답one-decode, HTTP200+CF-00000+필수값, 공식SDK sandbox별도호스트 존재, 기관코드 두상품별명시매핑/지원여부 확인. 이 문서 작성 시점은 구현·운영성공 주장이 아니다. 실공급자 승인/키/기관코드/실기기/실송금은 별도 수락으로 남긴다.
+
+
+CODEF 추가 경계 결정: 동일계좌 일5회는 Asia/Seoul 달력일 기준·사용자 간 공유이며 catalog별칭 bankId로 우회되지 않도록 확인된 transferOrganization+번호를 HMAC scope로 사용한다. 사용자lock과 별도로 같은계좌 신규생성의 동시성을 직렬화한다. 이 일자 기준도 운영기관의 리셋 시각을 확인한 사실이 아니라 서비스 제어 기본값이다. 단계가90초 이상 진행중이면 조회는 결과미확인으로 표시하되 GET으로 사실을 다시쓰기/외부전송을 재개하지 않는다. 앱 재진입의 미소비 VERIFIED 증명은 원번호/예금주를 재입력하여 exactbinding을 확인하며 masked정보에서 복원하지 않는다. 은행목록 wrapper는 {available,banks:[{id,name}]}, 본인 인증목록은 plainarray, provider호출실패는 FAILED/UNKNOWN 상태200으로 구분한다.

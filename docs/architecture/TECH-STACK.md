@@ -9,7 +9,7 @@
 | API | REST·DTO 계약 문서. 기계용 OpenAPI 명세는 후속 정비. 최종 정산 계산은 서버 담당 |
 | DB/마이그레이션 | PostgreSQL, Spring Data JPA/Hibernate, Flyway |
 | 인증 | Spring Security OAuth2 Client/Resource Server, 공급자 검증 및 서비스 세션, 신규 SMS 완료 전 제한 세션 |
-| SMS/예금주 | SOLAPI 어댑터, 계좌 확인은 별도 공급자 검증. 가입 실명/CI 전제 없음 |
+| SMS/예금주 | SOLAPI 어댑터, 계좌 확인은 해찬 설계의 CODEF 예금주+1원 인증. 가입 실명/CI 전제 없음. 실제 계약/키/운영 수락 별도 |
 | 채팅 | Spring WebSocket/STOMP, Flutter stomp_dart_client. 메시지 DB 저장 후 전송/재연결 누락 조회 |
 | 작업 처리 | Quartz JDBC JobStore + PostgreSQL outbox. 현재 요청 제한도 DB로 검증하며 Redis는 향후 캐시 후보 |
 | 파일/푸시 | 비공개 S3·현재 권한을 검사하는 bearer 파일 프록시, FCM/iOS APNs. 인앱 알림함은 DB 영속 |

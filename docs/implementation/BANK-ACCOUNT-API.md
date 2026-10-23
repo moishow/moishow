@@ -11,7 +11,7 @@
 
 V8은 검증된 계좌 이력을 보존하며 사용자당 current 한 건만 둔다. 원문 계좌·예금주는 `BANK_DATA_KEY_BASE64`의32바이트 키와 매번 새로운 nonce의 AES256-GCM으로 저장한다. 검증/암호화 실패 때 기존 current·version·이력은 변경하지 않는다. 과거 계좌 수정으로 기존 지급 사실을 다시 쓰지 않는다. API 응답과 멱등 응답에는 마스킹만 저장하고 공급자의 검증 참조도 공개하지 않는다.
 
-현재 기본 BankOwnershipVerifier는503 BANK_PROVIDER_NOT_CONFIGURED다. **실제 공급자 어댑터는 미완료이며 키만 입력하면 성공하는 상태가 아니다.** 공급자 계약과 공식 API 문서를 확인한 뒤 연결한다. BankApiTest는 test-only verifier로 DB·HTTP·암호화·권한·실패 보존만 검증하며 실계좌 인증 성공을 의미하지 않는다.
+기존 통합3aee1d5의 기본 BankOwnershipVerifier는503 BANK_PROVIDER_NOT_CONFIGURED다. 해찬 문서에 CODEF 예금주+1원 인증 설계가 존재함을 재확인했으며 [계좌 인증 계약](BANK-VERIFICATION.md)에 따라 후속 issue/3-codef-bank-verification에서 단계별 인증/일회증명을 구현 중이다. 공급자 선정을 새로 기다리는 상태가 아니며 실제 상품 승인/키/은행별 기관코드/운영 호출은 별도다. BankApiTest는 test-only verifier로 DB·HTTP·암호화·권한·실패 보존만 검증하며 실계좌 인증 성공을 의미하지 않는다.
 
 납부/환불/선지출 반환 화면의 전체 송금 정보는 정확한 업무와 송금 주체 검사 후 별도 연결한다. 계좌 등록 완료만으로 외부 송금이나 수령이 완료되지 않는다. 일반 모임 부원에게 전체 계좌를 공개하거나 마스킹된 번호로 송금을 유도하지 않는다.
 
