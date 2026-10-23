@@ -14,7 +14,16 @@ public class MobileScenarioHost {
  @Configuration @Profile("mobile-scenario") static class Fixtures implements WebMvcConfigurer {
   @Bean @Primary SocialVerifier fixtureIdentity(){return (provider,token,nonce)->{ApiProblem.require(token.startsWith("mobile-scenario:"),401,"SCENARIO_IDENTITY_REQUIRED");return new SocialVerifier.Identity(provider,token.substring(16));};}
   @Bean @Primary SmsGateway captureSms(){return (phone,code)->codes.put(phone,code);}
-  @Bean @Primary BankOwnershipVerifier fixtureBank(){return (user,bank,number,holder)->"LOCAL_SCENARIO_PROOF";}
+  // Provider wire fixture only: production challenge phases, code checks and proof consumption remain active.
+  // No live CODEF keys, network or one-won transfer are involved. Fixture holder/code are intentionally public test data.
+  @Bean @Primary CodefGateway fixtureCodef(){
+   var env=new org.springframework.mock.env.MockEnvironment().withProperty("CODEF_MODE","PRODUCTION").withProperty("CODEF_CLIENT_ID","LOCAL_SCENARIO_ONLY").withProperty("CODEF_CLIENT_SECRET","LOCAL_SCENARIO_ONLY").withProperty("CODEF_BANKS_JSON","[{\"id\":\"fixture-bank\",\"name\":\"TEST 가상은행\",\"holderOrganization\":\"9001\",\"transferOrganization\":\"901\"}]");
+   return new CodefGateway(env,request->{
+    if(request.uri().getHost().equals("oauth.codef.io"))return new CodefGateway.Reply(200,"{\"access_token\":\"LOCAL_SCENARIO_ONLY\",\"expires_in\":3600}");
+    String data=request.uri().getPath().endsWith("holder-authentication")?"{\"name\":\"테스트예금주\"}":"{\"authCode\":\"4837\"}";
+    return new CodefGateway.Reply(200,"{\"result\":{\"code\":\"CF-00000\",\"transactionId\":\"LOCAL_SCENARIO_ONLY\"},\"data\":"+data+"}");
+   });
+  }
   @Override public void addCorsMappings(CorsRegistry registry){registry.addMapping("/api/v1/**").allowedOrigins("http://127.0.0.1:8766","http://127.0.0.1:5173").allowedMethods("GET","POST","DELETE","OPTIONS").allowedHeaders("Authorization","Content-Type","Idempotency-Key");}
   @Bean @Order(0) SecurityFilterChain scenarioPreflight(HttpSecurity http)throws Exception{return http.securityMatcher(r->r.getMethod().equals("OPTIONS")&&r.getRequestURI().startsWith("/api/v1/")).cors(cors->cors.configurationSource(request->{var c=new CorsConfiguration();c.setAllowedOrigins(List.of("http://127.0.0.1:8766","http://127.0.0.1:5173"));c.setAllowedMethods(List.of("GET","POST","DELETE","OPTIONS"));c.setAllowedHeaders(List.of("Authorization","Content-Type","Idempotency-Key"));return c;})).authorizeHttpRequests(a->a.anyRequest().permitAll()).build();}
  }

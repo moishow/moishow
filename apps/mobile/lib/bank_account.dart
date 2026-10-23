@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'main.dart';
 import 'models.dart';
 import 'widgets.dart';
+import 'bank_verification.dart';
 
 class BankAccountPanel extends ConsumerWidget {
   const BankAccountPanel({super.key});
@@ -25,19 +26,15 @@ class BankAccountPanel extends ConsumerWidget {
           else
             const Text('확인된 개인 계좌가 없습니다.'),
           const Note(
-            '예금주 확인은 가입·전화번호 인증과 별개입니다. 은행 확인 공급자가 준비되지 않으면 계좌 확인을 완료할 수 없습니다.',
+            '계좌 확인은 가입·전화번호 인증과 별개입니다. 새 계좌의 최종 등록을 마치기 전까지 기존 등록 계좌는 유지됩니다.',
           ),
           OutlinedButton(
-            onPressed: () => actionForm(
+            onPressed: () => verifiedBankAction(
               context,
               ref.read(apiProvider),
+              purpose: 'PERSONAL',
               title: '개인 계좌 등록·예금주 확인',
               path: '/me/bank-account',
-              fields: const [
-                FormFieldSpec('bankName', '은행'),
-                FormFieldSpec('accountNumber', '계좌번호'),
-                FormFieldSpec('holderName', '예금주명'),
-              ],
               base: {'version': integerValue(bank['version'], 'bank.version')},
               reload: reload,
             ),

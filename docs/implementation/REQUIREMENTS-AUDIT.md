@@ -11,7 +11,27 @@
 3. 작업 중 결정한 값·상태·범위·예외를 아래에 기록하고 기존 결정 전체와 충돌 여부를 확인한다.
 4. 머지 전 구현·테스트·남은환경항목과 대조표를 갱신한다. 미완료/미검증을 완료로 닫지 않는다.
 
-## 현재 감사 범위
+## 현재 감사 범위 — 2026-10-23
+
+이번 대조의 비교 기준은 main/develop 통합3aee1d5이며, CODEF 후속은 issue/3-codef-bank-verification에서 기존 해찬 설계를 구현했다. Java25 전체196개/Gradle build, Flutter101개/분석·TEST웹·운영웹·debugAPK가 통과했고 실제 TEST GUI 계좌 복구→등록까지 확인했다. 최종 병합 여부는 해당 PR 기록으로 구분한다. 아래 초기 감사표의 ‘미구현’과 숫자는 당시 상태이며 현재 상태는 이 표와 후속 검증 근거를 따른다.
+
+| 요구 | 이슈·계획 | 현재 구현·검증 | 남은 범위 |
+|---|---|---|---|
+| P02 차수/정산 방식 명시 선택 | 13·16/Finance·Mobile | PREPAY/POSTPAY 명시 작성, 차수별 요청·기한, 전체 서버/앱 회귀 | 실단말 인수 |
+| P04 비용 고지·재동의·주최 취소/날짜 변경 | 13·16 | 기존 동의 비용 보존·미응답 참여유지, 주최 사유 전액환불, 원본 보존 정정 | 실제 은행 송금·실기기 |
+| P05 받은 취소비·초과·늦은 수령 | 13·14 | 실제 수령분만 차감·비례 floor환불·원단위 잔액, 늦은 REFUND/RESERVE 선택 | 외부 송금·적립 실제 수령 수락 |
+| P06 마감 후 정정·미납·이의 | 13 | 원본 snapshot/append 정정·실제 참석 정정, 남은 의무/이의 처리 유지 | 실제 운영 사례 수락 |
+| P07 인계·기존 주최자 선지출 의무 | 14 | 실제 전액/0원 확인·버전·후보, 새 담당자에게 기존 주최자 반환 의무 유지, Reserve23 | 실제 송금/수령·계좌 namespace |
+| P08 적립·해산·모임장 귀속 | 14 | 지정 보관자/실거래 ledger/잔액0, 모임장 귀속 지급 확인, 새 예금주 암호화 | 기존 평문 예금주 이행·실은행 |
+| P09 가입/계좌 분리 | 3·12·14·16/BANK-VERIFICATION | 소셜+SMS 유지, CODEF 예금주/1원 코드/일회 증명, 서버15+13·앱15 회귀 및 최신101 GUI | CODEF 계약/정식 키·기관코드·실1원·실기기 |
+| P10 닉네임·비공개 증빙 | 12·13·16 | 정확 금융 맥락 계좌, 이력 닉네임, 분쟁 당사자/담당자 제한, 현재 권한 재검사 | 실제 S3·실단말 업로드/보호 뷰어 |
+| P11 알림/채팅 | 15·16 | 인앱/푸시 분리·FCM outbox, 개인/그룹/모임/이벤트 채팅·REST/STOMP·초대/권한 | 실제 FCM/APNs·단말·다중서버 |
+| issue16 앱 인수 | 16 | 57화면/13와이어흐름, 101회귀·분석·웹2종/APK, 대표 실제 TEST GUI | 실소셜/SMS/은행·iOS·실단말/서명·배포 |
+| 기존 issue5 미결 | 5 | 임의 다인원 DM은 사용자 채택 후 구현 | 모임 공개/비공개 검색·별도 무료약속 flag 채택 미확정 |
+
+CODEF 성공은 계좌 확인이며 회비·환불·적립 송금을 자동 입증하지 않는다. ACTOR_FALLBACK·기존 평문 자료 이행·실환경 수락을 코드 완료로 덮지 않는다. 공급자 미정이라는 이전 설명은 해찬 CODEF 문서 확인으로 정정됐고 공급자명 답변을 다시 기다리지 않는다.
+
+## 2026-10-22 초기 감사 범위 — 과거 스냅샷
 
 기존 main 정책/51화면, PR19/20, 미커밋13~16/앱 통합 API. 새 기능 추가를 잠시 멈추고 요구/이슈/계획 대조 중이다. 작업자별 감사 결과를 통합해 수정 순서를 결정한다.
 
@@ -35,18 +55,18 @@
 | 서버 Java25/Gradle/Boot4.1.1 | 사용자확정 | 유지 |
 | 세션 제한15분/활성8시간, OTP5분/5회·60초/계정시간5회 | 구현 보안 기본값(사용자 숫자확정 아님) | 개인정보·푸시 정책과 무충돌, 설정/문서화. 환경테스트 필요 |
 | 초대7일 | 구현 보안 기본값 | 강퇴/블랙 우선순위를 바꾸지 않음 |
-| 소유자 승계 전 탈퇴 거부 | 책임유지 가드, 승계누락 때의 임시제약 | 승계 수락API14에서 제거가능. 계정삭제/보관계좌 인계와 함께 확인 |
-| 종료 후 신규 합류 거부 | 정책 미명시 구현 선택 | 소급 실제참가 정정 수단이 없으면 정산누락 충돌. 정정의 명단수정 필요 여부 검토 |
+| 소유자 승계 전 탈퇴 거부 | 소유권 공백 방지 | 현재 승계수락 API 완료 후 모임장 탈퇴 가능. 이벤트 정산/보관금 책임은 별도 담당/실제 인계 규칙으로 유지 |
+| 종료 후 신규 합류 거부(초기 선택) | 후속 감사에서 대체 | 현재 본인 LATE_REQUESTED와 원주최자/정산담당자의 명시 실제 참석 승인·정정으로 처리. 무조건 거부는 현재 규칙이 아님 |
 | 대기 자동승격 없음 | 정책 미명시·무단선정 방지 | 미납자동취소금지와 무충돌. UX에 대기유지 명시 |
-| 등록 후 참가상태 변경409 | 원본보존 위한 구현가드 | 이의 인정/참석정정 경로가 빠지면 요구불충족, append정정으로 대체 |
+| 등록 후 참가상태 변경409(초기 가드) | 후속 append 정정으로 대체 | 원본을 보존하며 사유·권한 있는 실제 참석 정정 가능. 미확정 REJECTED 재승인/취소비 우회는 별도 차단 |
 | 업무POST UUID Idempotency-Key + resource version | STATE-MODEL/구현명세 | 인증OTP/토큰발급을 같은응답원장에 넣지 않는 예외, 재시도 UX검증 |
-| root reserve 은행검증 기본503 | 미검증성공금지 | 영구stub를 외부키 미설정으로만 설명하지 않음. 실제계약 어댑터/개인계좌 필요 |
+| root reserve 은행검증 기본503(초기 stub) | CODEF 후속 구현으로 대체 | 예금주/1원코드·개인/적립/인계 일회 증명 구현. 기본DISABLED·실제 계약/지원기관/실계좌 수락은 별도 |
 | STOMP 쓰기는 REST, 구독만WebSocket, 단일노드broker·DB이력 | 기술구현 선택 | 메시지보존/재연결/권한 실효를 테스트. 다중서버배포미지원 명시 |
 | 새API default/dev DB비활성, db프로필만 영속 | 개발편의·안전경계 | 앱기동/배포안내와 일치검증 |
 
 ## 수정·검증 기록
 
-감사 진행 중. 위 항목은 해결됐다고 표시하지 않는다. 작업자별 원본요구 대조와 임의결정을 수신 후 머지 전 갱신한다.
+이하 기록은 감사 착수부터의 시간순 근거다. 당시 미구현/RED 문구는 현재 상태표와 후속 closure로 대체됐는지 확인한다. 실제 공급자/환경의 미검증 범위는 계속 분리한다.
 
 ## 도메인 감사 통합 — 수정 전 실제 상태
 
@@ -404,3 +424,39 @@ LEVEL 진입 대조: 서버는 같은 모임/확정 이벤트 관계(탈퇴·공
 최종 앱 통합 근거: f34fc26 PR22의 정확 HEAD에서 CI8개(Spring/정적·Node/운영웹/Flutter 각 push·PR)가 모두 성공하고 develop e84f1f1에 병합됐다. 로컬 최신 final05 Flutter86개/분석 GREEN, 마지막 표시 formatter 한 줄 포함 final04 TEST웹126.8초·production웹94.8초·debugAPK21.1초 성공과 실제 APK SHA256 FEFCFBDF18E04BDC52F7CA2A87ECA9A9EDD8EB6DBF412FEE5FF5CD3CEDB83817을 확인했다. 마지막5개 UI 수정 독립 closure도 남은 구체 P1/P2 없음이다.
 
 원격 CI와 별도 실제 최신PG GUI에서 운영웹 claim→PROGRESS 저장/버전2·목록/상세이력, 탈퇴자의 본인 미납·레벨50점, 블랙리스트 이력자의 금융 유지/일반모임 내부콘텐츠 비노출을 확인했다. GROUP 즉시목록·REST/STOMP 교차역할 수신 증거 PNG를 보존한다. 사진chooser 자동파일주입은 브라우저확장의로컬파일권한으로막혀 생산/앱권한을완화하지않고 GUI미검증으로남긴다. 실공급자/실은행어댑터503·실기기/iOS/서명배포/공개범위 미결은 성공으로 덮지 않는다.
+
+
+### 2026-10-23 CODEF 기존 설계 복원과 계좌 인증 대조
+
+사용자가 해찬 문서의 공급자 선정을 지적해 `origin/haechan:docs/external/codef.md`와 회원 시나리오를 재검토했다. CODEF 예금주명 인증+1원 이체+서비스 코드 대사 설계가 이미 존재한다. 이전의 '공급자 미정/문서 주소를 기다림/단순 후보' 설명은 부정확하며 CODEF 기준으로 정정한다. 실제 어댑터 미구현/계약·키·실계좌 검증 미확인은 별도 사실이다. 구 PASS CI는 현재 사용자 확정 소셜+SMS 정책으로 대체됐으므로 되살리지 않는다.
+
+요구사항/이슈3/현 구현을 대조하니 BankOwnershipVerifier 4인자 동기 호출과 단일 등록 POST만 있어 1원 코드 입력/수명/일회 증명/실패 후 재시도 경계가 빠졌다. `BANK-VERIFICATION.md`와 `../superpowers/plans/2026-10-23-codef-bank-verification.md`를 먼저 작성했다. 개인 계좌·적립금 계좌·새 보관 담당자 계좌에 공통 인증을 적용하되 기존 권한/실제 수령/금액/version은 유지한다.
+
+결정 원장: (1) 코드 유효10분/5시도, 사용자 간격120초/같은은행계좌 일5회는 남용·재시도 제어 기술 기본값이며 사용자 확정 정책으로 표시하지 않는다. (2) 예금주 exact trim 일치, 임의 자르기/유사이름 승인 없음. (3) DEMO는 인증 계좌를 만들지 않음, 기본DISABLED·catalog빈값. (4) provider HTTP 전에 durable dispatch선점, 외부IO중 DBtx없음, 결과불명 자동재송금 없음. (5) 코드 오답도 attempts/idempotency를 커밋한 뒤 오류반환. (6) actor/bank/account/holder/purpose/context 일회 증명, 최종쓰기 실패시 소비rollback. (7) identity는 transient, 원문코드 DB/응답없음; 코드/계좌fingerprint HMAC, 계좌/holder암호화. (8) 기존 테스트lambda호환은 test-only이며 운영oldverify는failclosed. (9) CODEF 추적ID는 은행거래reference나 자금출처namespace가 아니다. ACTOR_FALLBACK 한계를 receivingbank인증으로 임의 해결하지 않는다. (10) 새 optionalverificationId=null을 fingerprint에서 제외해 기존 멱등재시도 호환 보존. (11) 앱 인증 begin/confirm의 민감 입력은 영속 commandjournal에 저장하지 않고 같은 키의 인메모리 재시도로 제한하며, 결과 확인/재진입은 본인 challenge상태로 지원한다.
+
+원문 프로토콜 수정: inPrintType필수, 공식SDK whole-JSON URLencode/응답one-decode, HTTP200+CF-00000+필수값, 공식SDK sandbox별도호스트 존재, 기관코드 두상품별명시매핑/지원여부 확인. 이 문서 작성 시점은 구현·운영성공 주장이 아니다. 실공급자 승인/키/기관코드/실기기/실송금은 별도 수락으로 남긴다.
+
+
+CODEF 추가 경계 결정: 동일계좌 일5회는 Asia/Seoul 달력일 기준·사용자 간 공유이며 catalog별칭 bankId로 우회되지 않도록 확인된 transferOrganization+번호를 HMAC scope로 사용한다. 사용자lock과 별도로 같은계좌 신규생성의 동시성을 직렬화한다. 이 일자 기준도 운영기관의 리셋 시각을 확인한 사실이 아니라 서비스 제어 기본값이다. 단계가90초 이상 진행중이면 조회는 결과미확인으로 표시하되 GET으로 사실을 다시쓰기/외부전송을 재개하지 않는다. 앱 재진입의 미소비 VERIFIED 증명은 원번호/예금주를 재입력하여 exactbinding을 확인하며 masked정보에서 복원하지 않는다. 은행목록 wrapper는 {available,banks:[{id,name}]}, 본인 인증목록은 plainarray, provider호출실패는 FAILED/UNKNOWN 상태200으로 구분한다.
+
+
+계좌 인증 후속 대조: 기존 적립금 holderName은 평문 컬럼이었다. 신규 계좌 저장에서는 V12의 별도 holder_cipher에AES-GCM으로보호하고 기존NOTNULL holder_name은빈문자로저장한다. 레거시 cipher없음은기존holder_name을정확송금맥락에서만호환조회하며 자동키없는전체자료변환/기존평문제거를완료로주장하지않는다. 별도컬럼으로구분해 실제예금주문자열이암호문prefix와일치하는경우를추정파싱하지않는다. 원번호입력제약은기존개인6..30/적립4..34를purpose별로유지해공급자호출후최종형식거절낭비를막는다.
+
+정적BANK도기존단일예금주목업에서예금주→1원코드입력·결과불명조회단계를표시하도록catalog원본생성기를변경한다. screen-refresh실행대조에서모임소개/거절원문이생성기에반영되지않아덮어쓰일뻔한것을확인하고기존정본내용을생성기에도역반영했다. 가입/거절요구를삭제하지않고재생성결과의무변경을검증한다.
+
+
+CODEF gateway 검증: codef-gateway-behavior-red-02 실제10개assertion실패/오류0 뒤green-03에서10/10통과했다. root검토에서토큰철회401/CF-00401시캐시가최대1주남아다음요청까지실패하는문제를발견했다. revocation-red-04의13개중5개assertion실패/오류0(철회다음요청복구3·이름101/trace501경계2)을확인후요청에실제쓴토큰만compare-and-clear하여현재실패요청은재전송하지않고다음명시요청에OAuth를갱신한다. tokenA늦은실패가이미발급된B를지우지않는latch회귀도포함했다. revocation-green-05 13/13통과/실패오류skip0/Gradle44초다. 이는대역wire검증이며실CODEF호출이아니다.
+
+추가기술결정: gateway.live는CODEF모드/자격/유효nonemptycatalog만검사하고service.available은BANK_DATA_KEY 준비까지확인한다. catalog id는영숫자/_/-1..100, name100이내/중복id·name거부, 기관코드는1..16digits이며상품별3/4길이를추정하지않는다. 예금주100/trace500응답상한을검사한다. 성공provider_reference는내부challenge에만보존하고계좌verificationReference는CODEF:내부challengeUUID로연결한다. 은행입출금reference로쓰거나일반DTO로공개하지않는다. 기존reserve4~5자리입력의새challenge/계좌metadata는최소앞2자리를감추며suffix최대4자리만저장해짧은계좌전체를last4필드에그대로남기지않는다.
+
+Flutter신규12회귀actualRED이후전체98/analyzeGREEN은중간snapshot이다. 이후잘못된코드400+최신상태GET마저실패했을때과거남은시도횟수/재제출활성화가유지되는문제를검토해추가회귀와상태미확인표시/명시GET전확인차단을진행한다. 최종수정뒤정확테스트/플랫폼빌드를다시확인전완료로표시하지않는다.
+
+
+서버인증독립검토closure: Store프록시의 db.em 직접필드를읽는3곳에서NullPointerException이확인됐다. codef-verification-implementation-red-02 실제14개중11assertion실패/오류0의XML에서this.db.em null을확인하고Service자체 @PersistenceContext EntityManager로3쿼리만수정했다. 다음14개중13통과/1오류는expiry testfixture가expires>created제약을위반한것으로구분했으며생산제약을약화하지않고테스트의600초타임라인을수정했다. 역할회수/다른club·quota경쟁보강15개를포함한regression-green-04는BankVerification15/Bank2/Reserve23/Identity18/Gateway13/Provider1 합계72개실패오류skip0/Gradle5분44초다. 독립리뷰는해당P1코드해소/추가구체P1P2없음을확인했으며현재서버전체build를진행중이다.
+
+앱최종등록창이열린뒤계정이바뀌는P2도추가actualRED로확인했다. 서버증명binding은다른사용자등록을거부하지만다른계정의commandjournal에이전계좌본문이들어가면안된다. 인증dialog복귀뿐아니라최종제출의owner/세션도고정해원계정과다르면저널·POST에넣기전에거부한다. 일반금융명령권한이나서버계좌binding을완화하지않으며해당회귀및정확최종앱빌드를추가검증한다.
+
+
+CODEF 최종 로컬인수: codef-full-build-01 Java25 Wrapper build/JAR성공10분58초,18개JUnit report의196개실패/오류/skip0을root가직접합산했다. 앱은ownerbound최종101개63초/분석Noissues13.4초, exact최종TESTweb184.8초/prodweb243.3초/debugAPK129.9초성공이다. SHA256 411C880F9B5825C83AFD1B7F738448B1CEC2EC14D7926D27F951E018010558ED. 오답GET실패P2와최종창계정전환P2의실제RED뒤수정/전체GREEN을보존하며독립closure추가P1/P2없음을확인했다.
+
+실제최신101 TEST GUI에서새로고침후동일인증요청복구/남은4회→정답→원계좌정보재입력→최종등록을확인했다. 별도실API로등록전false/요청1건/AWAITING_CODE, 등록후true/version1/CONSUMED/미소비목록0을대조했다. 공급자만가상transport이며기존무조건성공verifier를제거하여운영서비스의proof소비를실행했다. TEST fixture seed도실REST계좌3단계/금융시나리오실행성공. 실제CODEF/실1원·실은행·실기기·운영승인은별도이며신뢰할수있는은행입출금namespace와레거시평문이행은미완으로유지한다.

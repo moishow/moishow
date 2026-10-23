@@ -23,6 +23,19 @@ class ApiFailure implements Exception {
   final String code;
   const ApiFailure(this.status, this.code);
   String get message => switch (code) {
+    'BANK_PROVIDER_NOT_CONFIGURED' => '지금은 계좌 인증을 이용할 수 없습니다. 기존 등록 계좌는 유지됩니다.',
+    'BANK_VERIFICATION_RATE_LIMIT' =>
+      '계좌 인증 요청 간격 또는 하루 한도에 도달했습니다. 새 인증을 반복 요청하지 말고 기다려주세요.',
+    'BANK_AUTH_CODE_INVALID' => '인증번호가 다릅니다. 남은 시도 횟수를 확인해주세요.',
+    'BANK_VERIFICATION_LOCKED' => '인증번호 시도 횟수를 모두 사용했습니다.',
+    'BANK_VERIFICATION_EXPIRED' => '계좌 인증 유효 시간이 지났습니다.',
+    'BANK_VERIFICATION_NOT_AWAITING_CODE' =>
+      '현재 단계에서는 인증번호를 확인할 수 없습니다. 인증 상태를 다시 조회해주세요.',
+    'BANK_VERIFICATION_PROOF_REQUIRED' => '계좌 소유 확인을 먼저 완료해주세요.',
+    'BANK_VERIFICATION_NOT_VERIFIED' => '완료된 계좌 인증이 아닙니다. 기존 계좌는 유지됩니다.',
+    'BANK_VERIFICATION_BINDING_MISMATCH' =>
+      '인증한 계좌·예금주 또는 등록 목적이 다릅니다. 원래 인증 정보를 확인해주세요.',
+    'BANK_VERIFICATION_OWNER_REQUIRED' => '본인이 요청한 계좌 인증만 확인할 수 있습니다.',
     'RECIPIENT_BANK_ACCOUNT_REQUIRED' =>
       '송금받을 분의 확인된 계좌가 없습니다. 수령자가 계좌를 등록·확인해야 합니다.',
     'FUNDING_RECONCILIATION_REQUIRED' => '지출의 자금 출처 분류가 끝나지 않아 인계할 수 없습니다.',
