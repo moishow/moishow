@@ -5,6 +5,8 @@ import 'main.dart';
 import 'transfer_instructions.dart';
 import 'widgets.dart';
 import 'models.dart';
+import 'bank_verification.dart';
+import 'api.dart' show Json;
 
 class HandoverReview extends ConsumerWidget {
   final Map<String, dynamic> handover;
@@ -26,43 +28,61 @@ class HandoverReview extends ConsumerWidget {
     final names = obj(inventory['names'] ?? h['names'] ?? {});
     String who(dynamic user) =>
         Person({'userId': '$user', ...obj(names['$user'])}).displayName;
-    void change(String action) => actionForm(
-      context,
-      api,
-      title: action == 'accept'
-          ? '명세 전체 인수 수락'
-          : action == 'confirm'
-          ? '실제 수령·0원 인계 확인'
-          : action == 'sent'
-          ? '외부 실제 송금 기록'
-          : '송금 전 인계 제안 정리',
-      path: '/handovers/${h['id']}/$action',
-      fields: ['accept', 'decline', 'cancel'].contains(action)
-          ? const []
-          : [
-              const FormFieldSpec('reference', '실제 거래·0원 인계 근거'),
-              const FormFieldSpec(
-                'actualAt',
-                '실제 송금·수령 시각',
-                kind: FieldKind.time,
-              ),
-              if (action == 'confirm')
+    Future<void> change(String action) async {
+      Json verified = {};
+      String? verifiedOwner;
+      if (action == 'confirm' && !event) {
+        final owner = api.session?.token;
+        final result = await verifyBankAccount(
+          context,
+          api,
+          purpose: 'RESERVE_HANDOVER',
+          contextId: h['id'],
+        );
+        if (result == null || !context.mounted || owner != api.session?.token) {
+          return;
+        }
+        verified = result;
+        verifiedOwner = owner;
+      }
+      if (!context.mounted) return;
+      await actionForm(
+        context,
+        verified.isEmpty ? api : verifiedBankCommandApi(api, verifiedOwner),
+        title: action == 'accept'
+            ? '명세 전체 인수 수락'
+            : action == 'confirm'
+            ? '실제 수령·0원 인계 확인'
+            : action == 'sent'
+            ? '외부 실제 송금 기록'
+            : '송금 전 인계 제안 정리',
+        path: '/handovers/${h['id']}/$action',
+        fields: ['accept', 'decline', 'cancel'].contains(action)
+            ? const []
+            : [
+                const FormFieldSpec('reference', '실제 거래·0원 인계 근거'),
                 const FormFieldSpec(
-                  'confirmedAmount',
-                  '실제로 받은 금액 (0원 포함)',
-                  kind: FieldKind.amount,
+                  'actualAt',
+                  '실제 송금·수령 시각',
+                  kind: FieldKind.time,
                 ),
-              if (action == 'confirm' && !event) ...const [
-                FormFieldSpec('bankName', '새 보관 은행'),
-                FormFieldSpec('accountNumber', '새 보관 계좌번호'),
-                FormFieldSpec('holderName', '예금주'),
+                if (action == 'confirm')
+                  const FormFieldSpec(
+                    'confirmedAmount',
+                    '실제로 받은 금액 (0원 포함)',
+                    kind: FieldKind.amount,
+                  ),
               ],
-            ],
-      base: {'version': integerValue(h['version'], 'handover.version')},
-      reload: reload,
-      notice:
-          '실제 받은 현금과 함께 미회수 선지출·일반 환불·남은 업무를 확인합니다. 명세가 바뀐 뒤 실제 수령하면 수령 사실만 보존하고 새 명세를 다시 수락해야 합니다.',
-    );
+        base: {
+          'version': integerValue(h['version'], 'handover.version'),
+          ...verified,
+        },
+        reload: reload,
+        notice:
+            '실제 받은 현금과 함께 미회수 선지출·일반 환불·남은 업무를 확인합니다. 명세가 바뀐 뒤 실제 수령하면 수령 사실만 보존하고 새 명세를 다시 수락해야 합니다.',
+      );
+    }
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
