@@ -71,3 +71,8 @@ POST /rounds/{id}/participations에 선택 memo(1000자)를 받는다. POST /rou
 두 history 응답은 id·userId·status·memo·reason·createdAt·createdBy와 nickname/departed(신청자), actorNickname/actorDeparted(이력 작성자)를 가진다. 현재/마지막 모임 닉네임과 서비스 닉네임 fallback을 재사용하며 PENDING/REJECTED 신청자가 명시한 모임 신청 닉네임도 우선한다. 과거 로그의 본문은 보존하고 조회 때 현재 관계로 이름을 표시한다. 사유/메모는 이 제한된 history 및 정확 가입관리자 pending 큐에서만 노출하고 일반 모임 소개·부원목록·정산 담당자 참여목록에는 포함하지 않는다. 모든 새 POST에 기존 Idempotency-Key·리소스 version 규칙을 적용한다. 실제 검증 결과는 REQUIREMENTS-AUDIT를 따른다.
 
 탐색 GET /clubs/discover?q=&region=&category=&offset=0&limit=50은 현재 ACTIVE 모임 소개와 같은 필드/실제 activeMemberCount를 반환한다. q는 이름 부분 일치, region/category는 trim한 자유 텍스트의 대소문자 무시 정확 일치이며 각각 선택이다. 검색과 각 필터는 최대100자, 페이지 검증·정렬(name,id)은 기존 규칙이다. 공개/비공개 정책 결정을 대신하는 새 flag나 위치 권한을 만들지 않는다.
+
+
+## 계좌 확인의 별도 수명
+
+가입은 소셜+SMS 그대로다. 해찬 CODEF 설계의 예금주+1원 인증은 [BANK-VERIFICATION](BANK-VERIFICATION.md), 최종 개인 계좌 등록은 [BANK-ACCOUNT-API](BANK-ACCOUNT-API.md)를 따른다. 새 인증 API는 ACTIVE bearer/본인 소유·목적별 맥락을 검사하고 코드·생년월일 원문을 상태·로그·DB·영속 앱 저널에 남기지 않는다. 이미 등록된 계좌는 인증 진행/실패/최종version충돌로 교체되지 않는다. CODEF DEMO는 랜덤데이터이므로 실제계좌를인증하지않는다. CODEF 선택은 기존해찬설계이며실제계약/운영승인은별도다.

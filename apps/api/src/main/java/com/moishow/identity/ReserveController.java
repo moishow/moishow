@@ -4,7 +4,9 @@ import java.util.UUID;import java.time.Instant;
 @RestController @Profile("db") @RequestMapping("/api/v1")
 class ReserveController {
  final Commands commands;final ReserveService service;ReserveController(Commands commands,ReserveService service){this.commands=commands;this.service=service;}
- record Form(Long version,UUID eventId,Long amount,String purpose,String reference,Instant actualAt,String bankName,String accountNumber,String holderName,UUID candidateId,Long inventoryAmount,String inventoryNote,Long bookVersion,Long confirmedAmount,Boolean ownerReceiptConfirmed,String actualRecordReason){}
+ record Form(Long version,UUID eventId,Long amount,String purpose,String reference,Instant actualAt,String bankName,String accountNumber,String holderName,UUID candidateId,Long inventoryAmount,String inventoryNote,Long bookVersion,Long confirmedAmount,Boolean ownerReceiptConfirmed,String actualRecordReason,@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL) UUID verificationId){
+  Form(Long version,UUID eventId,Long amount,String purpose,String reference,Instant actualAt,String bankName,String accountNumber,String holderName,UUID candidateId,Long inventoryAmount,String inventoryNote,Long bookVersion,Long confirmedAmount,Boolean ownerReceiptConfirmed,String actualRecordReason){this(version,eventId,amount,purpose,reference,actualAt,bankName,accountNumber,holderName,candidateId,inventoryAmount,inventoryNote,bookVersion,confirmedAmount,ownerReceiptConfirmed,actualRecordReason,null);}
+ }
  record ReturnForm(Long version,Long amount,String reason,String reference,Instant actualAt){}
  @GetMapping("/events/{id}/reserve-transfer-context") Object transferContext(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.transferContext(a,id);}
  @GetMapping("/clubs/{id}/reserve") Object get(@AuthenticationPrincipal Actor a,@PathVariable UUID id){return service.get(a,id);}

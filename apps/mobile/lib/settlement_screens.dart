@@ -6,6 +6,7 @@ import 'api.dart';
 import 'main.dart';
 import 'widgets.dart';
 import 'models.dart';
+import 'bank_verification.dart';
 
 const amount = FormFieldSpec('amount', '금액 (원)', kind: FieldKind.amount);
 const reason = FormFieldSpec('reason', '처리 사유');
@@ -59,17 +60,15 @@ class ReserveScreen extends ConsumerWidget {
             );
             final setup = admin && active
                 ? OutlinedButton(
-                    onPressed: () => action(
-                      '처음 보관 계좌 등록',
-                      'reserve/account',
-                      const [
-                        FormFieldSpec('bankName', '은행'),
-                        FormFieldSpec('accountNumber', '계좌번호'),
-                        FormFieldSpec('holderName', '예금주'),
-                      ],
-                      const {'version': 0},
-                      clubReload,
-                      notice: '은행 소유 확인 공급자 어댑터가 아직 연결되지 않아 현재 등록은 완료되지 않습니다.',
+                    onPressed: () => verifiedBankAction(
+                      context,
+                      api,
+                      purpose: 'RESERVE',
+                      contextId: id,
+                      title: '처음 보관 계좌 등록',
+                      path: '/clubs/$id/reserve/account',
+                      base: const {'version': 0},
+                      reload: clubReload,
                     ),
                     child: const Text('처음 보관 계좌 등록'),
                   )
@@ -238,15 +237,15 @@ class ReserveScreen extends ConsumerWidget {
                         child: const Text('출처 이벤트로 반환'),
                       ),
                       OutlinedButton(
-                        onPressed: () => form(
-                          '보관 계좌 등록·확인',
-                          'reserve/account',
-                          const [
-                            FormFieldSpec('bankName', '은행'),
-                            FormFieldSpec('accountNumber', '계좌번호'),
-                            FormFieldSpec('holderName', '예금주'),
-                          ],
-                          notice: '소유 확인 공급자 어댑터 미연동 상태에서는 등록을 완료하지 않습니다.',
+                        onPressed: () => verifiedBankAction(
+                          context,
+                          api,
+                          purpose: 'RESERVE',
+                          contextId: id,
+                          title: '보관 계좌 등록·확인',
+                          path: '/clubs/$id/reserve/account',
+                          base: {'version': version},
+                          reload: reload,
                         ),
                         child: const Text('보관 계좌 설정'),
                       ),

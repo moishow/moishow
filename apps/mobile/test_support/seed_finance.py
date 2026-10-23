@@ -42,7 +42,23 @@ now = datetime.now(timezone.utc)
 for index, actor in enumerate(roles):
     account=get('/me/bank-account', actor)
     if not account['registered']:
-        post('/me/bank-account',{'version':0,'bankName':'TEST 은행','accountNumber':f'900000000{index:04}','holderName':'테스트 전용'},actor)
+        catalog=get('/bank-verifications/banks',actor)
+        if catalog.get('available') is not True or not any(b['id']=='fixture-bank' and b['name']=='TEST 가상은행' for b in catalog['banks']):
+            raise RuntimeError('Expected test-source CODEF transport fixture, never a live provider')
+        number=f'900000000{index:04}'
+        previous=[p for p in get('/bank-verifications?purpose=PERSONAL',actor)
+            if p['bankName']=='TEST 가상은행' and p['accountMasked']=='*'*(len(number)-4)+number[-4:]]
+        if previous:
+            proof=previous[0]
+        else:
+            proof=post('/bank-verifications',{'purpose':'PERSONAL','bankId':'fixture-bank','accountNumber':number,
+                'holderName':'테스트예금주','identity':'900101'},actor)
+        if proof['status']=='AWAITING_CODE':
+            proof=post(f'/bank-verifications/{proof["id"]}/confirm',{'code':'4837'},actor)
+        if proof['status']!='VERIFIED':
+            raise RuntimeError('Test bank proof pending/failed; inspect its status, do not resend automatically')
+        post('/me/bank-account',{'version':account['version'],'bankName':'TEST 가상은행',
+            'accountNumber':number,'holderName':'테스트예금주','verificationId':proof['id']},actor)
 if not data.get('financeEventId'):
     club = data['clubId']
     event = post(f'/clubs/{club}/events',{'version':get(f'/clubs/{club}')['version'],
