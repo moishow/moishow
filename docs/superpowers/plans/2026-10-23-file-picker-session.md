@@ -44,8 +44,10 @@
 **Files:** update REQUIREMENTS-AUDIT, MOBILE-APP, issue16 and Obsidian current facts. Existing Java source remains unchanged.
 
 - [x] Review the exact async boundaries independently, including late controller/callback access.
-- [ ] Build TEST web, production web and debugAPK for the frozen source. Prior Java196 evidence remains valid for unchanged server sources; remote CI still verifies the full repository.
-- [ ] Commit explicit files, create+attach develop PR, verify exact-head CI and merge; promote to main under the existing user authorization. Keep real provider/device/iOS acceptance separate.
+- [x] Build TEST web193.5s, production web142.8s and JDK21 debugAPK224.3s for the frozen source. Prior Java196 evidence remains valid for unchanged server sources; remote CI still verifies the full repository.
+- [x] Commit explicit source files after105/analyze/independent closure and preserve the exact platform/GUI evidence.
+
+Create+attach the develop PR and merge only after exact-head CI. When main is an ancestor and the merge tree equals the tested source, promote by nonforce fast-forward; use a normal main PR if protection requires it. Keep real provider/device/iOS acceptance separate.
 
 Remote promotion outcome is tracked in GitHub PR checks/merge commits and the vault, rather than inferred from local test checkboxes.
 

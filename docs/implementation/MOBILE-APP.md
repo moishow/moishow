@@ -6,7 +6,7 @@
 
 SDK는 저장소 밖 `C:\Users\minjoun\Documents\Codex\tools\flutter`, 공식 stable3.47.7/Dart3.13.5다. 공식 archive SHA256 `c2c875da25a1a1448d18ee4e8f398b2f6fce888b4775d8f9130538e16d826cb4`를 확인했다. Java25 서버와 Android JDK21을 구분한다. Android SDK36/build-tools36.0.0, Gradle workers2/parallelfalse/heap2048m이다.
 
-2026-10-23 CODEF 후속 최종소스: `flutter analyze` **No issues found**(13.4초), `flutter test` **101개 통과**(63초). TEST web184.8초·production web243.3초·Android debug APK129.9초 빌드가 모두 성공했다. 근거는 `.superpowers/bank-flutter-owner-{analyze,full-test,test-web,web}.log`, `bank-flutter-final-apk.log`다. APK SHA256은 `411C880F9B5825C83AFD1B7F738448B1CEC2EC14D7926D27F951E018010558ED`. 기존86개에CODEF15회귀가추가됐으며소유계정전환/저널대기중전환과오답후상태조회실패경계도포함한다. iOS는Windows에서빌드하지않았고실공급자/실송금/실기기/운영배포는미검증이다.
+2026-10-23 첨부 세션 후속 최종소스: `flutter analyze` **No issues found**(7.4초), `flutter test` **105개 통과**(19초). TEST web193.5초(`build/test_web`)·production web142.8초·Android **JDK21** debug APK224.3초가 모두 성공했다. 근거는 `.superpowers/file-picker-{analyze,full-test,web}-01.log`, `file-picker-test-web-preview-02.log`, `file-picker-apk-jdk21-02.log`다. APK SHA256은 `639744DACDDA94B17A46B0B4B080CACED0167CDE47E5702D75DCB6799E44FB43`. 기존86+CODEF15+첨부 세션4 회귀다. 처음 user JAVA_HOME25를 상속한 APK는 최종 Android 인수에서 제외했고, 실제 JDK21 GradleDaemon 실행 경로를 확인했다. 사용자 전역 설정은 변경하지 않았다. iOS/실공급자·실송금·실기기/서명배포는 별도다.
 
 ```powershell
 $flutter = 'C:\Users\minjoun\Documents\Codex\tools\flutter\bin\flutter.bat'
@@ -62,7 +62,7 @@ API_BASE_URL/Google/Kakao/Firebase 공개 client 설정만 dart-define으로 전
 | MY · 마이 | 프로필·지난 정산·모임별 레벨·운영자 역할 진입 | 200/403 operator endpoint 구분 | 실제 화면 QA 대기 |
 | HISTORY · 개인 정산 내역 | 20개 더보기/실패 동일 offset 재시도·lazy 자기8금액·원본 계산/정정 진입 | mock Dio HTTP7 GREEN·늦은 세션응답/숫자 누락/320폭200% 검증 | 실제 비부원/탈퇴 본인 단면 QA 진행; 기간/상태 필터는 정본 요구 아님 |
 | LEVEL · 모임 레벨 | My 소속 모임·Club 기존 멤버행·허용 Event/Finance 본인 활동 레벨 | 같은모임 타인/공개 비부원 본인/탈퇴 본인 DTO위젯3 GREEN·ACL 그대로 | 실제 관계별 열람/403 QA 진행·전역directory/새공유프로필 없음 |
-| PROFILE · 프로필 | 닉네임/선택 관심사·소개/SELF 사진·부분보존/명시해제 | 서버 실PG3 GREEN·앱 정규화/사진해제 회귀 | 본인 전용 사진의 native 선택/열람 미검증 |
+| PROFILE · 프로필 | 닉네임/관심사·소개/본인 전용 사진·부분보존/명시해제 | 서버Profile3·첨부 세션4/앱105, 최신105 인앱 사진 업로드→저장→보호뷰어·본인200/타부원403 | 실제 Android/iOS 사진·S3 환경 수락 별도 |
 | SETTINGS · 설정 | 기기 소유 영속·만료/401시FCM토큰삭제·다음로그인재발급·refresh/늦은응답 격리·설정/인수함 | A만료→B등록·늦은A응답·구refresh/새rotation·Main만료 cleanup 회귀 GREEN | 실FCM/APNs 자격/실기기 수신·iOS 빌드 미검증 |
 | BANK · 계좌 등록·확인 | CODEF 예금주→1원 코드→일회증명·최종등록, 본인 masked조회·재진입·계정고정 | 앱15회귀/전체101, 서버BankVerification15+Gateway13/전체196, 최신101 GUI복구→등록·실API CONSUMED확인 | 실제상품승인/키/기관별지원·실CODEF/실1원/실기기 별도 |
 | ACCOUNT · 계정 관리 | 남은 담당 업무 삭제가드·로그아웃·세션 기한 | 저장 실패/세션전환/401 회귀 | 공식 소셜 계정 복구 도움 연결; 전화번호만으로 병합하는 기능은 만들지 않음 |
@@ -119,7 +119,7 @@ Flutter `test_support/main.dart`만 서버가 발급한8역할을 선택하고 T
 
 최종 GUI 보완: 중앙+의 실제 AX 이름 `정모·번개 만들기`를 확인했고, 실제 TEST PG/REST 환불 SENT→본인 CONFIRMED5000원 뒤 `수령 확인 완료` 카드와 확인 버튼 제거를 확인했다(`apps/mobile/docs/screenshots/test-refund-confirmed.png`, `test-refund-sent.png`). 외부 은행 송금은 하지 않았다. 피드/탐색 분리 회귀와 초대수락 뒤 최근 대화 즉시 갱신 회귀를 포함한 최신 전체86개 GREEN은 `mobile-analyze-final-05.log`, `mobile-test-final-05.log`에 보존했다. 실제 그룹초대 수락에서 발견한 stale 목록은 같은 화면의 관계 변경 성공 때 최근 대화도 재조회하도록 수정했으며 별도 권한/API를 만들지 않았다.
 
-최신86 TEST web에서 그룹초대 수락 후 같은 목록에 그룹방이 즉시 표시되고(`test-group-accepted.png`), 실제 그룹방 REST 작성 및 다른 테스트 역할이 쓴 메시지를 새로고침 없이 STOMP로 받았다(`test-group-message.png`, `test-group-live-received.png`). 피드 탭은 검색 폼 없이 별도 글 화면으로 확인했다(`test-feed-final.png`). 사진 선택은 브라우저 chooser까지 진입했으나 자동 파일 주입은 확장의 로컬 파일 접근 설정 때문에 차단되어 GUI 업로드/보호 뷰어 완료로 표시하지 않는다.
+최신86 TEST web에서 그룹초대 수락 후 같은 목록에 그룹방이 즉시 표시되고(`test-group-accepted.png`), 실제 그룹방 REST 작성 및 다른 테스트 역할이 쓴 메시지를 새로고침 없이 STOMP로 받았다(`test-group-message.png`, `test-group-live-received.png`). 피드 탭은 검색 폼 없이 별도 글 화면으로 확인했다(`test-feed-final.png`). 이86개 snapshot 당시 Chrome 자동 파일 주입은 확장 권한으로 차단됐다. 2026-10-23 후속에서는 권한 변경 없이 인앱 브라우저로 최신105 프로필 사진 업로드·저장·보호뷰어를 확인했다(아래 근거).
 
 최종 플랫폼 실행: `mobile-test-web-final-04.log` TEST web126.8초, `mobile-web-final-04.log` production web94.8초, `mobile-apk-final-04.log` debug APK21.1초 모두 성공. 마지막 변경은 기존 한국어 날짜 formatter 재사용 한 줄이며 금액/권한/전이 변경이 없다.
 
@@ -132,3 +132,10 @@ PR22의 f34fc26은 Java/Node/문서/운영웹/모바일 CI8개가 모두 통과�
 요청/오답 화면은중간동일API웹에서확인했고, 최신101소스TEST웹을다시로드해같은AWAITING_CODE요청(4회남음)을복구했다. 복구전본인계좌미등록/인증요청1건을실API로조회했다. TEST코드확인뒤원번호/예금주를재입력해최종등록했고서버는CONSUMED/registered=true/version1/미소비0을반환했다. [최신등록화면](../../apps/mobile/docs/screenshots/bank-code-registered.jpg)에TEST배너/가상은행·마스킹계좌/예금주/실제등록시각이보인다. 실제외부1원은없다. 과거86개/PR22기록은이전snapshot근거로보존하며최신101과혼합하지않는다.
 
 추가P2회귀: 오답400뒤상태GET실패는정확남은횟수로표시하지않고조회전확인/최종제출을막는다. 최종등록창을연후다른계정으로바뀌면원계정bound전송만허용하며다른계정저널/POST에원계좌본문을넣지않는다. genericApi.send동작은변경하지않고첫await전owner캡처와저널후token재확인을재사용한다. 독립closure에서추가구체P1/P2가없었다. 실단말/실CODEF/키/지원기관·실제수신코드는별도다.
+
+
+## 첨부 읽기 중 계정 전환 수정·최신105 GUI
+
+실제MoishowApp/router에서A의사진읽기를보류하고A로그아웃/프로필dispose/실제로그인→B세션을거친뒤읽기가끝나도A사진을B로보내지않아야한다. 이전코드는B bearer와B저널에A사진이들어갔다. 첫await전시작API/계정을고정하고사진선택·bytes·전송응답뒤화면/동일API/token/user를검사한다. 아직전송하지않은파일은폐기하고이미전송한응답은늦은controller/callback변경을차단한다. 파일scope/크기/MIME·서버권한·일반Api.send는바꾸지않았다. 초기picker뒤dispose/늦은controller와정상owner를포함한4회귀와전체105가통과했고독립closure추가P1/P2없음이다.
+
+Chrome의file URL권한은변경하지않았다. 인앱브라우저에서최신105TEST번들을다시로드하고프로젝트의가상이미지를실제filechooser→multipart업로드→프로필저장→보호뷰어로표시했다. 프로필version3/기존101사진과다른새fileId, 본인GET200·타부원403·image/png/no-store/219455bytes를실API와대조했다. [최신 보호 뷰어](../../apps/mobile/docs/screenshots/test-private-photo-viewer.jpg)에TEST배너와프로젝트가상이미지가보인다. 개인실사진/외부S3는사용하지않았다. 실단말사진·분쟁/납부모든맥락GUI·PDF시각수락은이대표사례와구분한다.
