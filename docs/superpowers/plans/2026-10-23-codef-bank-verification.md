@@ -62,5 +62,7 @@
 
 - [x] Compare every implementation with POLICY/spec/issue3 and record chosen defaults and known limitations centrally.
 - [x] Independent review of transfer retry, concurrency, permissions, private inputs, app journals and provider failure boundaries; fix concrete findings with regression evidence.
-- [ ] Java25 Gradle test/build, Flutter analyze/test/web/APK, handoff checks, exact-head CI. Commit explicit paths, create+attach PR to develop, merge only after checks; main integration under existing user authorization.
+- [x] Local Java25 Gradle test/build196, Flutter analyze/test101/web/APK, handoff checks; explicit source commits and independent review recorded.
+
+Remote promotion status is recorded in the GitHub PR exact-head checks/merge commit and Obsidian current project note, rather than inferred from this local-verification checkbox. Create+attach the develop PR, merge only after its checks pass, then promote to main under the existing user authorization.
 - [x] Keep live provider approval/keys/bank mapping/real transfer/iOS and source-account namespace limitations explicit. Update vault and audit links.
